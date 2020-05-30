@@ -14,7 +14,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(400, 800)
-        MainWindow.setMaximumSize(QtCore.QSize(400, 800))
+        MainWindow.setMaximumSize(QtCore.QSize(400, 600))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
         self.frame = QtWidgets.QFrame(self.centralwidget)
@@ -24,11 +24,7 @@ class Ui_MainWindow(object):
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.firewall_settings = QtWidgets.QVBoxLayout()
         self.label = QtWidgets.QLabel(self.frame)
-        self.label.setStyleSheet("font-size:15px;\n"
-"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 178, 102, 255), stop:0.55 rgba(235, 148, 61, 255), stop:0.98 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 0, 0));\n"
-"border:no;\n"
-"border-bottom:1px solid black;\n"
-"")
+
         self.firewall_settings.addWidget(self.label)
         self.gta_v_file_path = QtWidgets.QHBoxLayout()
         self.lineEdit = QtWidgets.QLineEdit(self.frame)
