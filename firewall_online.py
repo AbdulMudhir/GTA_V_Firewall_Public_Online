@@ -1,5 +1,5 @@
-from subprocess import call, check_output, check_call, Popen, PIPE
-import os
+from subprocess import call, Popen, PIPE
+import re
 import ctypes
 
 firewall_rule_name = "GTA Online Firewall Rule"
@@ -20,9 +20,7 @@ def firewall_exist():
 
 
 def firewall_scopes_list():
-
     if firewall_exist():
-
         netsh_firewall_exist = f'''netsh advfirewall firewall show rule name="{firewall_rule_name}" dir=in '''
         in_command = Popen(netsh_firewall_exist, stdout=PIPE, stderr=PIPE)
 
@@ -32,8 +30,17 @@ def firewall_scopes_list():
 
         remote_ip_address = output_message_decoded.split()[17]
 
+        return remote_ip_address != "any"
 
-        print(remote_ip_address)
+
+def valid_ip_address(ip_address):
+    ip_address_pattern = "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/?\d?\d?"
+    check_ip = re.match(ip_address_pattern, ip_address)
+
+    return check_ip is not None
+
+
+valid_ip_address("192.168.1.1/32")
 
 
 def add_firewall_rule():
@@ -48,6 +55,9 @@ def add_firewall_rule():
 
 
 def add_white_list(ip_address):
+    previous_scope = firewall_scopes_list()
+    new_scope = f'{previous_scope},{ip_address.strip()}'
+
     netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip={ip_address} '''
     call(netsh_allow_remote_address)
 
@@ -66,7 +76,6 @@ def delete_firewall_rule():
     netsh_add_firewall_command = f'''netsh advfirewall firewall delete rule name="{firewall_rule_name}" '''
     call(netsh_add_firewall_command)
 
-
 # delete_firewall_rule()
 # add_firewall_rule()
-firewall_scopes_list()
+# firewall_scopes_list()

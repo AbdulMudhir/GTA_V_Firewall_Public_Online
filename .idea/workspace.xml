@@ -111,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590847095804</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="retrieve the remote ip address">
+      <created>1590848745843</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1590848745843</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -119,32 +126,33 @@
     <MESSAGE value="added outbound block" />
     <MESSAGE value="check firewall_exist method" />
     <MESSAGE value="fixed issue where it would add duplicate firewall to inbound rule" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed issue where it would add duplicate firewall to inbound rule" />
+    <MESSAGE value="retrieve the remote ip address" />
+    <option name="LAST_COMMIT_MESSAGE" value="retrieve the remote ip address" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1590847095241">
+    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1590848744835">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590847095241" />
-    <state width="2539" height="461" key="GridCell.Tab.0.bottom" timestamp="1590848706719">
+    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590848744835" />
+    <state width="2539" height="461" key="GridCell.Tab.0.bottom" timestamp="1590850082208">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="461" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590848706719" />
-    <state width="2539" height="461" key="GridCell.Tab.0.center" timestamp="1590848706719">
+    <state width="2539" height="461" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590850082208" />
+    <state width="2539" height="461" key="GridCell.Tab.0.center" timestamp="1590850082208">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="461" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590848706719" />
-    <state width="2539" height="461" key="GridCell.Tab.0.left" timestamp="1590848706719">
+    <state width="2539" height="461" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590850082208" />
+    <state width="2539" height="461" key="GridCell.Tab.0.left" timestamp="1590850082207">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="461" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590848706719" />
-    <state width="2539" height="461" key="GridCell.Tab.0.right" timestamp="1590848706719">
+    <state width="2539" height="461" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590850082207" />
+    <state width="2539" height="461" key="GridCell.Tab.0.right" timestamp="1590850082208">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="461" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590848706719" />
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1590847096821">
+    <state width="2539" height="461" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590850082208" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1590848747369">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590847096821" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590848747369" />
   </component>
 </project>
