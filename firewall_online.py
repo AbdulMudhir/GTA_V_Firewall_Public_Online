@@ -1,4 +1,4 @@
-import subprocess
+from subprocess import call, check_output, check_call
 import os
 import ctypes
 
@@ -15,25 +15,27 @@ def firewall_exist():
 
 
 def add_firewall_rule():
-    netsh_add_firewall_command = f'''netsh advfirewall firewall add rule name="{firewall_rule_name}" dir=in action=block program="{program_path}" enable=no profile=domain,private,public protocol=UDP localport=6672'''
-    subprocess.call(netsh_add_firewall_command)
+    netsh_add_firewall_command_in = f'''netsh advfirewall firewall add rule name="{firewall_rule_name}" dir=in action=block program="{program_path}" enable=no profile=domain,private,public protocol=UDP localport=6672'''
+    netsh_add_firewall_command_out = f'''netsh advfirewall firewall add rule name="{firewall_rule_name}" dir=out action=block program="{program_path}" enable=no profile=domain,private,public protocol=UDP localport=6672'''
+    call(netsh_add_firewall_command_in)
+    call(netsh_add_firewall_command_out)
 
 
 def add_white_list(ip_address):
     netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" new remoteip={ip_address}'''
-    subprocess.call(netsh_allow_remote_address)
+    call(netsh_allow_remote_address)
 
 def enable_firewall_rule():
     netsh_add_firewall_command = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" enable=yes '''
-    subprocess.call(netsh_add_firewall_command)
+    call(netsh_add_firewall_command)
 
+def disabl_firewall_rule():
+    netsh_add_firewall_command = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" enable=no '''
+    call(netsh_add_firewall_command)
 
 
 def delete_firewall_rule():
     netsh_add_firewall_command = f'''netsh advfirewall firewall delete rule name="{firewall_rule_name}" '''
-    subprocess.call(netsh_add_firewall_command)
+    call(netsh_add_firewall_command)
 
-delete_firewall_rule()
 
-def enable_firewall_rule(firewall_rule_name):
-    pass
