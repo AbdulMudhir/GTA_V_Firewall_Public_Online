@@ -75,12 +75,12 @@ def remove_white_list(ip_address):
 
 
 def enable_firewall_rule():
-    netsh_add_firewall_command = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" enable=yes '''
+    netsh_add_firewall_command = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" new enable=yes '''
     call(netsh_add_firewall_command)
 
 
 def disable_firewall_rule():
-    netsh_add_firewall_command = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" enable=no '''
+    netsh_add_firewall_command = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" new enable=no '''
     call(netsh_add_firewall_command)
 
 
@@ -88,8 +88,8 @@ def delete_firewall_rule():
     netsh_add_firewall_command = f'''netsh advfirewall firewall delete rule name="{firewall_rule_name}" '''
     call(netsh_add_firewall_command)
 
+disable_firewall_rule()
+
 
 # delete_firewall_rule()
 # add_firewall_rule()
-
-remove_white_list("192.168.4.15")
