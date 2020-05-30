@@ -1,4 +1,4 @@
-from subprocess import call, check_output, check_call
+from subprocess import call, check_output, check_call, Popen, PIPE
 import os
 import ctypes
 
@@ -11,23 +11,37 @@ def running_as_admin():
 
 
 def firewall_exist():
-    pass
+    netsh_firewall_exist = f'''netsh advfirewall firewall show rule name="{firewall_rule_name}"'''
+    in_command = Popen(netsh_firewall_exist, stdout=PIPE, stderr=PIPE)
+
+    output_message, _ = in_command.communicate()
+
+    return "No rules match the specified criteria." == output_message.decode().strip()
 
 
 def add_firewall_rule():
     netsh_add_firewall_command_in = f'''netsh advfirewall firewall add rule name="{firewall_rule_name}" dir=in action=block program="{program_path}" enable=no profile=domain,private,public protocol=UDP localport=6672'''
     netsh_add_firewall_command_out = f'''netsh advfirewall firewall add rule name="{firewall_rule_name}" dir=out action=block program="{program_path}" enable=no profile=domain,private,public protocol=UDP localport=6672'''
-    call(netsh_add_firewall_command_in)
-    call(netsh_add_firewall_command_out)
+    in_command = Popen(netsh_add_firewall_command_in, stdout=PIPE, stderr=PIPE)
+    out_command = Popen(netsh_add_firewall_command_out, stdout=PIPE, stderr=PIPE)
+
+    output_message, _ = in_command.communicate()
+
+    return "Ok." == output_message.decode().strip()
+
+
+add_firewall_rule()
 
 
 def add_white_list(ip_address):
     netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" new remoteip={ip_address}'''
     call(netsh_allow_remote_address)
 
+
 def enable_firewall_rule():
     netsh_add_firewall_command = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" enable=yes '''
     call(netsh_add_firewall_command)
+
 
 def disabl_firewall_rule():
     netsh_add_firewall_command = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" enable=no '''
@@ -39,3 +53,4 @@ def delete_firewall_rule():
     call(netsh_add_firewall_command)
 
 
+delete_firewall_rule()
