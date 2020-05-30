@@ -23,11 +23,17 @@ def add_white_list(ip_address):
     netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" new remoteip={ip_address}'''
     subprocess.call(netsh_allow_remote_address)
 
-add_white_list("192.168.168.1")
+def enable_firewall_rule():
+    netsh_add_firewall_command = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" enable=yes '''
+    subprocess.call(netsh_add_firewall_command)
+
+
 
 def delete_firewall_rule():
-    pass
+    netsh_add_firewall_command = f'''netsh advfirewall firewall delete rule name="{firewall_rule_name}" '''
+    subprocess.call(netsh_add_firewall_command)
 
+delete_firewall_rule()
 
 def enable_firewall_rule(firewall_rule_name):
     pass
