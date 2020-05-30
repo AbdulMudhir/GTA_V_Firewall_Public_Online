@@ -30,7 +30,8 @@ def firewall_scopes_list():
 
         remote_ip_address = output_message_decoded.split()[17]
 
-        return remote_ip_address != "any"
+        if remote_ip_address != "Any":
+            return remote_ip_address
 
 
 def valid_ip_address(ip_address):
@@ -38,9 +39,6 @@ def valid_ip_address(ip_address):
     check_ip = re.match(ip_address_pattern, ip_address)
 
     return check_ip is not None
-
-
-valid_ip_address("192.168.1.1/32")
 
 
 def add_firewall_rule():
@@ -55,11 +53,25 @@ def add_firewall_rule():
 
 
 def add_white_list(ip_address):
-    previous_scope = firewall_scopes_list()
-    new_scope = f'{previous_scope},{ip_address.strip()}'
+    if valid_ip_address(ip_address):
+        previous_scope = firewall_scopes_list()
 
-    netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip={ip_address} '''
-    call(netsh_allow_remote_address)
+        new_scope = f'{previous_scope},{ip_address.strip()}'
+
+        netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip={new_scope} '''
+        Popen(netsh_allow_remote_address)
+
+
+def remove_white_list(ip_address):
+    previous_scope = firewall_scopes_list()
+
+    ip_address_exist_in_scope = ip_address in previous_scope
+
+    if ip_address_exist_in_scope:
+        new_ip_address_scope = ','.join([ip for ip in previous_scope.split(",") if ip_address not in ip])
+
+        netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip={new_ip_address_scope} '''
+        Popen(netsh_allow_remote_address)
 
 
 def enable_firewall_rule():
@@ -76,6 +88,8 @@ def delete_firewall_rule():
     netsh_add_firewall_command = f'''netsh advfirewall firewall delete rule name="{firewall_rule_name}" '''
     call(netsh_add_firewall_command)
 
+
 # delete_firewall_rule()
 # add_firewall_rule()
-# firewall_scopes_list()
+
+remove_white_list("192.168.4.15")
