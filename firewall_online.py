@@ -88,8 +88,7 @@ def delete_firewall_rule():
     netsh_add_firewall_command = f'''netsh advfirewall firewall delete rule name="{firewall_rule_name}" '''
     call(netsh_add_firewall_command)
 
-disable_firewall_rule()
-
+delete_firewall_rule()
 
 # delete_firewall_rule()
 # add_firewall_rule()
