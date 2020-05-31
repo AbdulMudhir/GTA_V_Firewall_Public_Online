@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="445d5f82-ae2c-468d-832f-e90354327bb7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firewall_online.py" beforeDir="false" afterPath="$PROJECT_DIR$/firewall_online.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_interface.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -60,9 +59,6 @@
       <module name="GTA_V_Firewall_Public_Online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -70,13 +66,17 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/user_interface.py" />
       <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.firewall_online" />
+      <item itemvalue="Python.user_interface" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.user_interface" />
@@ -170,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590881571401</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="added add and remove firewall button">
+      <created>1590886735490</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1590886735490</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -182,42 +189,51 @@
     <MESSAGE value="ip address validator" />
     <MESSAGE value="remove ip address from white_list" />
     <MESSAGE value="cleaned up user_interface and removed unecssary code" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaned up user_interface and removed unecssary code" />
+    <MESSAGE value="added add and remove firewall button" />
+    <option name="LAST_COMMIT_MESSAGE" value="added add and remove firewall button" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="3080" y="51" key="CommitChangelistDialog2" timestamp="1590881570913">
-      <screen x="2560" y="0" width="1440" height="860" />
+    <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590889080790">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590880512862" />
+    <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590889080790" />
+    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1590886735011">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590886735011" />
     <state x="3080" y="51" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881570913" />
-    <state width="2539" height="168" key="GridCell.Tab.0.bottom" timestamp="1590886691512">
+    <state x="1060" y="456" key="FileChooserDialogImpl" timestamp="1590887006365">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="168" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590886691512" />
+    <state x="1060" y="456" key="FileChooserDialogImpl/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590887006365" />
+    <state width="2539" height="467" key="GridCell.Tab.0.bottom" timestamp="1590889083552">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2539" height="467" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590889083552" />
     <state width="1419" height="2" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590882124792" />
-    <state width="2539" height="168" key="GridCell.Tab.0.center" timestamp="1590886691512">
+    <state width="2539" height="467" key="GridCell.Tab.0.center" timestamp="1590889083552">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="168" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590886691512" />
+    <state width="2539" height="467" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590889083552" />
     <state width="1419" height="2" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590882124792" />
-    <state width="2539" height="168" key="GridCell.Tab.0.left" timestamp="1590886691512">
+    <state width="2539" height="467" key="GridCell.Tab.0.left" timestamp="1590889083552">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="168" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590886691512" />
+    <state width="2539" height="467" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590889083552" />
     <state width="1419" height="2" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590882124792" />
-    <state width="2539" height="168" key="GridCell.Tab.0.right" timestamp="1590886691512">
+    <state width="2539" height="467" key="GridCell.Tab.0.right" timestamp="1590889083552">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="168" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590886691512" />
+    <state width="2539" height="467" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590889083552" />
     <state width="1419" height="2" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590882124792" />
     <state x="781" y="343" key="SettingsEditor" timestamp="1590879318931">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="781" y="343" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590879318931" />
-    <state x="3051" y="267" key="Vcs.Push.Dialog.v2" timestamp="1590881572496">
-      <screen x="2560" y="0" width="1440" height="860" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1590886736486">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590880514525" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590886736486" />
     <state x="3051" y="267" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881572496" />
   </component>
 </project>

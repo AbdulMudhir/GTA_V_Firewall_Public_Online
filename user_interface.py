@@ -8,8 +8,17 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from pathlib import Path
+import json, os
+
 
 class Ui_MainWindow(object):
+
+    def __init__(self):
+
+        self.settings_file = {}
+        self.settings_directory = ""
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(400, 800)
@@ -38,6 +47,9 @@ class Ui_MainWindow(object):
         self.gta_v_file_path = QtWidgets.QHBoxLayout()
         # directory path, will be used to retrieve the gta path for creating the firewall rule
         self.file_path_directory = QtWidgets.QLineEdit(self.frame)
+
+        self.file_path_directory.setText(self.settings_file.get("GTA_FILE_PATH"))
+
         self.gta_v_file_path.addWidget(self.file_path_directory)
 
         # will be used to get gta v .exe if user is doesn't have copy paste
@@ -45,11 +57,12 @@ class Ui_MainWindow(object):
 
         self.file_path.clicked.connect(self.get_file_path)
 
-
         self.gta_v_file_path.addWidget(self.file_path)
 
         # adding the the gta v file path layout to firewall setting menu
         self.firewall_settings.addLayout(self.gta_v_file_path)
+
+        self.create_setting_file()
 
         # create 2 seperate layout one for the layout and other is for holding the buttons
         self.ip_address_layout = QtWidgets.QVBoxLayout()
@@ -66,7 +79,6 @@ class Ui_MainWindow(object):
 
         self.ip_address_layout.addLayout(self.ip_address_options)
         self.ip_address_edit_text = QtWidgets.QLineEdit(self.frame)
-
 
         self.ip_address_layout.addWidget(self.ip_address_edit_text)
         self.scan_lobby_ip = QtWidgets.QPushButton(self.frame)
@@ -87,14 +99,11 @@ class Ui_MainWindow(object):
 
         self.firewall_settings.addLayout(add_remove_firewall_layout)
 
-
         self.firewall_settings.addLayout(self.ip_address_layout)
-
 
         self.tableView = QtWidgets.QTableView(self.frame)
 
         self.firewall_settings.addWidget(self.tableView)
-
 
         self.gridLayout_3.addLayout(self.firewall_settings, 0, 0, 1, 1)
         self.gridLayout_2.addWidget(self.frame, 1, 0, 1, 1)
@@ -116,19 +125,21 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-
     def get_file_path(self):
-        from pathlib import Path
 
-        home_directory = str(Path.home())
+        gta_file_path = self.settings_file.get("GTA_FILE_PATH")
 
-        print(home_directory)
+        home_directory = str(Path.home()) if not gta_file_path else gta_file_path
 
-        file_dialog = QtWidgets.QFileDialog.getOpenFileName(self.frame, "Open file", home_directory)
+        file_dialog = QtWidgets.QFileDialog.getOpenFileName(self.frame, "Open file", home_directory,
+                                                            "executable(*.exe)")
+        file_path, _ = file_dialog
 
-        print(file_dialog)
+        if file_path and file_path != self.settings_file.get("GTA_FILE_PATH"):
+            self.file_path_directory.setText(file_path)
+            self.settings_file["GTA_FILE_PATH"] = file_path
 
-
+            json.dump(self.settings_file, open("settings.json", "w"))
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -142,6 +153,20 @@ class Ui_MainWindow(object):
         self.scan_lobby_ip.setText(_translate("MainWindow", "Scan Lobby IP Address"))
         self.firewall_button.setText(_translate("MainWindow", "Firewall Mode"))
         self.resource_monitor_button.setText(_translate("MainWindow", "Resource Monitor"))
+
+    def create_setting_file(self):
+
+        current_cwd = os.getcwd()
+
+        try:
+            self.settings_file = json.load(open("settings.json"))
+            gta_v_file_path = self.settings_file.get("GTA_FILE_PATH")
+            self.file_path_directory.setText(gta_v_file_path)
+
+        except FileNotFoundError:
+
+            json_settings = {"GTA_FILE_PATH": ""}
+            update_setting_file = json.dump(json_settings, open("settings.json", "w"))
 
 
 if __name__ == "__main__":
