@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="445d5f82-ae2c-468d-832f-e90354327bb7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/firewall_online.py" beforeDir="false" afterPath="$PROJECT_DIR$/firewall_online.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/firewall.py" beforeDir="false" afterPath="$PROJECT_DIR$/firewall.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_interface.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,8 +67,8 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/user_interface.py" />
       <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="true" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
@@ -191,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590918806606</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="renamed firewall online to firewall">
+      <created>1590919107062</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1590919107062</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -206,50 +214,51 @@
     <MESSAGE value="added add and remove firewall button" />
     <MESSAGE value="added settings file" />
     <MESSAGE value="add and remove firewall function implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="add and remove firewall function implemented" />
+    <MESSAGE value="renamed firewall online to firewall" />
+    <option name="LAST_COMMIT_MESSAGE" value="renamed firewall online to firewall" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590889080790">
+    <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590919418041">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590889080790" />
-    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1590918805858">
+    <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590919418041" />
+    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1590919106372">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590918805858" />
+    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590919106372" />
     <state x="3080" y="51" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881570913" />
     <state x="1060" y="456" key="FileChooserDialogImpl" timestamp="1590887006365">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1060" y="456" key="FileChooserDialogImpl/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590887006365" />
-    <state width="2539" height="467" key="GridCell.Tab.0.bottom" timestamp="1590916256270">
+    <state width="2024" height="380" key="GridCell.Tab.0.bottom" timestamp="1590920087961">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="467" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590916256270" />
+    <state width="2024" height="380" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590920087961" />
     <state width="1419" height="2" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590882124792" />
-    <state width="2539" height="467" key="GridCell.Tab.0.center" timestamp="1590916256269">
+    <state width="2024" height="380" key="GridCell.Tab.0.center" timestamp="1590920087961">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="467" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590916256269" />
+    <state width="2024" height="380" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590920087961" />
     <state width="1419" height="2" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590882124792" />
-    <state width="2539" height="467" key="GridCell.Tab.0.left" timestamp="1590916256269">
+    <state width="2024" height="380" key="GridCell.Tab.0.left" timestamp="1590920087961">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="467" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590916256269" />
+    <state width="2024" height="380" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590920087961" />
     <state width="1419" height="2" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590882124792" />
-    <state width="2539" height="467" key="GridCell.Tab.0.right" timestamp="1590916256270">
+    <state width="2024" height="380" key="GridCell.Tab.0.right" timestamp="1590920087961">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="467" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590916256270" />
+    <state width="2024" height="380" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590920087961" />
     <state width="1419" height="2" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590882124792" />
     <state x="781" y="343" key="SettingsEditor" timestamp="1590879318931">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="781" y="343" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590879318931" />
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1590918808643">
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1590919107900">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590918808643" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590919107900" />
     <state x="3051" y="267" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881572496" />
   </component>
 </project>

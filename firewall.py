@@ -29,8 +29,10 @@ def firewall_scopes_list():
 
         remote_ip_address = output_message_decoded.split()[17]
 
-        if remote_ip_address != "Any":
-            return remote_ip_address
+
+        return remote_ip_address
+
+
 
 
 def valid_ip_address(ip_address):
@@ -56,25 +58,29 @@ def add_firewall_rule(program_path):
 
 
 def add_white_list(ip_address):
-    if valid_ip_address(ip_address):
-        previous_scope = firewall_scopes_list()
 
+    previous_scope = firewall_scopes_list()
+
+    if previous_scope != "Any":
         new_scope = f'{previous_scope},{ip_address.strip()}'
 
         netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip={new_scope} '''
         Popen(netsh_allow_remote_address)
 
+    else:
+        netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip={ip_address} '''
+        Popen(netsh_allow_remote_address)
+
 
 def ip_address_exist_in_scope(ip_address):
     current_ip_scope = firewall_scopes_list()
-
     return ip_address in current_ip_scope
 
 def remove_white_list(ip_address):
     previous_scope = firewall_scopes_list()
 
+    if previous_scope != "Any":
 
-    if ip_address_exist_in_scope(ip_address):
         new_ip_address_scope = ','.join([ip for ip in previous_scope.split(",") if ip_address not in ip])
 
         netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip={new_ip_address_scope} '''

@@ -145,17 +145,27 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def add_ip_address(self):
+
         ip_address = self.ip_address_edit_text.text()
 
-        if firewall.valid_ip_address(ip_address) and firewall.ip_address_exist_in_scope(ip_address):
+        if firewall.valid_ip_address(ip_address):
 
-
-        else:
-            print("invalid ip address")
-
+            if not firewall.ip_address_exist_in_scope(ip_address):
+                firewall.add_white_list(ip_address)
+            else:
+                # for debugging
+                print("ip address already exist")
 
     def remove_ip_address(self):
-        pass
+        ip_address = self.ip_address_edit_text.text()
+
+        if firewall.valid_ip_address(ip_address):
+
+            if  firewall.ip_address_exist_in_scope(ip_address):
+                firewall.remove_white_list(ip_address)
+            else:
+                # for debugging
+                print("ip address doesn't exist")
 
     def get_file_path(self):
 
