@@ -18,6 +18,7 @@ class Ui_MainWindow(object):
     def __init__(self):
 
         self.settings_file = {}
+        self.firewall_active = False
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -101,18 +102,6 @@ class Ui_MainWindow(object):
         self.remove_firewall_rule_button.setText("Remove Firewall Rule")
         add_remove_firewall_layout.addWidget(self.remove_firewall_rule_button)
 
-        # will be used to display that a firewall does not exist
-        if firewall.firewall_exist():
-            self.add_firewall_rule_button.setStyleSheet("background-color:#00FF00;")
-            self.remove_firewall_rule_button.setStyleSheet("background-color:red;")
-
-            self.add_firewall_rule_button.setDisabled(True)
-            self.remove_firewall_rule_button.setDisabled(False)
-        else:
-            self.remove_firewall_rule_button.setStyleSheet("background-color:red;")
-            self.add_firewall_rule_button.setStyleSheet("background-color:red;")
-            self.remove_firewall_rule_button.setDisabled(True)
-
         self.add_firewall_rule_button.clicked.connect(self.add_firewall)
         self.remove_firewall_rule_button.clicked.connect(self.remove_firewall)
 
@@ -128,6 +117,9 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.frame, 1, 0, 1, 1)
         self.buttons = QtWidgets.QHBoxLayout()
         self.firewall_button = QtWidgets.QPushButton(self.centralwidget)
+        self.firewall_button.setText("Firewall Mode (OFF)")
+        self.firewall_button.clicked.connect(self.firewall_mode)
+        self.firewall_button.setStyleSheet("background-color:red;")
 
         self.firewall_button.setMinimumSize(QtCore.QSize(25, 50))
         self.firewall_button.setMaximumSize(QtCore.QSize(218, 50))
@@ -139,10 +131,36 @@ class Ui_MainWindow(object):
 
         self.buttons.addWidget(self.resource_monitor_button)
         self.gridLayout_2.addLayout(self.buttons, 2, 0, 1, 1)
+
+        # will be used to display that a firewall does not exist
+        if firewall.firewall_exist():
+            self.add_firewall_rule_button.setStyleSheet("background-color:#00FF00;")
+            self.remove_firewall_rule_button.setStyleSheet("background-color:red;")
+
+            self.enable_firewall_settings_buttons()
+        else:
+            self.remove_firewall_rule_button.setStyleSheet("background-color:red;")
+            self.add_firewall_rule_button.setStyleSheet("background-color:red;")
+            self.disable_firewall_settings_buttons()
+
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def firewall_mode(self):
+
+        if not self.firewall_active:
+            self.firewall_active = True
+            firewall.enable_firewall_rule()
+            self.firewall_button.setText("Firewall Mode (ON)")
+            self.firewall_button.setStyleSheet("background-color:#00FF00;")
+
+        else:
+            self.firewall_active = False
+            firewall.disable_firewall_rule()
+            self.firewall_button.setText("Firewall Mode (OFF)")
+            self.firewall_button.setStyleSheet("background-color:red;")
 
     def add_ip_address(self):
 
@@ -161,7 +179,7 @@ class Ui_MainWindow(object):
 
         if firewall.valid_ip_address(ip_address):
 
-            if  firewall.ip_address_exist_in_scope(ip_address):
+            if firewall.ip_address_exist_in_scope(ip_address):
                 firewall.remove_white_list(ip_address)
             else:
                 # for debugging
@@ -195,7 +213,6 @@ class Ui_MainWindow(object):
         self.remove_ip_address_button.setText(_translate("MainWindow", "Remove IP Address"))
         self.ip_address_edit_text.setPlaceholderText(_translate("MainWindow", "IP Address", "IP Address"))
         self.scan_lobby_ip.setText(_translate("MainWindow", "Scan Lobby IP Address"))
-        self.firewall_button.setText(_translate("MainWindow", "Firewall Mode (OFF)"))
         self.resource_monitor_button.setText(_translate("MainWindow", "Resource Monitor"))
 
     def add_firewall(self):
@@ -204,18 +221,45 @@ class Ui_MainWindow(object):
 
         if added_firewall_rule:
             self.add_firewall_rule_button.setStyleSheet("background-color:#00FF00;")
-            self.add_firewall_rule_button.setDisabled(True)
-            self.remove_firewall_rule_button.setDisabled(False)
+            self.enable_firewall_settings_buttons()
+
         else:
             self.add_firewall_rule_button.setStyleSheet("background-color:red;")
 
     def remove_firewall(self):
 
         remove_firewall_rule = firewall.delete_firewall_rule()
-        print(remove_firewall_rule)
         if remove_firewall_rule:
-            self.remove_firewall_rule_button.setDisabled(True)
-            self.add_firewall_rule_button.setDisabled(False)
+            self.disable_firewall_settings_buttons()
+
+    def disable_firewall_settings_buttons(self):
+        self.add_ip_address_button.setDisabled(True)
+        self.remove_ip_address_button.setDisabled(True)
+        self.add_firewall_rule_button.setDisabled(False)
+        self.remove_firewall_rule_button.setDisabled(True)
+        self.ip_address_edit_text.setDisabled(True)
+        self.firewall_button.setDisabled(True)
+
+        if self.firewall_active:
+            self.firewall_active = False
+            self.firewall_button.setText("Firewall Mode (OFF)")
+            self.firewall_button.setStyleSheet("background-color:red;")
+
+    def enable_firewall_settings_buttons(self):
+        self.ip_address_edit_text.setDisabled(False)
+        self.firewall_button.setDisabled(False)
+
+        self.add_firewall_rule_button.setDisabled(True)
+        self.remove_firewall_rule_button.setDisabled(False)
+        self.add_ip_address_button.setDisabled(False)
+        self.remove_ip_address_button.setDisabled(False)
+        if not self.firewall_active:
+            self.firewall_button.setText("Firewall Mode (OFF)")
+            self.firewall_button.setStyleSheet("background-color:red;")
+
+
+
+
 
     def create_setting_file(self):
 
