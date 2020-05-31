@@ -10,6 +10,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from pathlib import Path
 import json, os
+import firewall_online
 
 
 class Ui_MainWindow(object):
@@ -17,7 +18,6 @@ class Ui_MainWindow(object):
     def __init__(self):
 
         self.settings_file = {}
-        self.settings_directory = ""
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -71,11 +71,15 @@ class Ui_MainWindow(object):
         self.ip_address_options = QtWidgets.QHBoxLayout()
         self.ip_address_options.setSpacing(0)
 
-        self.add_ip_address = QtWidgets.QPushButton(self.frame)
-        self.ip_address_options.addWidget(self.add_ip_address)
+        self.add_ip_address_button = QtWidgets.QPushButton(self.frame)
+        self.add_ip_address_button.clicked.connect(self.add_ip_address)
 
-        self.remove_ip_address = QtWidgets.QPushButton(self.frame)
-        self.ip_address_options.addWidget(self.remove_ip_address)
+        self.ip_address_options.addWidget(self.add_ip_address_button)
+
+        self.remove_ip_address_button = QtWidgets.QPushButton(self.frame)
+        self.remove_ip_address_button.clicked.connect(self.remove_ip_address)
+
+        self.ip_address_options.addWidget(self.remove_ip_address_button)
 
         self.ip_address_layout.addLayout(self.ip_address_options)
         self.ip_address_edit_text = QtWidgets.QLineEdit(self.frame)
@@ -89,13 +93,28 @@ class Ui_MainWindow(object):
 
         add_remove_firewall_layout.setSpacing(0)
 
-        add_firewall_rule = QtWidgets.QPushButton()
-        add_firewall_rule.setText("Add Firewall Rule")
-        add_remove_firewall_layout.addWidget(add_firewall_rule)
+        self.add_firewall_rule_button = QtWidgets.QPushButton()
+        self.add_firewall_rule_button.setText("Add Firewall Rule")
+        add_remove_firewall_layout.addWidget(self.add_firewall_rule_button)
 
-        remove_firewall_rule = QtWidgets.QPushButton()
-        remove_firewall_rule.setText("Remove Firewall Rule")
-        add_remove_firewall_layout.addWidget(remove_firewall_rule)
+        self.remove_firewall_rule_button = QtWidgets.QPushButton()
+        self.remove_firewall_rule_button.setText("Remove Firewall Rule")
+        add_remove_firewall_layout.addWidget(self.remove_firewall_rule_button)
+
+        # will be used to display that a firewall does not exist
+        if firewall_online.firewall_exist():
+            self.add_firewall_rule_button.setStyleSheet("background-color:#00FF00;")
+            self.remove_firewall_rule_button.setStyleSheet("background-color:red;")
+
+            self.add_firewall_rule_button.setDisabled(True)
+            self.remove_firewall_rule_button.setDisabled(False)
+        else:
+            self.remove_firewall_rule_button.setStyleSheet("background-color:red;")
+            self.add_firewall_rule_button.setStyleSheet("background-color:red;")
+            self.remove_firewall_rule_button.setDisabled(True)
+
+        self.add_firewall_rule_button.clicked.connect(self.add_firewall)
+        self.remove_firewall_rule_button.clicked.connect(self.remove_firewall)
 
         self.firewall_settings.addLayout(add_remove_firewall_layout)
 
@@ -125,6 +144,12 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    def add_ip_address(self):
+        pass
+
+    def remove_ip_address(self):
+        pass
+
     def get_file_path(self):
 
         gta_file_path = self.settings_file.get("GTA_FILE_PATH")
@@ -135,9 +160,11 @@ class Ui_MainWindow(object):
                                                             "executable(*.exe)")
         file_path, _ = file_dialog
 
+        file_path_format = os.path.realpath(file_path)
+
         if file_path and file_path != self.settings_file.get("GTA_FILE_PATH"):
-            self.file_path_directory.setText(file_path)
-            self.settings_file["GTA_FILE_PATH"] = file_path
+            self.file_path_directory.setText(file_path_format)
+            self.settings_file["GTA_FILE_PATH"] = os.path.realpath(file_path_format)
 
             json.dump(self.settings_file, open("settings.json", "w"))
 
@@ -147,12 +174,31 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "Firewall Settings"))
         self.file_path_directory.setPlaceholderText(_translate("MainWindow", "File Path"))
         self.file_path.setText(_translate("MainWindow", "GTA V Path"))
-        self.add_ip_address.setText(_translate("MainWindow", "Add IP Address"))
-        self.remove_ip_address.setText(_translate("MainWindow", "Remove IP Address"))
+        self.add_ip_address_button.setText(_translate("MainWindow", "Add IP Address (optional)"))
+        self.remove_ip_address_button.setText(_translate("MainWindow", "Remove IP Address"))
         self.ip_address_edit_text.setPlaceholderText(_translate("MainWindow", "IP Address", "IP Address"))
         self.scan_lobby_ip.setText(_translate("MainWindow", "Scan Lobby IP Address"))
-        self.firewall_button.setText(_translate("MainWindow", "Firewall Mode"))
+        self.firewall_button.setText(_translate("MainWindow", "Firewall Mode (OFF)"))
         self.resource_monitor_button.setText(_translate("MainWindow", "Resource Monitor"))
+
+    def add_firewall(self):
+
+        added_firewall_rule = firewall_online.add_firewall_rule(self.file_path_directory.text())
+
+        if added_firewall_rule:
+            self.add_firewall_rule_button.setStyleSheet("background-color:#00FF00;")
+            self.add_firewall_rule_button.setDisabled(True)
+            self.remove_firewall_rule_button.setDisabled(False)
+        else:
+            self.add_firewall_rule_button.setStyleSheet("background-color:red;")
+
+    def remove_firewall(self):
+
+        remove_firewall_rule = firewall_online.delete_firewall_rule()
+        print(remove_firewall_rule)
+        if remove_firewall_rule:
+            self.remove_firewall_rule_button.setDisabled(True)
+            self.add_firewall_rule_button.setDisabled(False)
 
     def create_setting_file(self):
 

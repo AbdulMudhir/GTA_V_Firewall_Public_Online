@@ -3,7 +3,6 @@ import re
 import ctypes
 
 firewall_rule_name = "GTA Online Firewall Rule"
-program_path = "C:\GTAV\GTA5.exe"
 
 
 def running_as_admin():
@@ -41,13 +40,17 @@ def valid_ip_address(ip_address):
     return check_ip is not None
 
 
-def add_firewall_rule():
-    netsh_add_firewall_command_in = f'''netsh advfirewall firewall add rule name="{firewall_rule_name}" dir=in action=block program="{program_path}" enable=no profile=domain,private,public protocol=UDP localport=6672  '''
+def add_firewall_rule(program_path):
+
+
+
+    netsh_add_firewall_command_in = f'''netsh advfirewall firewall add rule name="{firewall_rule_name}" dir=in action=block program="{program_path}" enable=no profile=domain,private,public protocol=UDP localport=6672'''
     netsh_add_firewall_command_out = f'''netsh advfirewall firewall add rule name="{firewall_rule_name}" dir=out action=block program="{program_path}" enable=no profile=domain,private,public protocol=UDP localport=6672'''
     in_command = Popen(netsh_add_firewall_command_in, stdout=PIPE, stderr=PIPE)
     out_command = Popen(netsh_add_firewall_command_out, stdout=PIPE, stderr=PIPE)
 
     output_message, _ = in_command.communicate()
+
 
     return "Ok." == output_message.decode().strip()
 
@@ -86,9 +89,6 @@ def disable_firewall_rule():
 
 def delete_firewall_rule():
     netsh_add_firewall_command = f'''netsh advfirewall firewall delete rule name="{firewall_rule_name}" '''
-    call(netsh_add_firewall_command)
-
-delete_firewall_rule()
-
-# delete_firewall_rule()
-# add_firewall_rule()
+    in_command = Popen(netsh_add_firewall_command, stdout=PIPE, stderr=PIPE)
+    output_message, _ = in_command.communicate()
+    return "Ok." in output_message.decode().strip()
