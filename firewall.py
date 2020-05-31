@@ -29,7 +29,6 @@ def firewall_scopes_list():
 
         remote_ip_address = output_message_decoded.split()[17]
 
-
         return remote_ip_address
 
 

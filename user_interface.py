@@ -19,6 +19,7 @@ class Ui_MainWindow(object):
 
         self.settings_file = {}
         self.firewall_active = False
+        self.ip_address_scope =""
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -109,7 +110,10 @@ class Ui_MainWindow(object):
 
         self.firewall_settings.addLayout(self.ip_address_layout)
 
-        self.tableView = QtWidgets.QTableView(self.frame)
+        # will be used to display the ip address white listed
+        self.tableView = QtWidgets.QTableWidget(self.frame)
+
+
 
         self.firewall_settings.addWidget(self.tableView)
 
@@ -134,19 +138,43 @@ class Ui_MainWindow(object):
 
         # will be used to display that a firewall does not exist
         if firewall.firewall_exist():
-            self.add_firewall_rule_button.setStyleSheet("background-color:#00FF00;")
-            self.remove_firewall_rule_button.setStyleSheet("background-color:red;")
-
+            self.ip_address_scope = firewall.firewall_scopes_list().split(",")
             self.enable_firewall_settings_buttons()
         else:
-            self.remove_firewall_rule_button.setStyleSheet("background-color:red;")
-            self.add_firewall_rule_button.setStyleSheet("background-color:red;")
+
             self.disable_firewall_settings_buttons()
+
+
+        self.setup_table()
 
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+
+    def setup_table(self):
+
+        self.tableView.setColumnCount(2)
+
+        header = self.tableView.horizontalHeader()
+        header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+
+        self.tableView.setHorizontalHeaderLabels(["IP Address", "Username"])
+        self.tableView.setRowCount(len(self.ip_address_scope))
+
+        self.update_table()
+
+
+
+
+
+    def update_table(self):
+        self.tableView.setRowCount(len(firewall.firewall_scopes_list().split(",")))
+
+        for index, ip_address in enumerate(firewall.firewall_scopes_list().split(",")):
+            self.tableView.setItem(index, 0, QtWidgets.QTableWidgetItem(ip_address))
+
 
     def firewall_mode(self):
 
@@ -169,7 +197,13 @@ class Ui_MainWindow(object):
         if firewall.valid_ip_address(ip_address):
 
             if not firewall.ip_address_exist_in_scope(ip_address):
+
+
                 firewall.add_white_list(ip_address)
+                self.update_table()
+
+
+
             else:
                 # for debugging
                 print("ip address already exist")
@@ -181,6 +215,7 @@ class Ui_MainWindow(object):
 
             if firewall.ip_address_exist_in_scope(ip_address):
                 firewall.remove_white_list(ip_address)
+                self.update_table()
             else:
                 # for debugging
                 print("ip address doesn't exist")
@@ -220,11 +255,7 @@ class Ui_MainWindow(object):
         added_firewall_rule = firewall.add_firewall_rule(self.file_path_directory.text())
 
         if added_firewall_rule:
-            self.add_firewall_rule_button.setStyleSheet("background-color:#00FF00;")
             self.enable_firewall_settings_buttons()
-
-        else:
-            self.add_firewall_rule_button.setStyleSheet("background-color:red;")
 
     def remove_firewall(self):
 
