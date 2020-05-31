@@ -65,12 +65,16 @@ def add_white_list(ip_address):
         Popen(netsh_allow_remote_address)
 
 
+def ip_address_exist_in_scope(ip_address):
+    current_ip_scope = firewall_scopes_list()
+
+    return ip_address in current_ip_scope
+
 def remove_white_list(ip_address):
     previous_scope = firewall_scopes_list()
 
-    ip_address_exist_in_scope = ip_address in previous_scope
 
-    if ip_address_exist_in_scope:
+    if ip_address_exist_in_scope(ip_address):
         new_ip_address_scope = ','.join([ip for ip in previous_scope.split(",") if ip_address not in ip])
 
         netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip={new_ip_address_scope} '''

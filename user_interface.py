@@ -10,7 +10,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from pathlib import Path
 import json, os
-import firewall_online
+import firewall
 
 
 class Ui_MainWindow(object):
@@ -102,7 +102,7 @@ class Ui_MainWindow(object):
         add_remove_firewall_layout.addWidget(self.remove_firewall_rule_button)
 
         # will be used to display that a firewall does not exist
-        if firewall_online.firewall_exist():
+        if firewall.firewall_exist():
             self.add_firewall_rule_button.setStyleSheet("background-color:#00FF00;")
             self.remove_firewall_rule_button.setStyleSheet("background-color:red;")
 
@@ -145,7 +145,14 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def add_ip_address(self):
-        pass
+        ip_address = self.ip_address_edit_text.text()
+
+        if firewall.valid_ip_address(ip_address) and firewall.ip_address_exist_in_scope(ip_address):
+
+
+        else:
+            print("invalid ip address")
+
 
     def remove_ip_address(self):
         pass
@@ -183,7 +190,7 @@ class Ui_MainWindow(object):
 
     def add_firewall(self):
 
-        added_firewall_rule = firewall_online.add_firewall_rule(self.file_path_directory.text())
+        added_firewall_rule = firewall.add_firewall_rule(self.file_path_directory.text())
 
         if added_firewall_rule:
             self.add_firewall_rule_button.setStyleSheet("background-color:#00FF00;")
@@ -194,7 +201,7 @@ class Ui_MainWindow(object):
 
     def remove_firewall(self):
 
-        remove_firewall_rule = firewall_online.delete_firewall_rule()
+        remove_firewall_rule = firewall.delete_firewall_rule()
         print(remove_firewall_rule)
         if remove_firewall_rule:
             self.remove_firewall_rule_button.setDisabled(True)
