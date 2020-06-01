@@ -164,11 +164,12 @@ class Ui_MainWindow(object):
 
         self.ip_address_scope = firewall.firewall_scopes_list().split(",")
 
+        self.tableView.setRowCount(len(self.ip_address_scope))
+
         if self.ip_address_scope[0] == "Any":
             self.tableView.setItem(0, 0, QtWidgets.QTableWidgetItem("Any"))
 
         else:
-            self.tableView.setRowCount(len(self.ip_address_scope))
             for index, ip_address in enumerate(self.ip_address_scope):
                 self.tableView.setItem(index, 0, QtWidgets.QTableWidgetItem(ip_address))
 
@@ -191,13 +192,8 @@ class Ui_MainWindow(object):
         ip_address = self.ip_address_edit_text.text().strip()
 
         if firewall.valid_ip_address(ip_address):
-
-            # if not firewall.ip_address_exist_in_scope(ip_address):
-
             firewall.add_white_list(ip_address)
             self.update_table()
-
-
 
         else:
              # for debugging
@@ -207,9 +203,8 @@ class Ui_MainWindow(object):
         ip_address = self.ip_address_edit_text.text()
 
         if firewall.valid_ip_address(ip_address):
-
             if firewall.ip_address_exist_in_scope(ip_address):
-                #firewall.remove_white_list(ip_address)
+                firewall.remove_white_list(ip_address)
                 self.update_table()
             else:
                 # for debugging
