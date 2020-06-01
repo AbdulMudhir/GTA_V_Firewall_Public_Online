@@ -73,8 +73,7 @@ def new_ip_address_scope(previous_scope, ip_address):
 
     split_ip_address = ip_address.split('.')
     # splitting the ip address so we can get a +1 and -1 range of the current ip address
-    first_ip = f"{'.'.join(split_ip_address[0:3])}.{int(split_ip_address[-1]) - 1}"
-    second_ip = f"{'.'.join(split_ip_address[0:3])}.{int(split_ip_address[-1]) + 1}"
+    first_ip, second_ip = ip_address_above_and_below(ip_address)
 
     # joining first and second ip to the scope list rather than having to loop twice
     new_unsorted_scope = f"{split_scope}-{first_ip}-{second_ip}".split("-")
@@ -89,7 +88,7 @@ def new_ip_address_scope(previous_scope, ip_address):
 
 def add_white_list(ip_address):
     previous_scope = firewall_scopes_list()
-
+    # will be used to create a new scope if none exist
     zero_IP = "0.0.0.0"
     last_IP = "255.255.255.255"
 
@@ -102,15 +101,15 @@ def add_white_list(ip_address):
 
     else:
 
-        ip_address_above_and_below(ip_address)
+        first_ip, second_ip = ip_address_above_and_below(ip_address)
 
-        # first_range = f"{zero_IP}-{other_remaining}.{int(last_octet) - 1}"
-        # second_range = f"{other_remaining}.{int(last_octet) + 1}-{last_IP}"
-        #
-        # new_scope = f'{previous_scope},{first_range},{second_range}'
-        #
-        # netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" new remoteip={ip_address} '''
-        # Popen(netsh_allow_remote_address)
+        first_range = f"{zero_IP}-{first_ip}"
+        second_range = f"{second_ip}-{last_IP}"
+
+        new_scope = f'{first_range},{second_range}'
+
+        netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" new remoteip={new_scope} '''
+        Popen(netsh_allow_remote_address)
 
 
 def ip_address_exist_in_scope(ip_address):
