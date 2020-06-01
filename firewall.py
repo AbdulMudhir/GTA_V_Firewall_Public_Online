@@ -112,9 +112,27 @@ def add_white_list(ip_address):
         Popen(netsh_allow_remote_address)
 
 
+def ip_address_without_scope():
+    ip_address_in_firewall = re.split('[,-]', firewall_scopes_list())
+    ip_address_in_scope = []
+
+    for index, ip_address in enumerate(ip_address_in_firewall, start=1):
+
+        if index % 2 == 0 and index != len(ip_address_in_firewall):
+            ip_address = ip_address.split('.')
+            last_octet = ip_address[-1]
+            original_ip = f"{'.'.join(ip_address[0:3])}.{int(last_octet) + 1}"
+            ip_address_in_scope.append(original_ip)
+
+    return ip_address_in_scope
+
+
 def ip_address_exist_in_scope(ip_address):
-    current_ip_scope = firewall_scopes_list()
-    return ip_address in current_ip_scope
+    current_ip_scope = ip_address_without_scope()
+    for ip in current_ip_scope:
+        if ip == ip_address:
+            return True
+    return False
 
 
 def remove_white_list(ip_address):

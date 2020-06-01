@@ -209,7 +209,7 @@ class Ui_MainWindow(object):
         if firewall.valid_ip_address(ip_address):
 
             if firewall.ip_address_exist_in_scope(ip_address):
-                firewall.remove_white_list(ip_address)
+                #firewall.remove_white_list(ip_address)
                 self.update_table()
             else:
                 # for debugging
