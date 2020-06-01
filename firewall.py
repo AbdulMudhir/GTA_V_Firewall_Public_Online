@@ -49,10 +49,11 @@ def add_firewall_rule(program_path):
 
     return "Ok." == output_message.decode().strip()
 
+
 def split_ip_addresss(ip_address):
     # will be split to compare the different IP octet
     split_ip = ip_address.split(".")
-    return (int(split_ip[0]), int(split_ip[1]), int(split_ip[2]), int(split_ip[3]))
+    return int(split_ip[0]), int(split_ip[1]), int(split_ip[2]), int(split_ip[3])
 
 
 def ip_address_scope_addition(scope, ip_address):
@@ -67,27 +68,12 @@ def ip_address_scope_addition(scope, ip_address):
     # joining first and second ip to the scope list rather than having to loop twice
     new_unsorted_scope = f"{split_scope}-{first_ip}-{second_ip}".split("-")
 
-    new_sorted_scope = sorted(new_unsorted_scope,  key= split_ip_addresss)
+    new_sorted_scope = sorted(new_unsorted_scope, key=split_ip_addresss)
+    # looping through the sorted list and combine two ip address to get the range we need
+    new_scope = [f"{new_sorted_scope[index - 1]}-{ip}" for index, ip in enumerate(new_sorted_scope) if
+                 (index + 1) % 2 == 0]
 
-    #
-    # for index, i in enumerate(split_scope):
-    #     ip_address_split = i.split("-")
-    #
-    #     print(ip_address_split)
-    #
-    #     first_octet = int(ip_address_split[0].split('.')[0])
-    #     second_octet = int(ip_address_split[1].split('.')[0])
-    #
-    #
-    #
-    #     if first_octet_ip > first_octet:
-    #
-    #         if first_octet_ip > second_octet:
-    #             print(index, i)
-    #             # get the next ip address_ index
-    #
-
-    # check next index in list
+    return ','.join(new_scope)
 
 
 def add_white_list(ip_address):
