@@ -259,7 +259,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591035119064</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="fit new address to the scope for blocking ip address">
+      <created>1591038171223</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1591038171223</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -280,41 +287,42 @@
     <MESSAGE value="adding ip address to the table" />
     <MESSAGE value="changing sorting for ip address" />
     <MESSAGE value="sort the ip addresses from smallest to biggest" />
-    <option name="LAST_COMMIT_MESSAGE" value="sort the ip addresses from smallest to biggest" />
+    <MESSAGE value="fit new address to the scope for blocking ip address" />
+    <option name="LAST_COMMIT_MESSAGE" value="fit new address to the scope for blocking ip address" />
   </component>
   <component name="WindowStateProjectService">
     <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590919418041">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590919418041" />
-    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591035117697">
+    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591038170464">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591035117697" />
+    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591038170464" />
     <state x="3080" y="51" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881570913" />
     <state x="1060" y="456" key="FileChooserDialogImpl" timestamp="1590887006365">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1060" y="456" key="FileChooserDialogImpl/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590887006365" />
-    <state width="2287" height="144" key="GridCell.Tab.0.bottom" timestamp="1591037968331">
+    <state width="2287" height="144" key="GridCell.Tab.0.bottom" timestamp="1591040202559">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2287" height="144" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591037968331" />
+    <state width="2287" height="144" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591040202559" />
     <state width="1419" height="59" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590961159728" />
-    <state width="2287" height="144" key="GridCell.Tab.0.center" timestamp="1591037968329">
+    <state width="2287" height="144" key="GridCell.Tab.0.center" timestamp="1591040202558">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2287" height="144" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591037968329" />
+    <state width="2287" height="144" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591040202558" />
     <state width="1419" height="59" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590961159728" />
-    <state width="2287" height="144" key="GridCell.Tab.0.left" timestamp="1591037968328">
+    <state width="2287" height="144" key="GridCell.Tab.0.left" timestamp="1591040202558">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2287" height="144" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591037968328" />
+    <state width="2287" height="144" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591040202558" />
     <state width="1419" height="59" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590961159727" />
-    <state width="2287" height="144" key="GridCell.Tab.0.right" timestamp="1591037968330">
+    <state width="2287" height="144" key="GridCell.Tab.0.right" timestamp="1591040202559">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2287" height="144" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591037968330" />
+    <state width="2287" height="144" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591040202559" />
     <state width="1419" height="59" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590961159728" />
     <state width="2287" height="480" key="GridCell.Tab.1.bottom" timestamp="1591034037643">
       <screen x="0" y="0" width="2560" height="1400" />
@@ -336,10 +344,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="781" y="343" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590879318931" />
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591035130300">
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591038172285">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591035130300" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591038172285" />
     <state x="3051" y="267" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881572496" />
   </component>
 </project>

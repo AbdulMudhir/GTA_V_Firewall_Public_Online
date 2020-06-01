@@ -56,9 +56,20 @@ def split_ip_addresss(ip_address):
     return int(split_ip[0]), int(split_ip[1]), int(split_ip[2]), int(split_ip[3])
 
 
-def ip_address_scope_addition(scope, ip_address):
+def ip_address_above_and_below(ip_address):
+    # split ip address to get different octet
+    ip_address = ip_address.split('.')
+    last_octet = ip_address[-1]
+    other_remaining = '.'.join(ip_address[0:3])
+    first_ip = f"{other_remaining}.{int(last_octet) - 1}"
+    second_ip = f"{other_remaining}.{int(last_octet) + 1}"
+
+    return first_ip, second_ip
+
+
+def new_ip_address_scope(previous_scope, ip_address):
     # will be used to sort out ip address from smallest to biggest
-    split_scope = '-'.join(scope.split(","))
+    split_scope = '-'.join(previous_scope.split(","))
 
     split_ip_address = ip_address.split('.')
     # splitting the ip address so we can get a +1 and -1 range of the current ip address
@@ -84,26 +95,22 @@ def add_white_list(ip_address):
 
     if previous_scope != "Any":
 
-        ip_address_scope_addition(previous_scope, ip_address)
+        new_scope = new_ip_address_scope(previous_scope, ip_address)
+        netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}"  new remoteip={new_scope} '''
+        Popen(netsh_allow_remote_address)
 
-        # print(previous_scope)
 
-        # ip_address = ip_address.split('.')
-        # last_octet = ip_address[-1]
-        # other_remaining = ".".join(ip_address[0:3])
-        #
+    else:
+
+        ip_address_above_and_below(ip_address)
+
         # first_range = f"{zero_IP}-{other_remaining}.{int(last_octet) - 1}"
         # second_range = f"{other_remaining}.{int(last_octet) + 1}-{last_IP}"
         #
         # new_scope = f'{previous_scope},{first_range},{second_range}'
-
-        # netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}"  new remoteip={new_scope} '''
-        # Popen(netsh_allow_remote_address)
         #
-
-    else:
-        netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" new remoteip={ip_address} '''
-        Popen(netsh_allow_remote_address)
+        # netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" new remoteip={ip_address} '''
+        # Popen(netsh_allow_remote_address)
 
 
 def ip_address_exist_in_scope(ip_address):
