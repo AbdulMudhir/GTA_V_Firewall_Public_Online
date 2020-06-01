@@ -49,16 +49,25 @@ def add_firewall_rule(program_path):
 
     return "Ok." == output_message.decode().strip()
 
+def split_ip_addresss(ip_address):
+    # will be split to compare the different IP octet
+    split_ip = ip_address.split(".")
+    return (int(split_ip[0]), int(split_ip[1]), int(split_ip[2]), int(split_ip[3]))
+
 
 def ip_address_scope_addition(scope, ip_address):
-    split_scope = scope.split(",")
+    # will be used to sort out ip address from smallest to biggest
+    split_scope = '-'.join(scope.split(","))
 
     split_ip_address = ip_address.split('.')
     # splitting the ip address so we can get a +1 and -1 range of the current ip address
-    first_ip = f"{'.'.join(split_ip_address[0:3])}.{int(split_ip_address[-1])-1}"
+    first_ip = f"{'.'.join(split_ip_address[0:3])}.{int(split_ip_address[-1]) - 1}"
     second_ip = f"{'.'.join(split_ip_address[0:3])}.{int(split_ip_address[-1]) + 1}"
 
-    print(first_ip, second_ip)
+    # joining first and second ip to the scope list rather than having to loop twice
+    new_unsorted_scope = f"{split_scope}-{first_ip}-{second_ip}".split("-")
+
+    new_sorted_scope = sorted(new_unsorted_scope,  key= split_ip_addresss)
 
     #
     # for index, i in enumerate(split_scope):
@@ -78,14 +87,7 @@ def ip_address_scope_addition(scope, ip_address):
     #             # get the next ip address_ index
     #
 
-
-
-            # check next index in list
-
-
-
-
-
+    # check next index in list
 
 
 def add_white_list(ip_address):
