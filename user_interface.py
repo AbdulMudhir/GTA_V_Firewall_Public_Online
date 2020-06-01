@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
 
         self.settings_file = {}
         self.firewall_active = False
-        self.ip_address_scope =""
+        self.ip_address_scope = ""
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -86,6 +86,8 @@ class Ui_MainWindow(object):
         self.ip_address_layout.addLayout(self.ip_address_options)
         self.ip_address_edit_text = QtWidgets.QLineEdit(self.frame)
 
+        self.ip_address_edit_text.setText("192.168.1.1")
+
         self.ip_address_layout.addWidget(self.ip_address_edit_text)
         self.scan_lobby_ip = QtWidgets.QPushButton(self.frame)
 
@@ -113,8 +115,6 @@ class Ui_MainWindow(object):
         # will be used to display the ip address white listed
         self.tableView = QtWidgets.QTableWidget(self.frame)
 
-
-
         self.firewall_settings.addWidget(self.tableView)
 
         self.gridLayout_3.addLayout(self.firewall_settings, 0, 0, 1, 1)
@@ -136,45 +136,41 @@ class Ui_MainWindow(object):
         self.buttons.addWidget(self.resource_monitor_button)
         self.gridLayout_2.addLayout(self.buttons, 2, 0, 1, 1)
 
-        # will be used to display that a firewall does not exist
-        if firewall.firewall_exist():
-            self.ip_address_scope = firewall.firewall_scopes_list().split(",")
-            self.enable_firewall_settings_buttons()
-        else:
-
-            self.disable_firewall_settings_buttons()
-
-
-        self.setup_table()
-
-        MainWindow.setCentralWidget(self.centralwidget)
-
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-
-    def setup_table(self):
-
         self.tableView.setColumnCount(2)
 
         header = self.tableView.horizontalHeader()
         header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
 
         self.tableView.setHorizontalHeaderLabels(["IP Address", "Username"])
-        self.tableView.setRowCount(len(self.ip_address_scope))
 
-        self.update_table()
+        # will be used to display that a firewall does not exist
+        if firewall.firewall_exist():
+            self.ip_address_scope = firewall.firewall_scopes_list().split(",")
+            self.enable_firewall_settings_buttons()
+            self.tableView.setRowCount(len(self.ip_address_scope))
+            self.update_table()
+
+        else:
+
+            self.disable_firewall_settings_buttons()
 
 
+        MainWindow.setCentralWidget(self.centralwidget)
 
-
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def update_table(self):
-        self.tableView.setRowCount(len(firewall.firewall_scopes_list().split(",")))
 
-        for index, ip_address in enumerate(firewall.firewall_scopes_list().split(",")):
-            self.tableView.setItem(index, 0, QtWidgets.QTableWidgetItem(ip_address))
+        self.ip_address_scope = firewall.firewall_scopes_list().split(",")
 
+        if self.ip_address_scope[0] == "Any":
+            self.tableView.setItem(0, 0, QtWidgets.QTableWidgetItem("Any"))
+
+        else:
+            self.tableView.setRowCount(len(self.ip_address_scope))
+            for index, ip_address in enumerate(self.ip_address_scope):
+                self.tableView.setItem(index, 0, QtWidgets.QTableWidgetItem(ip_address))
 
     def firewall_mode(self):
 
@@ -192,21 +188,20 @@ class Ui_MainWindow(object):
 
     def add_ip_address(self):
 
-        ip_address = self.ip_address_edit_text.text()
+        ip_address = self.ip_address_edit_text.text().strip()
 
         if firewall.valid_ip_address(ip_address):
 
-            if not firewall.ip_address_exist_in_scope(ip_address):
+            # if not firewall.ip_address_exist_in_scope(ip_address):
+
+            firewall.add_white_list(ip_address)
+            self.update_table()
 
 
-                firewall.add_white_list(ip_address)
-                self.update_table()
 
-
-
-            else:
-                # for debugging
-                print("ip address already exist")
+        else:
+             # for debugging
+             print("ip address already exist")
 
     def remove_ip_address(self):
         ip_address = self.ip_address_edit_text.text()
@@ -288,10 +283,6 @@ class Ui_MainWindow(object):
             self.firewall_button.setText("Firewall Mode (OFF)")
             self.firewall_button.setStyleSheet("background-color:red;")
 
-
-
-
-
     def create_setting_file(self):
 
         current_cwd = os.getcwd()
@@ -303,7 +294,13 @@ class Ui_MainWindow(object):
 
         except FileNotFoundError:
 
-            json_settings = {"GTA_FILE_PATH": ""}
+            json_settings = {"GTA_FILE_PATH": "",
+                             "IP_Address": {
+                             }
+
+                             }
+
+            self.settings_file = json_settings
             update_setting_file = json.dump(json_settings, open("settings.json", "w"))
 
 
