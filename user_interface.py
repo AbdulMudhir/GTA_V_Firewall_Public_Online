@@ -162,11 +162,12 @@ class Ui_MainWindow(object):
 
     def update_table(self):
 
-        self.ip_address_scope = firewall.firewall_scopes_list().split(",")
+        self.ip_address_scope = firewall.ip_address_without_scope()
 
         self.tableView.setRowCount(len(self.ip_address_scope))
 
-        if self.ip_address_scope[0] == "Any":
+        if not self.ip_address_scope:
+            self.tableView.setRowCount(1)
             self.tableView.setItem(0, 0, QtWidgets.QTableWidgetItem("Any"))
 
         else:
@@ -192,8 +193,10 @@ class Ui_MainWindow(object):
         ip_address = self.ip_address_edit_text.text().strip()
 
         if firewall.valid_ip_address(ip_address):
-            firewall.add_white_list(ip_address)
-            self.update_table()
+
+            if not firewall.ip_address_exist_in_scope(ip_address):
+                firewall.add_white_list(ip_address)
+                self.update_table()
 
         else:
              # for debugging
@@ -246,12 +249,16 @@ class Ui_MainWindow(object):
 
         if added_firewall_rule:
             self.enable_firewall_settings_buttons()
+            self.update_table()
 
     def remove_firewall(self):
 
         remove_firewall_rule = firewall.delete_firewall_rule()
         if remove_firewall_rule:
             self.disable_firewall_settings_buttons()
+            self.tableView.setRowCount(0)
+            self.ip_address_edit_text.setText("")
+
 
     def disable_firewall_settings_buttons(self):
         self.add_ip_address_button.setDisabled(True)

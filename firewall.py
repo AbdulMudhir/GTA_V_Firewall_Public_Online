@@ -113,7 +113,13 @@ def add_white_list(ip_address):
 
 
 def ip_address_without_scope():
-    ip_address_in_firewall = re.split('[,-]', firewall_scopes_list())
+
+    ip_scope = firewall_scopes_list()
+
+    ip_address_in_firewall = re.split('[,-]', ip_scope)
+
+
+
     ip_address_in_scope = []
 
     for index, ip_address in enumerate(ip_address_in_firewall, start=1):
