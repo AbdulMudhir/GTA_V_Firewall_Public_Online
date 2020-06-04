@@ -8,6 +8,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox, QMainWindow
+from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from pathlib import Path
 import json, os
 import firewall
@@ -86,8 +88,6 @@ class Ui_MainWindow(object):
         self.ip_address_layout.addLayout(self.ip_address_options)
         self.ip_address_edit_text = QtWidgets.QLineEdit(self.frame)
 
-        self.ip_address_edit_text.setText("192.168.1.1")
-
         self.ip_address_layout.addWidget(self.ip_address_edit_text)
         self.scan_lobby_ip = QtWidgets.QPushButton(self.frame)
 
@@ -136,12 +136,12 @@ class Ui_MainWindow(object):
         self.buttons.addWidget(self.resource_monitor_button)
         self.gridLayout_2.addLayout(self.buttons, 2, 0, 1, 1)
 
-        self.tableView.setColumnCount(2)
+        self.tableView.setColumnCount(1)
 
         header = self.tableView.horizontalHeader()
         header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
 
-        self.tableView.setHorizontalHeaderLabels(["IP Address", "Username"])
+        self.tableView.setHorizontalHeaderLabels(["IP Address"])
 
         # will be used to display that a firewall does not exist
         if firewall.firewall_exist():
@@ -153,7 +153,6 @@ class Ui_MainWindow(object):
         else:
 
             self.disable_firewall_settings_buttons()
-
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -199,19 +198,37 @@ class Ui_MainWindow(object):
                 self.update_table()
 
         else:
-             # for debugging
-             print("ip address already exist")
+            # for debugging
+            print("ip address already exist")
 
     def remove_ip_address(self):
-        ip_address = self.ip_address_edit_text.text()
+        # ip_address = self.ip_address_edit_text.text()
+        selected_ip_address = self.tableView.selectedItems()
 
-        if firewall.valid_ip_address(ip_address):
-            if firewall.ip_address_exist_in_scope(ip_address):
-                firewall.remove_white_list(ip_address)
-                self.update_table()
+        if selected_ip_address:
+
+            if len(selected_ip_address) > 1:
+                message_box = QtWidgets.QMessageBox()
+                message_box.setWindowTitle("Confirm")
+                message_box.setText("Are you sure you want to delete?")
+                message_box.setIcon(QtWidgets.QMessageBox.Critical)
+                message_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+                message_box.buttonClicked.connect(self.messageBoxConfirmationRemoval)
+                message_box.exec_()
+
             else:
-                # for debugging
-                print("ip address doesn't exist")
+                firewall.remove_white_list(selected_ip_address[0].text())
+                self.update_table()
+
+        else:
+            pass
+
+    def messageBoxConfirmationRemoval(self, button):
+        if button.text() == "&Yes":
+            worker_thread = MyThread(self.tableView, self.update_table)
+
+            worker_thread.start()
+
 
     def get_file_path(self):
 
@@ -259,7 +276,6 @@ class Ui_MainWindow(object):
             self.tableView.setRowCount(0)
             self.ip_address_edit_text.setText("")
 
-
     def disable_firewall_settings_buttons(self):
         self.add_ip_address_button.setDisabled(True)
         self.remove_ip_address_button.setDisabled(True)
@@ -304,6 +320,25 @@ class Ui_MainWindow(object):
 
             self.settings_file = json_settings
             update_setting_file = json.dump(json_settings, open("settings.json", "w"))
+
+
+class MyThread(QThread):
+
+    def __init__(self, tableWidget,update_table, parent=None):
+        super(MyThread, self).__init__(parent)
+        self.tableView = tableWidget
+        self.update_table = update_table
+
+
+    def __del__(self):
+        self.wait()
+
+    def run(self):
+        # loop through the ip address selected
+        for ip_address in self.tableView.selectedItems():
+            firewall.remove_white_list(ip_address.text())
+
+        self.update_table()
 
 
 if __name__ == "__main__":
