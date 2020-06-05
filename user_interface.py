@@ -15,10 +15,11 @@ import json, os
 import firewall
 
 
-class Ui_MainWindow(object):
+class Ui_MainWindow(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, parent = None):
 
+        super(Ui_MainWindow, self).__init__(parent)
         self.settings_file = {}
         self.firewall_active = False
         self.ip_address_scope = ""
@@ -98,11 +99,9 @@ class Ui_MainWindow(object):
         add_remove_firewall_layout.setSpacing(0)
 
         self.add_firewall_rule_button = QtWidgets.QPushButton()
-        self.add_firewall_rule_button.setText("Add Firewall Rule")
         add_remove_firewall_layout.addWidget(self.add_firewall_rule_button)
 
         self.remove_firewall_rule_button = QtWidgets.QPushButton()
-        self.remove_firewall_rule_button.setText("Remove Firewall Rule")
         add_remove_firewall_layout.addWidget(self.remove_firewall_rule_button)
 
         self.add_firewall_rule_button.clicked.connect(self.add_firewall)
@@ -121,7 +120,6 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.frame, 1, 0, 1, 1)
         self.buttons = QtWidgets.QHBoxLayout()
         self.firewall_button = QtWidgets.QPushButton(self.centralwidget)
-        self.firewall_button.setText("Firewall Mode (OFF)")
         self.firewall_button.clicked.connect(self.firewall_mode)
         self.firewall_button.setStyleSheet("background-color:red;")
 
@@ -154,10 +152,25 @@ class Ui_MainWindow(object):
 
             self.disable_firewall_settings_buttons()
 
-        MainWindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.setTextForButtons()
+
+    def setTextForButtons(self):
+        self.firewall_button.setText("Firewall Mode (OFF)")
+        self.add_firewall_rule_button.setText("Add Firewall Rule")
+        self.remove_firewall_rule_button.setText("Remove Firewall Rule")
+        self.setWindowTitle("GTA V TOOL KIT")
+        self.label.setText("Firewall Settings")
+        self.file_path_directory.setPlaceholderText("File Path")
+        self.file_path.setText("GTA V Path")
+        self.add_ip_address_button.setText("Add IP Address (optional)")
+        self.remove_ip_address_button.setText("Remove IP Address")
+        self.ip_address_edit_text.setPlaceholderText("IP Address")
+        self.scan_lobby_ip.setText("Scan Lobby IP Address")
+        self.resource_monitor_button.setText("Resource Monitor")
+
 
     def update_table(self):
 
@@ -191,11 +204,12 @@ class Ui_MainWindow(object):
 
         ip_address = self.ip_address_edit_text.text().strip()
 
+
+
         if firewall.valid_ip_address(ip_address):
 
-            if not firewall.ip_address_exist_in_scope(ip_address):
-                firewall.add_white_list(ip_address)
-                self.update_table()
+            whitelist = AddIPThread(ip_address, self.update_table)
+            whitelist.start()
 
         else:
             # for debugging
@@ -208,7 +222,7 @@ class Ui_MainWindow(object):
         if selected_ip_address:
 
             if len(selected_ip_address) > 1:
-                message_box = QtWidgets.QMessageBox()
+                message_box = QtWidgets.QMessageBox(self)
                 message_box.setWindowTitle("Confirm")
                 message_box.setText("Are you sure you want to delete?")
                 message_box.setIcon(QtWidgets.QMessageBox.Critical)
@@ -225,7 +239,7 @@ class Ui_MainWindow(object):
 
     def messageBoxConfirmationRemoval(self, button):
         if button.text() == "&Yes":
-            worker_thread = MyThread(self.tableView, self.update_table)
+            worker_thread = RemoveIPThread(self.tableView, self.update_table)
 
             worker_thread.start()
 
@@ -248,17 +262,7 @@ class Ui_MainWindow(object):
 
             json.dump(self.settings_file, open("settings.json", "w"))
 
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label.setText(_translate("MainWindow", "Firewall Settings"))
-        self.file_path_directory.setPlaceholderText(_translate("MainWindow", "File Path"))
-        self.file_path.setText(_translate("MainWindow", "GTA V Path"))
-        self.add_ip_address_button.setText(_translate("MainWindow", "Add IP Address (optional)"))
-        self.remove_ip_address_button.setText(_translate("MainWindow", "Remove IP Address"))
-        self.ip_address_edit_text.setPlaceholderText(_translate("MainWindow", "IP Address", "IP Address"))
-        self.scan_lobby_ip.setText(_translate("MainWindow", "Scan Lobby IP Address"))
-        self.resource_monitor_button.setText(_translate("MainWindow", "Resource Monitor"))
+
 
     def add_firewall(self):
 
@@ -322,10 +326,10 @@ class Ui_MainWindow(object):
             update_setting_file = json.dump(json_settings, open("settings.json", "w"))
 
 
-class MyThread(QThread):
+class RemoveIPThread(QThread):
 
     def __init__(self, tableWidget,update_table, parent=None):
-        super(MyThread, self).__init__(parent)
+        super(RemoveIPThread, self).__init__(parent)
         self.tableView = tableWidget
         self.update_table = update_table
 
@@ -339,6 +343,23 @@ class MyThread(QThread):
             firewall.remove_white_list(ip_address.text())
 
         self.update_table()
+
+class AddIPThread(QThread):
+
+    def __init__(self, ip_address,update_table, parent=None):
+        super(AddIPThread, self).__init__(parent)
+        self.ip_address = ip_address
+        self.update_table = update_table
+
+
+    def __del__(self):
+        self.wait()
+
+    def run(self):
+
+        if not firewall.ip_address_exist_in_scope(self.ip_address):
+            firewall.add_white_list(self.ip_address)
+            self.update_table()
 
 
 if __name__ == "__main__":
