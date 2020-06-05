@@ -31,6 +31,21 @@ def firewall_scopes_list():
 
         return remote_ip_address
 
+def firewall_active():
+    netsh_firewall_exist = f'''netsh advfirewall firewall show rule name="{firewall_rule_name}" dir=in '''
+    in_command = Popen(netsh_firewall_exist, stdout=PIPE, stderr=PIPE)
+
+
+    output_message, _ = in_command.communicate()
+
+    output_message_decoded = output_message.decode().strip()
+
+    status = output_message_decoded.split()[8]
+    return status != "No"
+
+
+
+
 
 def valid_ip_address(ip_address):
     ip_address_pattern = "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/?\d?\d?"
