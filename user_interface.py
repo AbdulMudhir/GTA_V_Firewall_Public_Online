@@ -8,7 +8,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMessageBox, QMainWindow
+from PyQt5.QtWidgets import QMessageBox, QMainWindow, QSystemTrayIcon, QMenu
+from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from pathlib import Path
 import json, os
@@ -17,19 +18,25 @@ import firewall
 
 class Ui_MainWindow(QMainWindow):
 
-    def __init__(self, parent = None):
+    def __init__(self, parent=None):
 
         super(Ui_MainWindow, self).__init__(parent)
+        self.tray_icon = QSystemTrayIcon(self)
         self.settings_file = {}
         self.firewall_active = False
         self.ip_address_scope = ""
+        self.gta_icon = QIcon("gta_icon.png")
+        self.setupUi()
+        self.setupTrayIcon()
 
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(400, 800)
-        MainWindow.setMaximumSize(QtCore.QSize(400, 600))
+    def setupUi(self):
+
+        self.resize(400, 800)
+        self.setMaximumSize(QtCore.QSize(400, 600))
+        self.setWindowIcon(self.gta_icon)
+
         # main screen
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget = QtWidgets.QWidget(self)
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
 
         # setting the base frame as the main window
@@ -141,6 +148,13 @@ class Ui_MainWindow(QMainWindow):
 
         self.tableView.setHorizontalHeaderLabels(["IP Address"])
 
+
+
+
+
+
+
+
         # will be used to display that a firewall does not exist
         if firewall.firewall_exist():
             self.ip_address_scope = firewall.firewall_scopes_list().split(",")
@@ -152,16 +166,41 @@ class Ui_MainWindow(QMainWindow):
 
             self.disable_firewall_settings_buttons()
 
-
-
-        MainWindow.setCentralWidget(self.centralwidget)
+        self.setCentralWidget(self.centralwidget)
         self.setTextForButtons()
+
+    def changeEvent(self, event):
+        if event.type() == QtCore.QEvent.WindowStateChange:
+            if self.windowState() & QtCore.Qt.WindowMinimized:
+                event.ignore()
+                self.hide()
+                self.tray_icon.showMessage("GTA V TOOLKIT", "Application has been minimised to tray")
+
+
+    def setupTrayIcon(self):
+        self.tray_icon.setIcon(self.gta_icon)
+
+        tray_menu = QMenu()
+        exit_Application = tray_menu.addAction("Exit")
+        exit_Application.triggered.connect(self.close)
+        exit_Application.setIcon(QIcon("exit"))
+
+        show_application = tray_menu.addAction("Show")
+        show_application.triggered.connect(self.hide)
+        show_application.setIcon(QIcon("show"))
+
+        self.tray_icon.show()
+
+        self.tray_icon.setContextMenu(tray_menu)
+
+
+
 
     def setTextForButtons(self):
         self.firewall_button.setText("Firewall Mode (OFF)")
         self.add_firewall_rule_button.setText("Add Firewall Rule")
         self.remove_firewall_rule_button.setText("Remove Firewall Rule")
-        self.setWindowTitle("GTA V TOOL KIT")
+        self.setWindowTitle("GTA V SOLO KIT")
         self.label.setText("Firewall Settings")
         self.file_path_directory.setPlaceholderText("File Path")
         self.file_path.setText("GTA V Path")
@@ -170,7 +209,6 @@ class Ui_MainWindow(QMainWindow):
         self.ip_address_edit_text.setPlaceholderText("IP Address")
         self.scan_lobby_ip.setText("Scan Lobby IP Address")
         self.resource_monitor_button.setText("Resource Monitor")
-
 
     def update_table(self):
 
@@ -203,8 +241,6 @@ class Ui_MainWindow(QMainWindow):
     def add_ip_address(self):
 
         ip_address = self.ip_address_edit_text.text().strip()
-
-
 
         if firewall.valid_ip_address(ip_address):
 
@@ -243,7 +279,6 @@ class Ui_MainWindow(QMainWindow):
 
             worker_thread.start()
 
-
     def get_file_path(self):
 
         gta_file_path = self.settings_file.get("GTA_FILE_PATH")
@@ -261,8 +296,6 @@ class Ui_MainWindow(QMainWindow):
             self.settings_file["GTA_FILE_PATH"] = os.path.realpath(file_path_format)
 
             json.dump(self.settings_file, open("settings.json", "w"))
-
-
 
     def add_firewall(self):
 
@@ -328,11 +361,10 @@ class Ui_MainWindow(QMainWindow):
 
 class RemoveIPThread(QThread):
 
-    def __init__(self, tableWidget,update_table, parent=None):
+    def __init__(self, tableWidget, update_table, parent=None):
         super(RemoveIPThread, self).__init__(parent)
         self.tableView = tableWidget
         self.update_table = update_table
-
 
     def __del__(self):
         self.wait()
@@ -344,19 +376,18 @@ class RemoveIPThread(QThread):
 
         self.update_table()
 
+
 class AddIPThread(QThread):
 
-    def __init__(self, ip_address,update_table, parent=None):
+    def __init__(self, ip_address, update_table, parent=None):
         super(AddIPThread, self).__init__(parent)
         self.ip_address = ip_address
         self.update_table = update_table
-
 
     def __del__(self):
         self.wait()
 
     def run(self):
-
         if not firewall.ip_address_exist_in_scope(self.ip_address):
             firewall.add_white_list(self.ip_address)
             self.update_table()
@@ -366,8 +397,6 @@ if __name__ == "__main__":
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    mainWindow = Ui_MainWindow()
+    mainWindow.show()
     sys.exit(app.exec_())
