@@ -24,6 +24,8 @@ class Ui_MainWindow(QMainWindow):
         self.tray_icon = QSystemTrayIcon(self)
         self.settings_file = {}
         self.firewall_active = False
+        # will  be used for setting hotkeys
+        self.hold_control = False
         self.ip_address_scope = ""
         self.gta_icon = QIcon("gta_icon.png")
         self.setupUi()
@@ -148,13 +150,6 @@ class Ui_MainWindow(QMainWindow):
 
         self.tableView.setHorizontalHeaderLabels(["IP Address"])
 
-
-
-
-
-
-
-
         # will be used to display that a firewall does not exist
         if firewall.firewall_exist():
             self.ip_address_scope = firewall.firewall_scopes_list().split(",")
@@ -169,12 +164,43 @@ class Ui_MainWindow(QMainWindow):
         self.setCentralWidget(self.centralwidget)
         self.setTextForButtons()
 
+    # check events from application
     def changeEvent(self, event):
+        # check for events tht causes windows state to change
         if event.type() == QtCore.QEvent.WindowStateChange:
+            # check if it has been minimised
             if self.windowState() & QtCore.Qt.WindowMinimized:
+                # ignore the event
                 event.ignore()
+                # create new event
                 self.hide()
-                self.tray_icon.showMessage("GTA V TOOLKIT", "Application has been minimised to tray")
+                self.tray_icon.showMessage("GTA V TOOLKIT", "Application has been minimised to tray",
+                                           QSystemTrayIcon.NoIcon, 2000)
+    # will be used to create shortcut key
+    def keyPressEvent(self, event):
+
+        if event.key() == Qt.Key_Control:
+            print("control pressed")
+            self.hold_control = True
+
+        elif self.hold_control and not event.isAutoRepeat() and event.key() == Qt.Key_F1:
+            print("user held control and f1")
+
+        elif self.hold_control and not event.isAutoRepeat() and event.key() == Qt.Key_F2:
+            print("user held control and f2")
+
+        elif self.hold_control and not event.isAutoRepeat() and event.key() == Qt.Key_F3:
+            print("user held control and f2")
+
+
+
+    def keyReleaseEvent(self, event):
+
+        if event.key() == Qt.Key_Control:
+            print("control released")
+            self.hold_control = False
+
+
 
 
     def setupTrayIcon(self):
@@ -186,15 +212,12 @@ class Ui_MainWindow(QMainWindow):
         exit_Application.setIcon(QIcon("exit"))
 
         show_application = tray_menu.addAction("Show")
-        show_application.triggered.connect(self.hide)
+        show_application.triggered.connect(self.show)
         show_application.setIcon(QIcon("show"))
 
         self.tray_icon.show()
 
         self.tray_icon.setContextMenu(tray_menu)
-
-
-
 
     def setTextForButtons(self):
         self.firewall_button.setText("Firewall Mode (OFF)")
