@@ -25,7 +25,7 @@ class Ui_MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
 
-        #  will be used to set up hotkeys to turn on and off firewall
+        #  will be used to set up hot keys to turn on and off firewall
         changeFirewallStatus = GlobalHotKeys({'<ctrl>+<f1>': self.turnOnFirewall,
                                               '<ctrl>+<f2>': self.turnOffFirewall
                                       })
@@ -47,11 +47,6 @@ class Ui_MainWindow(QMainWindow):
         self.firewall_status()
         self.create_setting_file()
         self.setupTrayIcon()
-    def test(self):
-        print("hello")
-
-    def test2(self):
-        print("i released")
 
     def setupUi(self):
 
