@@ -15,17 +15,31 @@ from pathlib import Path
 import json, os
 import firewall
 
+from pynput.keyboard import Key, Listener, KeyCode, HotKey, GlobalHotKeys
+
 
 class Ui_MainWindow(QMainWindow):
 
-    def __init__(self, parent=None):
 
+
+    def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
+
+        #  will be used to set up hotkeys to turn on and off firewall
+        changeFirewallStatus = GlobalHotKeys({'<ctrl>+<f1>': self.turnOnFirewall,
+                                              '<ctrl>+<f2>': self.turnOffFirewall
+                                      })
+        changeFirewallStatus.start()
+
+
         self.tray_icon = QSystemTrayIcon(self)
         self.settings_file = {}
         # will  be used for setting hotkeys
         self.firewall_active = False
         self.hold_control = False
+
+        self.already_holding_key= False
+
         self.ip_address_scope = ""
         self.gta_icon = QIcon("gta_icon.png")
         self.setupUi()
@@ -33,6 +47,11 @@ class Ui_MainWindow(QMainWindow):
         self.firewall_status()
         self.create_setting_file()
         self.setupTrayIcon()
+    def test(self):
+        print("hello")
+
+    def test2(self):
+        print("i released")
 
     def setupUi(self):
 
@@ -159,6 +178,7 @@ class Ui_MainWindow(QMainWindow):
         self.show()
         self.setWindowState(self.windowState() & ~QtCore.Qt.WindowMinimized | QtCore.Qt.WindowActive)
         self.activateWindow()
+
     def firewall_status(self):
 
         # will be used to display that a firewall does not exist
@@ -197,42 +217,27 @@ class Ui_MainWindow(QMainWindow):
                 self.tray_icon.showMessage("GTA V TOOLKIT", "Application has been minimised to tray",
                                            QSystemTrayIcon.NoIcon, 2000)
 
-    # will be used to create shortcut key
-    def keyPressEvent(self, event):
+    def turnOnFirewall(self):
+        if firewall.firewall_exist():
 
-        if event.key() == Qt.Key_Control:
-            print("control pressed")
-            self.hold_control = True
+            if not self.firewall_active:
+                print("user held control and f1")
+                self.tray_icon.showMessage(self.windowTitle(), "Firewall On")
+                firewall.enable_firewall_rule()
+                self.update_firewall_button_status()
 
-        elif self.hold_control and not event.isAutoRepeat() and event.key() == Qt.Key_F1:
+    def turnOffFirewall(self):
 
-            if firewall.firewall_exist():
+        if firewall.firewall_exist():
 
-                if not self.firewall_active:
-                    print("user held control and f1")
-                    self.tray_icon.showMessage(self.windowTitle(), "Firewall On")
-                    firewall.enable_firewall_rule()
-                    self.update_firewall_button_status()
+            if self.firewall_active:
+                print("user held control and f2")
+                self.tray_icon.showMessage(self.windowTitle(), "Firewall off")
+                firewall.disable_firewall_rule()
+                self.update_firewall_button_status()
 
 
-        elif self.hold_control and not event.isAutoRepeat() and event.key() == Qt.Key_F2:
 
-            if firewall.firewall_exist():
-
-                if self.firewall_active:
-                    print("user held control and f2")
-                    self.tray_icon.showMessage(self.windowTitle(), "Firewall off")
-                    firewall.disable_firewall_rule()
-                    self.update_firewall_button_status()
-
-        elif self.hold_control and not event.isAutoRepeat() and event.key() == Qt.Key_F3:
-            print("user held control and f3")
-
-    def keyReleaseEvent(self, event):
-
-        if event.key() == Qt.Key_Control:
-            print("control released")
-            self.hold_control = False
 
     def setupTrayIcon(self):
         self.tray_icon.setIcon(self.gta_icon)
