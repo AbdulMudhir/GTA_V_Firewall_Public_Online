@@ -7,9 +7,11 @@
 # WARNING! All changes made in this file will be lost!
 
 
-from PyQt5 import QtCore,QtWidgets
-from PyQt5.QtCore import Qt
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt, QThread
 import packetsniffer
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -21,17 +23,26 @@ class Ui_Dialog(object):
         self.tableWidget = QtWidgets.QTableWidget(Dialog)
         self.add_ip_address = QtWidgets.QPushButton(Dialog)
         self.interface_options = QtWidgets.QComboBox(Dialog)
+        Dialog.setWindowIcon(QIcon('gta_icon.png'))
         self.setupInterfaces()
 
-        self.tableWidget.setColumnCount(0)
-        self.tableWidget.setRowCount(0)
+
+        self.tableWidget.setColumnCount(1)
+        self.tableWidget.setHorizontalHeaderLabels(["IP Address"])
+        header = self.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+
         self.gridLayout.addWidget(self.tableWidget, 5, 0, 1, 1)
         self.verticalLayout = QtWidgets.QVBoxLayout()
-        self.verticalLayout.setSpacing(0)
+        self.verticalLayout.setSpacing(2)
         self.scanning_buttons = QtWidgets.QPushButton(Dialog)
+        self.scanning_buttons.clicked.connect(self.scanIPAddressInLobby)
         self.scanning_buttons.setFocus()
 
+        interface_label = QtWidgets.QLabel(Dialog)
+        interface_label.setText("Network Interface")
 
+        self.verticalLayout.addWidget(interface_label)
         self.verticalLayout.addWidget(self.interface_options)
         self.verticalLayout.addWidget(self.scanning_buttons)
         self.verticalLayout.addWidget(self.add_ip_address)
@@ -44,16 +55,15 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-
     def setupInterfaces(self):
-
         network_adapters = packetsniffer.network_interface
 
         if network_adapters:
-
             self.interface_options.addItems(network_adapters)
 
-    def
+    def scanIPAddressInLobby(self):
+        sniffer = SnifferThread("Ethernet")
+        sniffer.start()
 
 
     def retranslateUi(self, Dialog):
@@ -63,8 +73,24 @@ class Ui_Dialog(object):
         self.add_ip_address.setText(_translate("Dialog", "Add IP Address"))
 
 
+class SnifferThread(QThread):
+
+    def __init__(self, interface, parent=None):
+        super(SnifferThread, self).__init__(parent)
+        self.interface = interface
+        self.ip_address = None
+
+    def __del__(self):
+        self.wait()
+
+    def run(self):
+        self.ip_address = packetsniffer.scan_ip_address()
+        print(self.ip_address)
+
+
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     Dialog = QtWidgets.QDialog()
     ui = Ui_Dialog()

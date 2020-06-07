@@ -14,5 +14,11 @@ def ip_address_scanned(packet):
         ip_addresses.append(ip_address)
 
 
-scan_ip_address = AsyncSniffer(iface=conf.iface, prn=ip_address_scanned,
+def scan_ip_address(interface = conf.iface):
+    sniffer = AsyncSniffer(iface=interface, prn=ip_address_scanned,
                  filter="udp and port 6672 or port 61455 or port 61457 or port 61456 or port 61458", count=30)
+
+    sniffer.start()
+    sniffer.join()
+
+    return ip_addresses
