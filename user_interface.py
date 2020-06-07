@@ -20,25 +20,20 @@ from pynput.keyboard import Key, Listener, KeyCode, HotKey, GlobalHotKeys
 
 class Ui_MainWindow(QMainWindow):
 
-
-
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
 
         #  will be used to set up hot keys to turn on and off firewall
-        changeFirewallStatus = GlobalHotKeys({'<ctrl>+<f1>': self.turnOnFirewall,
-                                              '<ctrl>+<f2>': self.turnOffFirewall
-                                      })
+        changeFirewallStatus = GlobalHotKeys({'<f11>': self.turnOnFirewall,
+                                              '<f12>': self.turnOffFirewall
+                                              })
         changeFirewallStatus.start()
-
 
         self.tray_icon = QSystemTrayIcon(self)
         self.settings_file = {}
-        # will  be used for setting hotkeys
+        # will  be used for setting hot keys
         self.firewall_active = False
         self.hold_control = False
-
-        self.already_holding_key= False
 
         self.ip_address_scope = ""
         self.gta_icon = QIcon("gta_icon.png")
@@ -142,6 +137,7 @@ class Ui_MainWindow(QMainWindow):
 
         self.gridLayout_3.addLayout(self.firewall_settings, 0, 0, 1, 1)
         self.gridLayout_2.addWidget(self.frame, 1, 0, 1, 1)
+
         self.buttons = QtWidgets.QHBoxLayout()
         self.firewall_button = QtWidgets.QPushButton(self.centralwidget)
         self.firewall_button.clicked.connect(self.firewall_mode)
@@ -230,9 +226,6 @@ class Ui_MainWindow(QMainWindow):
                 self.tray_icon.showMessage(self.windowTitle(), "Firewall off")
                 firewall.disable_firewall_rule()
                 self.update_firewall_button_status()
-
-
-
 
     def setupTrayIcon(self):
         self.tray_icon.setIcon(self.gta_icon)

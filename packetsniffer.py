@@ -1,18 +1,22 @@
-import socket
-import struct
-import binascii
+from scapy.all import *
 
-host = socket.gethostbyname(socket.gethostname())
+network_interface = get_if_list()
 
-connection = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_IP)
-connection.bind((host, 6672))
+host_ip_address = get_if_addr(conf.iface)
 
-connection2 = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_IP)
-connection2.bind((host, 61455))
-
-while True:
-    raw_data, address = connection.recvfrom(100)
-    raw_data2, address2 = connection2.recvfrom(100)
+ip_addresses = []
 
 
-    print(address,)
+def ip_address_scanned(packet):
+    ip_address = packet.sprintf("{IP:%IP.src%}")
+
+    if ip_address not in ip_addresses and ip_address != host_ip_address:
+        ip_addresses.append(ip_address)
+
+
+t = AsyncSniffer(iface=conf.iface, prn=ip_address_scanned,
+                 filter="udp and port 6672 or port 61455 or port 61457 or port 61456 or port 61458", count=30)
+t.start()
+t.join()
+
+print(ip_addresses)
