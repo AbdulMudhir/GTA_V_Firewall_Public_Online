@@ -1,4 +1,4 @@
-from scapy.all import *
+from scapy.all import get_if_addr, get_if_list, conf, AsyncSniffer
 
 network_interface = get_if_list()
 
@@ -14,9 +14,5 @@ def ip_address_scanned(packet):
         ip_addresses.append(ip_address)
 
 
-t = AsyncSniffer(iface=conf.iface, prn=ip_address_scanned,
+scan_ip_address = AsyncSniffer(iface=conf.iface, prn=ip_address_scanned,
                  filter="udp and port 6672 or port 61455 or port 61457 or port 61456 or port 61458", count=30)
-t.start()
-t.join()
-
-print(ip_addresses)

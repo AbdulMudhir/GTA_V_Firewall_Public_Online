@@ -11,6 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QMainWindow, QSystemTrayIcon, QMenu
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
+from ip_sniffer import Ui_Dialog
 from pathlib import Path
 import json, os
 import firewall
@@ -110,6 +111,7 @@ class Ui_MainWindow(QMainWindow):
 
         self.ip_address_layout.addWidget(self.ip_address_edit_text)
         self.scan_lobby_ip = QtWidgets.QPushButton(self.frame)
+        self.scan_lobby_ip.clicked.connect(self.displayLobbyScanWindow)
 
         self.ip_address_layout.addWidget(self.scan_lobby_ip)
 
@@ -161,9 +163,18 @@ class Ui_MainWindow(QMainWindow):
 
         self.tableView.setHorizontalHeaderLabels(["IP Address"])
 
+
+
         self.setCentralWidget(self.centralwidget)
         self.focusWidget()
         self.setTextForButtons()
+
+    def displayLobbyScanWindow(self):
+        Dialog = QtWidgets.QDialog(self)
+        ui = Ui_Dialog()
+        ui.setupUi(Dialog)
+        Dialog.show()
+
 
     def showWindow(self):
         self.show()
