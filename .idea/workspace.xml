@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ip_sniffer.py" beforeDir="false" afterPath="$PROJECT_DIR$/ip_sniffer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packetsniffer.py" beforeDir="false" afterPath="$PROJECT_DIR$/packetsniffer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_interface.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +36,7 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.ip_sniffer">
+  <component name="RunManager" selected="Python.user_interface">
     <configuration name="firewall (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="GTA_V_Firewall_Public_Online" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -150,8 +151,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.ip_sniffer" />
         <item itemvalue="Python.user_interface" />
+        <item itemvalue="Python.ip_sniffer" />
         <item itemvalue="Python.packetsniffer" />
         <item itemvalue="Python.firewall (1)" />
       </list>
@@ -411,11 +412,17 @@
       <option name="project" value="LOCAL" />
       <updated>1591545537495</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="added network interfaces">
+      <created>1591547811887</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1591547811887</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="cleaned up user_interface and removed unecssary code" />
     <MESSAGE value="added add and remove firewall button" />
     <MESSAGE value="added settings file" />
     <MESSAGE value="add and remove firewall function implemented" />
@@ -440,42 +447,43 @@
     <MESSAGE value="removed test methods" />
     <MESSAGE value="added ip sniffer using scapy" />
     <MESSAGE value="packet sniffer complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="packet sniffer complete" />
+    <MESSAGE value="added network interfaces" />
+    <option name="LAST_COMMIT_MESSAGE" value="added network interfaces" />
   </component>
   <component name="WindowStateProjectService">
     <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590919418041">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1590919418041" />
-    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591545536855">
+    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591547811233">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591545536855" />
+    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591547811233" />
     <state x="3080" y="51" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881570913" />
     <state x="1060" y="456" key="FileChooserDialogImpl" timestamp="1591437431752">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1060" y="456" key="FileChooserDialogImpl/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591437431752" />
-    <state width="1670" height="137" key="GridCell.Tab.0.bottom" timestamp="1591547586973">
+    <state width="2539" height="76" key="GridCell.Tab.0.bottom" timestamp="1591571652696">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1670" height="137" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591547586973" />
-    <state width="1419" height="68" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591352469946" />
-    <state width="1670" height="137" key="GridCell.Tab.0.center" timestamp="1591547586970">
+    <state width="2539" height="76" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591571652696" />
+    <state width="1419" height="76" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591571304405" />
+    <state width="2539" height="76" key="GridCell.Tab.0.center" timestamp="1591571652696">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1670" height="137" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591547586970" />
-    <state width="1419" height="68" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591352469946" />
-    <state width="1670" height="137" key="GridCell.Tab.0.left" timestamp="1591547586969">
+    <state width="2539" height="76" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591571652696" />
+    <state width="1419" height="76" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591571304405" />
+    <state width="2539" height="76" key="GridCell.Tab.0.left" timestamp="1591571652696">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1670" height="137" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591547586969" />
-    <state width="1419" height="68" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591352469945" />
-    <state width="1670" height="137" key="GridCell.Tab.0.right" timestamp="1591547586971">
+    <state width="2539" height="76" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591571652696" />
+    <state width="1419" height="76" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591571304405" />
+    <state width="2539" height="76" key="GridCell.Tab.0.right" timestamp="1591571652696">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1670" height="137" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591547586971" />
-    <state width="1419" height="68" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591352469946" />
+    <state width="2539" height="76" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591571652696" />
+    <state width="1419" height="76" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591571304405" />
     <state width="1716" height="449" key="GridCell.Tab.1.bottom" timestamp="1591543768999">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -496,10 +504,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="781" y="343" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591538994622" />
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591545538458">
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591547812909">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591545538458" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591547812909" />
     <state x="3051" y="267" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881572496" />
   </component>
 </project>

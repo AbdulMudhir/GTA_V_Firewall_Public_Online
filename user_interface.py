@@ -163,6 +163,11 @@ class Ui_MainWindow(QMainWindow):
 
         self.tableView.setHorizontalHeaderLabels(["IP Address"])
 
+        # second window for scanning lobby ip adress
+        self.Dialog = QtWidgets.QDialog(self)
+        self.ui = Ui_Dialog()
+        self.ui.setupUi(self.Dialog)
+
 
 
         self.setCentralWidget(self.centralwidget)
@@ -170,10 +175,8 @@ class Ui_MainWindow(QMainWindow):
         self.setTextForButtons()
 
     def displayLobbyScanWindow(self):
-        Dialog = QtWidgets.QDialog(self)
-        ui = Ui_Dialog()
-        ui.setupUi(Dialog)
-        Dialog.show()
+
+        self.Dialog.show()
 
 
     def showWindow(self):

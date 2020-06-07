@@ -19,6 +19,6 @@ def scan_ip_address(interface = conf.iface):
                  filter="udp and port 6672 or port 61455 or port 61457 or port 61456 or port 61458", count=30)
 
     sniffer.start()
-    sniffer.join()
+    sniffer.join(timeout=0.5)
 
     return ip_addresses
