@@ -74,14 +74,11 @@ class Ui_Dialog(object):
     def add_ip_address_from_table(self):
 
         ip_addresses = self.tableWidget.selectedItems()
-        if len(ip_addresses) > 1:
+
+        if len(ip_addresses) >= 1:
 
             add_ip_thread = AddIPThread(ip_addresses,self.main_window.update_table)
             add_ip_thread.start()
-
-
-
-
 
 
     def retranslateUi(self, Dialog):
@@ -95,18 +92,20 @@ class AddIPThread(QThread):
 
     def __init__(self, ip_addresses, main_window_table, parent=None):
         super(AddIPThread, self).__init__(parent)
-        self.ip_addresses = ip_addresses
+        self.ip_addresses_item = ip_addresses
         self.tableWidget = main_window_table
 
     def __del__(self):
         self.wait()
 
     def run(self):
+        # create a list of ip address that do not exist on the table
+        ip_addresses_text = [ip.text() for ip in self.ip_addresses_item if not firewall.ip_address_exist_in_scope(ip.text())]
 
+        ip_addresses = ",".join(ip_addresses_text)
+        firewall.add_white_list(ip_addresses)
 
-        if not firewall.ip_address_exist_in_scope(self.ip_address):
-            firewall.add_white_list(self.ip_address)
-            self.tableWidget()
+        self.tableWidget()
 
 
 class SnifferThread(QThread):

@@ -31,10 +31,10 @@ def firewall_scopes_list():
 
         return remote_ip_address
 
+
 def firewall_active():
     netsh_firewall_exist = f'''netsh advfirewall firewall show rule name="{firewall_rule_name}" dir=in '''
     in_command = Popen(netsh_firewall_exist, stdout=PIPE, stderr=PIPE)
-
 
     output_message, _ = in_command.communicate()
 
@@ -42,9 +42,6 @@ def firewall_active():
 
     status = output_message_decoded.split()[8]
     return status != "No"
-
-
-
 
 
 def valid_ip_address(ip_address):
@@ -84,14 +81,35 @@ def ip_address_above_and_below(ip_address):
 
 def new_ip_address_scope(previous_scope, ip_address):
     # will be used to sort out ip address from smallest to biggest
-    split_scope = '-'.join(previous_scope.split(","))
+    previous_split_scope = "-".join(previous_scope.split(",")).split("-")
 
-    split_ip_address = ip_address.split('.')
-    # splitting the ip address so we can get a +1 and -1 range of the current ip address
-    first_ip, second_ip = ip_address_above_and_below(ip_address)
+    multiple_ip_address = []
 
-    # joining first and second ip to the scope list rather than having to loop twice
-    new_unsorted_scope = f"{split_scope}-{first_ip}-{second_ip}".split("-")
+    # check if multiple ip_address are passed through
+    if "," in ip_address:
+        new_ip_address_split = ip_address.split(",")
+
+        for ip in new_ip_address_split:
+            split_ip_address = ip_address.split('.')
+            # splitting the ip address so we can get a +1 and -1 range of the current ip address
+            first_ip, second_ip = ip_address_above_and_below(ip)
+            # keep track of both ip addresses
+            multiple_ip_address.append(first_ip)
+            multiple_ip_address.append(second_ip)
+
+
+
+
+
+
+    new_unsorted_scope =previous_split_scope + multiple_ip_address
+
+    # split_ip_address = ip_address.split('.')
+    # # splitting the ip address so we can get a +1 and -1 range of the current ip address
+    # first_ip, second_ip = ip_address_above_and_below(ip_address)
+    #
+    # # joining first and second ip to the scope list rather than having to loop twice
+    # new_unsorted_scope = f"{split_scope}-{first_ip}-{second_ip}".split("-")
 
     new_sorted_scope = sorted(new_unsorted_scope, key=split_ip_addresss)
     # looping through the sorted list and combine two ip address to get the range we need
@@ -110,6 +128,7 @@ def add_white_list(ip_address):
     if previous_scope != "Any":
 
         new_scope = new_ip_address_scope(previous_scope, ip_address)
+
         netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}"  new remoteip={new_scope} '''
         Popen(netsh_allow_remote_address)
 
@@ -128,12 +147,9 @@ def add_white_list(ip_address):
 
 
 def ip_address_without_scope():
-
     ip_scope = firewall_scopes_list()
 
     ip_address_in_firewall = re.split('[,-]', ip_scope)
-
-
 
     ip_address_in_scope = []
 
@@ -149,7 +165,6 @@ def ip_address_without_scope():
 
 
 def ip_address_exist_in_scope(ip_address):
-
     current_ip_scope = ip_address_without_scope()
     for ip in current_ip_scope:
         if ip == ip_address:
@@ -158,10 +173,7 @@ def ip_address_exist_in_scope(ip_address):
 
 
 def remove_white_list(ip_address):
-
     ip_scope = ','.join(re.split("[,-]", firewall_scopes_list()))
-
-
 
     first_ip, second_ip = ip_address_above_and_below(ip_address)
 
@@ -169,7 +181,7 @@ def remove_white_list(ip_address):
     remove_second_ip = remove_first_ip.replace(f"{second_ip},", "").split(",")
 
     new_scope = ",".join([f"{remove_second_ip[index - 1]}-{ip}" for index, ip in enumerate(remove_second_ip) if
-                 (index + 1) % 2 == 0])
+                          (index + 1) % 2 == 0])
     if new_scope != '0.0.0.0-255.255.255.255':
         netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip={new_scope}    '''
         Popen(netsh_allow_remote_address)
@@ -178,8 +190,6 @@ def remove_white_list(ip_address):
         print("here")
         netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip="" '''
         Popen(netsh_allow_remote_address)
-
-
 
 
 # if previous_scope != "Any":
