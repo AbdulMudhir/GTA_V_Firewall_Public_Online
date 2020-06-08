@@ -163,10 +163,10 @@ class Ui_MainWindow(QMainWindow):
 
         self.tableView.setHorizontalHeaderLabels(["IP Address"])
 
-        # second window for scanning lobby ip adress
+        # second window for scanning lobby ip _ add
         self.Dialog = QtWidgets.QDialog(self)
-        self.ui = Ui_Dialog()
-        self.ui.setupUi(self.Dialog)
+        self.second_window = Ui_Dialog()
+        self.second_window.setupUi(self.Dialog)
 
 
 

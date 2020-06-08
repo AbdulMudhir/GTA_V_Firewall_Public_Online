@@ -10,6 +10,7 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, QThread
+import firewall
 import packetsniffer
 
 
@@ -22,6 +23,7 @@ class Ui_Dialog(object):
         self.gridLayout = QtWidgets.QGridLayout(Dialog)
         self.tableWidget = QtWidgets.QTableWidget(Dialog)
         self.add_ip_address = QtWidgets.QPushButton(Dialog)
+        self.add_ip_address.clicked.connect(self.add_ip_address_from_table)
         self.interface_options = QtWidgets.QComboBox(Dialog)
         Dialog.setWindowIcon(QIcon('gta_icon.png'))
         self.setupInterfaces()
@@ -64,11 +66,39 @@ class Ui_Dialog(object):
         sniffer = SnifferThread(self.tableWidget, "Ethernet")
         sniffer.start()
 
+    def add_ip_address_from_table(self):
+
+        ip_address = self.tableWidget.selectedItems()
+        print(ip_address)
+        if len(ip_address) == 1:
+
+            if firewall.valid_ip_address(ip_address):
+                pass
+
+
+            else:
+                # for debugging
+                print("ip address already exist")
+
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "GTA V SOLO KIT"))
         self.scanning_buttons.setText(_translate("Dialog", "Scan Lobby"))
         self.add_ip_address.setText(_translate("Dialog", "Add IP Address"))
+
+
+class AddIPThread(QThread):
+
+    def __init__(self, ip_address, parent=None):
+        super(AddIPThread, self).__init__(parent)
+        self.ip_address = ip_address
+
+    def __del__(self):
+        self.wait()
+
+    def run(self):
+        if not firewall.ip_address_exist_in_scope(self.ip_address):
+            firewall.add_white_list(self.ip_address)
 
 
 class SnifferThread(QThread):
