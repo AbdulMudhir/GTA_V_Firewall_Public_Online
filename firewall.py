@@ -81,35 +81,34 @@ def ip_address_above_and_below(ip_address):
 
 def new_ip_address_scope(previous_scope, ip_address):
     # will be used to sort out ip address from smallest to biggest
-    previous_split_scope = "-".join(previous_scope.split(",")).split("-")
+    previous_split_scope = "-".join(previous_scope.split(","))
 
     multiple_ip_address = []
 
+
     # check if multiple ip_address are passed through
     if "," in ip_address:
+
+
         new_ip_address_split = ip_address.split(",")
 
         for ip in new_ip_address_split:
-            split_ip_address = ip_address.split('.')
             # splitting the ip address so we can get a +1 and -1 range of the current ip address
             first_ip, second_ip = ip_address_above_and_below(ip)
             # keep track of both ip addresses
             multiple_ip_address.append(first_ip)
             multiple_ip_address.append(second_ip)
 
+        new_unsorted_scope = previous_split_scope.split("-") + multiple_ip_address
 
 
+    else:
+        # splitting the ip address so we can get a +1 and -1 range of the current ip address
+        first_ip, second_ip = ip_address_above_and_below(ip_address)
 
+        # joining first and second ip to the scope list rather than having to loop twice
+        new_unsorted_scope = f"{previous_split_scope}-{first_ip}-{second_ip}".split("-")
 
-
-    new_unsorted_scope =previous_split_scope + multiple_ip_address
-
-    # split_ip_address = ip_address.split('.')
-    # # splitting the ip address so we can get a +1 and -1 range of the current ip address
-    # first_ip, second_ip = ip_address_above_and_below(ip_address)
-    #
-    # # joining first and second ip to the scope list rather than having to loop twice
-    # new_unsorted_scope = f"{split_scope}-{first_ip}-{second_ip}".split("-")
 
     new_sorted_scope = sorted(new_unsorted_scope, key=split_ip_addresss)
     # looping through the sorted list and combine two ip address to get the range we need
