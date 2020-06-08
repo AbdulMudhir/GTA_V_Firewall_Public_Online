@@ -81,6 +81,7 @@ class Ui_Dialog(object):
             add_ip_thread.start()
 
 
+
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "GTA V SOLO KIT"))
@@ -102,10 +103,11 @@ class AddIPThread(QThread):
         # create a list of ip address that do not exist on the table
         ip_addresses_text = [ip.text() for ip in self.ip_addresses_item if not firewall.ip_address_exist_in_scope(ip.text())]
 
-        ip_addresses = ",".join(ip_addresses_text)
-        firewall.add_white_list(ip_addresses)
+        if ip_addresses_text:
+            ip_addresses = ",".join(ip_addresses_text)
+            firewall.add_white_list(ip_addresses)
 
-        self.tableWidget()
+            self.tableWidget()
 
 
 class SnifferThread(QThread):
@@ -121,7 +123,10 @@ class SnifferThread(QThread):
 
     def run(self):
         self.ip_address = packetsniffer.scan_ip_address()
+        self.table.clearContents()
+        self.table.setRowCount(0)
 
+        print(len(self.ip_address))
         self.table.setRowCount(len(self.ip_address))
 
         for index, ip_address in enumerate(self.ip_address):

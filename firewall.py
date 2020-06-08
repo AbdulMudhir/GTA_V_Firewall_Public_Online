@@ -172,21 +172,44 @@ def ip_address_exist_in_scope(ip_address):
 
 
 def remove_white_list(ip_address):
-    ip_scope = ','.join(re.split("[,-]", firewall_scopes_list()))
+    ip_scope = re.split("[,-]", firewall_scopes_list())
 
-    first_ip, second_ip = ip_address_above_and_below(ip_address)
 
-    remove_first_ip = ip_scope.replace(f",{first_ip}", "")
-    remove_second_ip = remove_first_ip.replace(f"{second_ip},", "").split(",")
 
-    new_scope = ",".join([f"{remove_second_ip[index - 1]}-{ip}" for index, ip in enumerate(remove_second_ip) if
+
+    if "," in ip_address:
+        ip_addresses = ip_address.split(",")
+
+        for ip in ip_addresses:
+
+            first_ip, second_ip = ip_address_above_and_below(ip)
+
+            try:
+                ip_scope.remove(first_ip)
+                ip_scope.remove(second_ip)
+                # will be used if a value was already removed form the scope
+            except ValueError:
+                pass
+    else:
+        first_ip, second_ip = ip_address_above_and_below(ip_address)
+
+        try:
+            ip_scope.remove(first_ip)
+            ip_scope.remove(second_ip)
+            # will be used if a value was already removed form the scope
+        except ValueError:
+            pass
+
+    new_scope = ",".join([f"{ip_scope[index - 1]}-{ip}" for index, ip in enumerate(ip_scope) if
                           (index + 1) % 2 == 0])
-    if new_scope != '0.0.0.0-255.255.255.255':
+
+
+
+    if len(new_scope) != 1:
         netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip={new_scope}    '''
         Popen(netsh_allow_remote_address)
 
     else:
-        print("here")
         netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip="" '''
         Popen(netsh_allow_remote_address)
 

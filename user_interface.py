@@ -277,15 +277,20 @@ class Ui_MainWindow(QMainWindow):
 
         self.ip_address_scope = firewall.ip_address_without_scope()
 
-        self.tableView.setRowCount(len(self.ip_address_scope))
 
         if not self.ip_address_scope:
             self.tableView.setRowCount(1)
-            self.tableView.setItem(0, 0, QtWidgets.QTableWidgetItem("Any"))
-
+            self.tableView.setItem(0, 0, QtWidgets.QTableWidgetItem("Private Session - None Allowed"))
         else:
+            # remove the "private session not allowed Row"
+            self.tableView.removeRow(0)
+            self.tableView.setRowCount(len(self.ip_address_scope))
+
             for index, ip_address in enumerate(self.ip_address_scope):
                 self.tableView.setItem(index, 0, QtWidgets.QTableWidgetItem(ip_address))
+
+
+
 
     def firewall_mode(self):
 
@@ -302,8 +307,9 @@ class Ui_MainWindow(QMainWindow):
 
         if firewall.valid_ip_address(ip_address):
 
-            whitelist = AddIPThread(ip_address, self.update_table)
+            whitelist = AddIPThread(ip_address, parent=self)
             whitelist.start()
+
 
         else:
             # for debugging
@@ -428,19 +434,21 @@ class RemoveIPThread(QThread):
         self.wait()
 
     def run(self):
-        # loop through the ip address selected
-        for ip_address in self.tableView.selectedItems():
-            firewall.remove_white_list(ip_address.text())
+
+        # get the strings value of the table rows
+        ip_addresses = ",".join([ ip.text() for ip in self.tableView.selectedItems()])
+
+        firewall.remove_white_list(ip_addresses)
 
         self.update_table()
 
 
 class AddIPThread(QThread):
 
-    def __init__(self, ip_address, update_table, parent=None):
+    def __init__(self, ip_address, parent=None):
         super(AddIPThread, self).__init__(parent)
         self.ip_address = ip_address
-        self.update_table = update_table
+        self.main_window  = parent
 
     def __del__(self):
         self.wait()
@@ -448,7 +456,8 @@ class AddIPThread(QThread):
     def run(self):
         if not firewall.ip_address_exist_in_scope(self.ip_address):
             firewall.add_white_list(self.ip_address)
-            self.update_table()
+
+            self.main_window.update_table()
 
 
 if __name__ == "__main__":
