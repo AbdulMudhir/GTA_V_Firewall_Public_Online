@@ -45,6 +45,12 @@ class Ui_MainWindow(QMainWindow):
         self.setupTrayIcon()
 
     def setupUi(self):
+        # second window for scanning lobby ip _ add
+        self.Dialog = QtWidgets.QDialog(self)
+        self.second_window = Ui_Dialog(self)
+        self.second_window.setupUi(self.Dialog)
+
+
 
         self.resize(400, 800)
         self.setMaximumSize(QtCore.QSize(400, 600))
@@ -163,19 +169,15 @@ class Ui_MainWindow(QMainWindow):
 
         self.tableView.setHorizontalHeaderLabels(["IP Address"])
 
-        # second window for scanning lobby ip _ add
-        self.Dialog = QtWidgets.QDialog(self)
-        self.second_window = Ui_Dialog()
-        self.second_window.setupUi(self.Dialog)
-
 
 
         self.setCentralWidget(self.centralwidget)
         self.focusWidget()
         self.setTextForButtons()
 
-    def displayLobbyScanWindow(self):
 
+
+    def displayLobbyScanWindow(self):
         self.Dialog.show()
 
 

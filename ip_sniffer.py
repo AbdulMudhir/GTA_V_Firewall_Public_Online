@@ -16,6 +16,11 @@ import packetsniffer
 
 class Ui_Dialog(object):
 
+    def __init__(self, parent=None):
+        QtWidgets.QDialog.__init__(parent)
+        # will be used to pass information across to main window
+        self.main_window = parent
+
     def setupUi(self, Dialog):
         Dialog.resize(413, 648)
         Dialog.setMinimumSize(QtCore.QSize(413, 648))
@@ -68,17 +73,16 @@ class Ui_Dialog(object):
 
     def add_ip_address_from_table(self):
 
-        ip_address = self.tableWidget.selectedItems()
-        print(ip_address)
-        if len(ip_address) == 1:
+        ip_addresses = self.tableWidget.selectedItems()
+        if len(ip_addresses) > 1:
 
-            if firewall.valid_ip_address(ip_address):
-                pass
+            add_ip_thread = AddIPThread(ip_addresses,self.main_window.update_table)
+            add_ip_thread.start()
 
 
-            else:
-                # for debugging
-                print("ip address already exist")
+
+
+
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -89,16 +93,20 @@ class Ui_Dialog(object):
 
 class AddIPThread(QThread):
 
-    def __init__(self, ip_address, parent=None):
+    def __init__(self, ip_addresses, main_window_table, parent=None):
         super(AddIPThread, self).__init__(parent)
-        self.ip_address = ip_address
+        self.ip_addresses = ip_addresses
+        self.tableWidget = main_window_table
 
     def __del__(self):
         self.wait()
 
     def run(self):
+
+
         if not firewall.ip_address_exist_in_scope(self.ip_address):
             firewall.add_white_list(self.ip_address)
+            self.tableWidget()
 
 
 class SnifferThread(QThread):
