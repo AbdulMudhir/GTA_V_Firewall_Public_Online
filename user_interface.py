@@ -51,7 +51,6 @@ class Ui_MainWindow(QMainWindow):
         self.second_window.setupUi(self.Dialog)
 
 
-
         self.resize(400, 800)
         self.setMaximumSize(QtCore.QSize(400, 600))
         self.setWindowIcon(self.gta_icon)
@@ -169,7 +168,8 @@ class Ui_MainWindow(QMainWindow):
 
         self.tableView.setHorizontalHeaderLabels(["IP Address"])
 
-
+        # prevent tables from  being edited
+        self.tableView.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
 
         self.setCentralWidget(self.centralwidget)
         self.focusWidget()
@@ -330,9 +330,12 @@ class Ui_MainWindow(QMainWindow):
                 message_box.buttonClicked.connect(self.messageBoxConfirmationRemoval)
                 message_box.exec_()
 
-            else:
+            elif selected_ip_address[0].text() != "Private Session - None Allowed":
+
                 firewall.remove_white_list(selected_ip_address[0].text())
                 self.update_table()
+
+
 
         else:
             pass

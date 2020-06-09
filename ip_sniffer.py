@@ -14,17 +14,21 @@ import firewall
 import packetsniffer
 
 
-class Ui_Dialog(object):
+class Ui_Dialog():
 
-    def __init__(self, parent=None):
-        QtWidgets.QDialog.__init__(parent)
-        # will be used to pass information across to main window
-        self.main_window = parent
+    # def __init__(self, parent=None):
+    #     QtWidgets.QDialog.__init__(parent)
+    #     # will be used to pass information across to main window
+    #     self.main_window = parent
 
     def setupUi(self, Dialog):
         Dialog.resize(413, 648)
         Dialog.setMinimumSize(QtCore.QSize(413, 648))
         Dialog.setMaximumSize(QtCore.QSize(413, 648))
+
+        self.network_interface = None
+        self.network_name, self.network_description = packetsniffer.network_interfaces()
+
         self.gridLayout = QtWidgets.QGridLayout(Dialog)
         self.tableWidget = QtWidgets.QTableWidget(Dialog)
         self.add_ip_address = QtWidgets.QPushButton(Dialog)
@@ -34,6 +38,8 @@ class Ui_Dialog(object):
         self.setupInterfaces()
 
         self.tableWidget.setColumnCount(1)
+        # prevent tables from  being edited
+        self.tableWidget.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         self.tableWidget.setHorizontalHeaderLabels(["IP Address"])
         header = self.tableWidget.horizontalHeader()
         header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
@@ -62,13 +68,17 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def setupInterfaces(self):
-        network_adapters = packetsniffer.network_interface
 
-        if network_adapters:
-            self.interface_options.addItems(network_adapters)
+        if self.network_description:
+            self.interface_options.addItems(self.network_description)
 
     def scanIPAddressInLobby(self):
-        sniffer = SnifferThread(self.tableWidget, "Ethernet")
+
+        network_description_index = self.interface_options.currentIndex()
+
+        network_name = self.network_name[network_description_index]
+
+        sniffer = SnifferThread(self.tableWidget, network_name)
         sniffer.start()
 
     def add_ip_address_from_table(self):
@@ -76,11 +86,8 @@ class Ui_Dialog(object):
         ip_addresses = self.tableWidget.selectedItems()
 
         if len(ip_addresses) >= 1:
-
-            add_ip_thread = AddIPThread(ip_addresses,self.main_window.update_table)
+            add_ip_thread = AddIPThread(ip_addresses, self.main_window.update_table)
             add_ip_thread.start()
-
-
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -101,7 +108,8 @@ class AddIPThread(QThread):
 
     def run(self):
         # create a list of ip address that do not exist on the table
-        ip_addresses_text = [ip.text() for ip in self.ip_addresses_item if not firewall.ip_address_exist_in_scope(ip.text())]
+        ip_addresses_text = [ip.text() for ip in self.ip_addresses_item if
+                             not firewall.ip_address_exist_in_scope(ip.text())]
 
         if ip_addresses_text:
             ip_addresses = ",".join(ip_addresses_text)
@@ -126,7 +134,6 @@ class SnifferThread(QThread):
         self.table.clearContents()
         self.table.setRowCount(0)
 
-        print(len(self.ip_address))
         self.table.setRowCount(len(self.ip_address))
 
         for index, ip_address in enumerate(self.ip_address):
