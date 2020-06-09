@@ -8,7 +8,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMessageBox, QMainWindow, QSystemTrayIcon, QMenu
+from PyQt5.QtWidgets import QMessageBox, QMainWindow, QSystemTrayIcon, QMenu, QAction
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from ip_sniffer import Ui_Dialog
@@ -21,6 +21,10 @@ from pynput.keyboard import Key, Listener, KeyCode, HotKey, GlobalHotKeys
 
 class Ui_MainWindow(QMainWindow):
 
+    height = 600
+    width = 400
+    window_title = "GTA V SOLO KIT"
+
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
 
@@ -32,12 +36,11 @@ class Ui_MainWindow(QMainWindow):
 
         self.tray_icon = QSystemTrayIcon(self)
         self.settings_file = {}
-        # will  be used for setting hot keys
+        # will  be used for setting hot keysvisu
         self.firewall_active = False
         self.hold_control = False
 
         self.ip_address_scope = ""
-        self.gta_icon = QIcon("gta_icon.png")
         self.setupUi()
 
         self.firewall_status()
@@ -49,10 +52,10 @@ class Ui_MainWindow(QMainWindow):
         self.Dialog = QtWidgets.QDialog(self)
         self.second_window = Ui_Dialog(self)
         self.second_window.setupUi(self.Dialog)
+        self.gta_icon = QIcon("gta_icon.png")
 
-
-        self.resize(400, 800)
-        self.setMaximumSize(QtCore.QSize(400, 600))
+        self.resize(self.width, self.height)
+        self.setMaximumSize(QtCore.QSize(self.width, self.height))
         self.setWindowIcon(self.gta_icon)
 
         # main screen
@@ -171,10 +174,62 @@ class Ui_MainWindow(QMainWindow):
         # prevent tables from  being edited
         self.tableView.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
 
+        menu_bar = self.menuBar()
+        setting_menu = menu_bar.addMenu("Keyboard Shortcut Settings")
+
+
+        help_window = menu_bar.addAction("Help")
+        help_window.triggered.connect(self.displayHelpScreen)
+        self.help_dialog = QtWidgets.QDialog(self)
+
         self.setCentralWidget(self.centralwidget)
         self.focusWidget()
         self.setTextForButtons()
 
+
+    def displayHelpScreen(self):
+
+
+        self.help_dialog.setWindowTitle(self.window_title +"- HELP")
+        layout = QtWidgets.QHBoxLayout()
+        instruction = QtWidgets.QLabel("Instruction\n"
+                                       "1. Add Firewall Rule\n"
+                                       "2. Join a public lobby\n"
+                                       "3. Turn on the Firewall (you can use shortcut key in game default key = F11)\n"
+                                       "Give it few seconds(5) and everyone should be kicked out, If not "
+                                       "simply turn off\n and on the firewall \n(using this application) to update GTA "
+                                       "\n\n"
+                                       "Adding your friends"
+                                       "\nFollow the above instructions until you're in a solo lobby\n"
+                                       "1. Turn off firewall\n"
+                                       "2. Get your friends to join your solo lobby\n"
+                                       "3. Add their IP address manually or use the Scan Lobby IP Address feature\n"
+                                       "4. Turn on Firewall\n"
+                                       "\nIf you're using the Scan Lobby IP Address\n"
+                                       "1. Get your friends to join your solo public lobby (firewall off first)\n"
+                                       "2. Click on Scan Lobby IP Address\n"
+                                       "3. Click on Scan Lobby\n"
+                                       "4. Select the IP address and click on Add IP address"
+                                      "5. Turn on Firewall "
+                                       "\n\nIf you have any questions, feel free to contact me on discord @ Hunter#2950"
+                                       
+                                       
+                                       "")
+
+
+        layout.addWidget(instruction)
+        layout.setSpacing(0)
+        instruction.setMargin(0)
+        self.help_dialog.setFixedHeight(310)
+        self.help_dialog.setFixedWidth(420)
+
+
+        self.help_dialog.setLayout(layout)
+
+
+
+        # prevent from switching between main window while it is opened
+        self.help_dialog.show()
 
 
     def displayLobbyScanWindow(self):
@@ -263,7 +318,7 @@ class Ui_MainWindow(QMainWindow):
         self.firewall_button.setText("Firewall Mode (OFF)")
         self.add_firewall_rule_button.setText("Add Firewall Rule")
         self.remove_firewall_rule_button.setText("Remove Firewall Rule")
-        self.setWindowTitle("GTA V SOLO KIT")
+        self.setWindowTitle(self.window_title)
         self.label.setText("Firewall Settings")
         self.file_path_directory.setPlaceholderText("File Path")
         self.file_path.setText("GTA V Path")

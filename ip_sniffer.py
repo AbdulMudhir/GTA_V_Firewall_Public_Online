@@ -16,10 +16,10 @@ import packetsniffer
 
 class Ui_Dialog():
 
-    # def __init__(self, parent=None):
-    #     QtWidgets.QDialog.__init__(parent)
-    #     # will be used to pass information across to main window
-    #     self.main_window = parent
+    def __init__(self, parent=None):
+        QtWidgets.QDialog.__init__(parent)
+        # will be used to pass information across to main window
+        self.main_window = parent
 
     def setupUi(self, Dialog):
         Dialog.resize(413, 648)
@@ -124,19 +124,18 @@ class SnifferThread(QThread):
         super(SnifferThread, self).__init__(parent)
         self.interface = interface
         self.table = table
-        self.ip_address = None
 
     def __del__(self):
         self.wait()
 
+
     def run(self):
-        self.ip_address = packetsniffer.scan_ip_address()
-        self.table.clearContents()
-        self.table.setRowCount(0)
+        ip_address = packetsniffer.scan_ip_address()
 
-        self.table.setRowCount(len(self.ip_address))
 
-        for index, ip_address in enumerate(self.ip_address):
+        self.table.setRowCount(len(ip_address))
+
+        for index, ip_address in enumerate(ip_address):
             self.table.setItem(index, 0, QtWidgets.QTableWidgetItem(ip_address))
 
 
