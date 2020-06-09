@@ -15,24 +15,18 @@ from ip_sniffer import Ui_Dialog
 from pathlib import Path
 import json, os
 import firewall
+import hotkey
 
 from pynput.keyboard import Key, Listener, KeyCode, HotKey, GlobalHotKeys
 
 
 class Ui_MainWindow(QMainWindow):
-
     height = 600
     width = 400
     window_title = "GTA V SOLO KIT"
 
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
-
-        #  will be used to set up hot keys to turn on and off firewall
-        changeFirewallStatus = GlobalHotKeys({'<f11>': self.turnOnFirewall,
-                                              '<f12>': self.turnOffFirewall
-                                              })
-        changeFirewallStatus.start()
 
         self.tray_icon = QSystemTrayIcon(self)
         self.settings_file = {}
@@ -47,7 +41,7 @@ class Ui_MainWindow(QMainWindow):
         self.create_setting_file()
         self.setupTrayIcon()
         self.set_up_help_window()
-        self.setup_shortcut_window()
+        self.setup_global_hot_key()
 
     def setupUi(self):
         # second window for scanning lobby ip _ add
@@ -175,30 +169,50 @@ class Ui_MainWindow(QMainWindow):
 
         # prevent tables from  being edited
         self.tableView.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
-
         menu_bar = self.menuBar()
         setting_menu = menu_bar.addAction("Keyboard Shortcut Settings")
         setting_menu.triggered.connect(self.display_shortcut_window)
 
-
         help_window = menu_bar.addAction("Help")
         help_window.triggered.connect(self.displayHelpScreen)
         self.help_dialog = QtWidgets.QDialog(self)
-        self.shortcut_dialog = QtWidgets.QDialog(self)
 
+        self.shortcut_window = hotkey.HotKey(self)
 
         self.setCentralWidget(self.centralwidget)
         self.focusWidget()
         self.setTextForButtons()
 
-    def setup_shortcut_window(self):
-        layout = QtWidgets.QHBoxLayout()
-        # prevent from switching between main window while it is opened
-        self.shortcut_dialog.setWindowModality(Qt.ApplicationModal)
+    def setup_global_hot_key(self):
+        self.hot_keys = self.settings_file.get("Hot_Key")
 
+        hot_key_on = f'<{self.hot_keys.get("F_ON")}>'
+        hot_key_off = f'<{self.hot_keys.get("F_OFF")}>'
+
+        #  will be used to set up hot keys to turn on and off firewall
+        self.changeFirewallStatus = GlobalHotKeys({hot_key_on: self.turnOnFirewall,
+                                                   hot_key_off: self.turnOffFirewall
+                                                   })
+        self.changeFirewallStatus.start()
+    def update_global_hot_key(self):
+
+        self.hot_keys = json.load(open("settings.json", "r")).get("Hot_Key")
+
+        hot_key_on = f'<{self.hot_keys.get("F_ON")}>'
+        hot_key_off = f'<{self.hot_keys.get("F_OFF")}>'
+
+        print(hot_key_on)
+
+        self.changeFirewallStatus.stop()
+        #  will be used to set up hot keys to turn on and off firewall
+        self.changeFirewallStatus = GlobalHotKeys({hot_key_on: self.turnOnFirewall,
+                                                   hot_key_off: self.turnOffFirewall
+                                                   })
+        self.changeFirewallStatus.start()
 
     def display_shortcut_window(self):
-        self.shortcut_dialog.show()
+
+        self.shortcut_window.show()
 
     def set_up_help_window(self):
 
@@ -237,18 +251,11 @@ class Ui_MainWindow(QMainWindow):
 
     def displayHelpScreen(self):
 
-
-
-
-
-
         # prevent from switching between main window while it is opened
         self.help_dialog.show()
 
-
     def displayLobbyScanWindow(self):
         self.Dialog.show()
-
 
     def showWindow(self):
         self.show()
@@ -297,7 +304,6 @@ class Ui_MainWindow(QMainWindow):
         if firewall.firewall_exist():
 
             if not self.firewall_active:
-                print("user held control and f1")
                 self.tray_icon.showMessage(self.windowTitle(), "Firewall On")
                 firewall.enable_firewall_rule()
                 self.update_firewall_button_status()
@@ -307,7 +313,6 @@ class Ui_MainWindow(QMainWindow):
         if firewall.firewall_exist():
 
             if self.firewall_active:
-                print("user held control and f2")
                 self.tray_icon.showMessage(self.windowTitle(), "Firewall off")
                 firewall.disable_firewall_rule()
                 self.update_firewall_button_status()
@@ -346,7 +351,6 @@ class Ui_MainWindow(QMainWindow):
 
         self.ip_address_scope = firewall.ip_address_without_scope()
 
-
         if not self.ip_address_scope:
             self.tableView.setRowCount(1)
             self.tableView.setItem(0, 0, QtWidgets.QTableWidgetItem("Private Session - None Allowed"))
@@ -357,9 +361,6 @@ class Ui_MainWindow(QMainWindow):
 
             for index, ip_address in enumerate(self.ip_address_scope):
                 self.tableView.setItem(index, 0, QtWidgets.QTableWidgetItem(ip_address))
-
-
-
 
     def firewall_mode(self):
 
@@ -488,11 +489,11 @@ class Ui_MainWindow(QMainWindow):
             json_settings = {"GTA_FILE_PATH": "",
                              "IP_Address": {
                              },
-                             "Hot_Key":{"F_ON":"F11",
-                                        "F_OFF":"F12",
-                                        "R_M":"F10"
+                             "Hot_Key": {"F_ON": "F11",
+                                         "F_OFF": "F12",
+                                         "R_M": "F10"
 
-                             }
+                                         }
 
                              }
 
@@ -511,9 +512,8 @@ class RemoveIPThread(QThread):
         self.wait()
 
     def run(self):
-
         # get the strings value of the table rows
-        ip_addresses = ",".join([ ip.text() for ip in self.tableView.selectedItems()])
+        ip_addresses = ",".join([ip.text() for ip in self.tableView.selectedItems()])
 
         firewall.remove_white_list(ip_addresses)
 
@@ -525,7 +525,7 @@ class AddIPThread(QThread):
     def __init__(self, ip_address, parent=None):
         super(AddIPThread, self).__init__(parent)
         self.ip_address = ip_address
-        self.main_window  = parent
+        self.main_window = parent
 
     def __del__(self):
         self.wait()

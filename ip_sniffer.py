@@ -14,10 +14,10 @@ import firewall
 import packetsniffer
 
 
-class Ui_Dialog():
+class Ui_Dialog(QtWidgets.QDialog):
 
     def __init__(self, parent=None):
-        QtWidgets.QDialog.__init__(parent)
+        super(Ui_Dialog, self).__init__(parent)
         # will be used to pass information across to main window
         self.main_window = parent
 

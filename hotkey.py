@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QGridLayout, QMainWindow, QWidget
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread, pyqtSignal, Qt
 from pynput.keyboard import Key, Listener
 import json
 import re
@@ -44,16 +44,18 @@ hot_keys_values = settings.get("Hot_Key").values()
 
 hot_keys = settings.get("Hot_Key")
 
+
 class HotKey(QMainWindow):
 
     def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setup_ui()
+        super(HotKey, self).__init__(parent)
         self.setFixedWidth(400)
         self.setWindowIcon(QtGui.QIcon("gta_icon.png"))
         self.setWindowTitle("GTA V SOLO KIT - HotKeys")
         # to check if a user is still setting a hotkey
         self.setting_key = False
+        self.main_parent = parent
+        self.setup_ui()
 
     def setup_ui(self):
         main_layout = QGridLayout()
@@ -68,21 +70,24 @@ class HotKey(QMainWindow):
         resource_monitor_key.setStyleSheet("border:1px solid black;")
 
         self.resource_monitor_button = QPushButton(self)
-        self.resource_monitor_button.setText("F10")
         self.resource_monitor_button.clicked.connect(self.hot_key_resource_monitor)
         self.resource_monitor_button.setFixedSize(100, 23)
 
-
         self.firewall_on_button = QPushButton(self)
-        self.firewall_on_button.setText("F11")
         self.firewall_on_button.clicked.connect(self.hot_key_firewall_on)
         self.firewall_on_button.setFixedSize(100, 23)
 
         self.firewall_off_button = QPushButton(self)
         self.firewall_off_button.clicked.connect(self.hot_key_firewall_off)
-        self.firewall_off_button.setText("F12")
         self.firewall_off_button.setFixedSize(100, 23)
+
         self.firewall_on_button.setObjectName("F_ON")
+        self.firewall_off_button.setObjectName("F_OFF")
+        self.resource_monitor_button.setObjectName("R_M")
+
+        self.firewall_on_button.setText(hot_keys[self.firewall_on_button.objectName()])
+        self.firewall_off_button.setText(hot_keys[self.firewall_off_button.objectName()])
+        self.resource_monitor_button.setText(hot_keys[self.resource_monitor_button.objectName()])
 
         option_label = QLabel("Options")
         hot_key_label = QLabel("HotKeys")
@@ -107,7 +112,7 @@ class HotKey(QMainWindow):
         # to be used when listening for keys to be assigned to
         self.worker_thread = WorkerThread(self)
         self.worker_thread.finished.connect(self.changeTextButton)
-
+        self.setWindowModality(Qt.ApplicationModal)
         self.setCentralWidget(widget)
 
     def hot_key_resource_monitor(self):
@@ -137,6 +142,7 @@ class HotKey(QMainWindow):
 
             self.worker_thread.button = self.firewall_on_button
             self.worker_thread.start()
+
 
         else:
             self.worker_thread.button.setStyleSheet(StyleSheet)
@@ -187,24 +193,38 @@ class WorkerThread(QThread):
         self.button = None
         self.button_name = None
 
+        self.parent_test = parent
+
+
     def on_press(self, key):
 
-        format_key = str(key).replace("Key.", "").title()
+        format_key = re.sub("Key\.", "", str(key)).title()
 
+        if format_key == '''"'"''':
+            format_key = format_key.replace('"', "")
 
+        else:
+            format_key = format_key.replace("'", "")
 
         if key == Key.esc:
             self.finished.emit(str(key))
+
         # check the key has not already been assigned
         elif format_key in hot_keys_values and hot_keys[self.button_name] != format_key:
-            print("i am here")
             self.finished.emit("Key_in_used")
 
-
         else:
+            # replacing the hot key setting
+            hot_keys[self.button_name] = format_key
+            with open("settings.json", "w") as f:
+                json.dump(settings, f)
+                # update the global hot_keys
+            self.parent_test.main_parent.update_global_hot_key()
+
             self.listening_for_key = False
             self.finished.emit(format_key)
             self.key_listner.stop()
+
 
 
     def run(self):
