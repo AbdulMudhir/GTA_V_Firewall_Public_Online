@@ -46,6 +46,8 @@ class Ui_MainWindow(QMainWindow):
         self.firewall_status()
         self.create_setting_file()
         self.setupTrayIcon()
+        self.set_up_help_window()
+        self.setup_shortcut_window()
 
     def setupUi(self):
         # second window for scanning lobby ip _ add
@@ -175,22 +177,32 @@ class Ui_MainWindow(QMainWindow):
         self.tableView.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
 
         menu_bar = self.menuBar()
-        setting_menu = menu_bar.addMenu("Keyboard Shortcut Settings")
+        setting_menu = menu_bar.addAction("Keyboard Shortcut Settings")
+        setting_menu.triggered.connect(self.display_shortcut_window)
 
 
         help_window = menu_bar.addAction("Help")
         help_window.triggered.connect(self.displayHelpScreen)
         self.help_dialog = QtWidgets.QDialog(self)
+        self.shortcut_dialog = QtWidgets.QDialog(self)
+
 
         self.setCentralWidget(self.centralwidget)
         self.focusWidget()
         self.setTextForButtons()
 
+    def setup_shortcut_window(self):
+        layout = QtWidgets.QHBoxLayout()
+        # prevent from switching between main window while it is opened
+        self.shortcut_dialog.setWindowModality(Qt.ApplicationModal)
 
-    def displayHelpScreen(self):
 
+    def display_shortcut_window(self):
+        self.shortcut_dialog.show()
 
-        self.help_dialog.setWindowTitle(self.window_title +"- HELP")
+    def set_up_help_window(self):
+
+        self.help_dialog.setWindowTitle(self.window_title + "- HELP")
         layout = QtWidgets.QHBoxLayout()
         instruction = QtWidgets.QLabel("Instruction\n"
                                        "1. Add Firewall Rule\n"
@@ -210,21 +222,23 @@ class Ui_MainWindow(QMainWindow):
                                        "2. Click on Scan Lobby IP Address\n"
                                        "3. Click on Scan Lobby\n"
                                        "4. Select the IP address and click on Add IP address"
-                                      "5. Turn on Firewall "
+                                       "5. Turn on Firewall "
                                        "\n\nIf you have any questions, feel free to contact me on discord @ Hunter#2950"
-                                       
-                                       
+
+
                                        "")
 
-
         layout.addWidget(instruction)
-        layout.setSpacing(0)
-        instruction.setMargin(0)
+
         self.help_dialog.setFixedHeight(310)
         self.help_dialog.setFixedWidth(420)
 
-
         self.help_dialog.setLayout(layout)
+
+    def displayHelpScreen(self):
+
+
+
 
 
 
