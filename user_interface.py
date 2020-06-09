@@ -487,6 +487,11 @@ class Ui_MainWindow(QMainWindow):
 
             json_settings = {"GTA_FILE_PATH": "",
                              "IP_Address": {
+                             },
+                             "Hot_Key":{"F_ON":"F11",
+                                        "F_OFF":"F12",
+                                        "R_M":"F10"
+
                              }
 
                              }

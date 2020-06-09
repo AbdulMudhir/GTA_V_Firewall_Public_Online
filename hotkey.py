@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButt
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import QThread, pyqtSignal
 from pynput.keyboard import Key, Listener
+import json
 import re
 
 StyleSheet = '''
@@ -37,6 +38,11 @@ QPushButton:hover {
 
 '''
 
+settings = json.load(open("settings.json"))
+
+hot_keys_values = settings.get("Hot_Key").values()
+
+hot_keys = settings.get("Hot_Key")
 
 class HotKey(QMainWindow):
 
@@ -76,6 +82,7 @@ class HotKey(QMainWindow):
         self.firewall_off_button.clicked.connect(self.hot_key_firewall_off)
         self.firewall_off_button.setText("F12")
         self.firewall_off_button.setFixedSize(100, 23)
+        self.firewall_on_button.setObjectName("F_ON")
 
         option_label = QLabel("Options")
         hot_key_label = QLabel("HotKeys")
@@ -161,10 +168,13 @@ class HotKey(QMainWindow):
         if key == "Key.esc":
             self.worker_thread.button.setText("None")
             self.worker_thread.button.setStyleSheet(StyleSheet)
-        else:
-            format_key = key.replace("Key.", "").title()
 
-            self.worker_thread.button.setText(format_key)
+        elif key == "Key_in_used":
+            self.worker_thread.button.setText("Select a hotkey...")
+            self.worker_thread.button.setStyleSheet(StyleSheetSelected)
+        else:
+
+            self.worker_thread.button.setText(key)
             self.worker_thread.button.setStyleSheet(StyleSheet)
 
 
@@ -175,24 +185,33 @@ class WorkerThread(QThread):
         super(WorkerThread, self).__init__(parent)
         self.listening_for_key = False
         self.button = None
+        self.button_name = None
 
     def on_press(self, key):
+
+        format_key = str(key).replace("Key.", "").title()
+
+
+
         if key == Key.esc:
             self.finished.emit(str(key))
+        # check the key has not already been assigned
+        elif format_key in hot_keys_values and hot_keys[self.button_name] != format_key:
+            print("i am here")
+            self.finished.emit("Key_in_used")
+
+
         else:
-            self.finished.emit(str(key))
+            self.listening_for_key = False
+            self.finished.emit(format_key)
+            self.key_listner.stop()
 
-
-        self.key_listner.stop()
-        self.listening_for_key = False
-
-    def on_release(self, key):
-        self.finished.emit(str(key))
 
     def run(self):
         self.listening_for_key = True
+        self.button_name = self.button.objectName()
         # Collect events until released
-        self.key_listner = Listener(on_press=self.on_press, on_release=self.on_release)
+        self.key_listner = Listener(on_press=self.on_press)
         self.key_listner.start()
 
 
