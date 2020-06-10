@@ -16,6 +16,10 @@ from pathlib import Path
 import json, os
 import firewall
 import hotkey
+from suspendprocess import GTASuspend
+
+
+
 
 from pynput.keyboard import Key, Listener, KeyCode, HotKey, GlobalHotKeys
 
@@ -41,7 +45,7 @@ class Ui_MainWindow(QMainWindow):
         self.create_setting_file()
         self.setupTrayIcon()
         self.set_up_help_window()
-        self.setup_global_hot_key()
+        self.update_global_hot_key()
 
     def setupUi(self):
         # second window for scanning lobby ip _ add
@@ -153,6 +157,7 @@ class Ui_MainWindow(QMainWindow):
         self.firewall_button.setMaximumSize(QtCore.QSize(218, 50))
         self.buttons.addWidget(self.firewall_button)
         self.resource_monitor_button = QtWidgets.QPushButton(self.centralwidget)
+        self.resource_monitor_button.clicked.connect(self.suspend_gta)
 
         self.resource_monitor_button.setMinimumSize(QtCore.QSize(25, 50))
         self.resource_monitor_button.setMaximumSize(QtCore.QSize(217, 50))
@@ -177,67 +182,43 @@ class Ui_MainWindow(QMainWindow):
         help_window.triggered.connect(self.displayHelpScreen)
         self.help_dialog = QtWidgets.QDialog(self)
 
+        self.gta_process = GTASuspend(self)
+        self.gta_process.seconds.connect(self.seconds_process_down)
+
         self.shortcut_window = hotkey.HotKey(self)
 
         self.setCentralWidget(self.centralwidget)
         self.focusWidget()
         self.setTextForButtons()
 
-    def setup_global_hot_key(self):
-        self.hot_keys = self.settings_file.get("Hot_Key")
+    def seconds_process_down(self, seconds):
 
-        hot_key_on = f'<{self.hot_keys.get("F_ON")}>'
-        hot_key_off = f'<{self.hot_keys.get("F_OFF")}>'
+        self.resource_monitor_button.setText(f"GTA V Will Resume Process in {seconds}")
+
+        if seconds == 0:
+            self.resource_monitor_button.setText("Resource Monitor")
 
 
-        if  hot_key_on == "<None>" and  hot_key_off == "<None>":
-            self.changeFirewallStatus = GlobalHotKeys({
-            })
+    def suspend_gta(self):
 
-        elif hot_key_on == "<None>":
+        if not self.gta_process.isRunning():
 
-            #  will be used to set up hot keys to turn on and off firewall
-            self.changeFirewallStatus = GlobalHotKeys({
-                                                       hot_key_off: self.turnOffFirewall
-                                                       })
-        elif hot_key_off == "<None>":
-            #  will be used to set up hot keys to turn on and off firewall
-            self.changeFirewallStatus = GlobalHotKeys({hot_key_on: self.turnOnFirewall
-                                                       })
+            self.gta_process.start()
 
-        else:
-            #  will be used to set up hot keys to turn on and off firewall
-            self.changeFirewallStatus = GlobalHotKeys({hot_key_on: self.turnOnFirewall,
-                                                       hot_key_off: self.turnOffFirewall
-                                                       })
-        self.changeFirewallStatus.start()
+
     def update_global_hot_key(self):
 
         self.hot_keys = json.load(open("settings.json", "r")).get("Hot_Key")
 
-        hot_key_on = f'<{self.hot_keys.get("F_ON")}>'
-        hot_key_off = f'<{self.hot_keys.get("F_OFF")}>'
+        method_calls = [self.turnOnFirewall, self.turnOffFirewall, self.suspend_gta]
 
-        if hot_key_on == "<None>" and hot_key_off == "<None>":
-            self.changeFirewallStatus = GlobalHotKeys({
-            })
+        # remove the need to assign function if no key has been assigned
 
-        elif hot_key_on == "<None>":
+        hot_keys = {f"<{key}>": method_calls[index]
+                    for index, (name, key) in enumerate(self.hot_keys.items()) if key != "None"}
 
-            #  will be used to set up hot keys to turn on and off firewall
-            self.changeFirewallStatus = GlobalHotKeys({
-                hot_key_off: self.turnOffFirewall
-            })
-        elif hot_key_off == "<None>":
-            #  will be used to set up hot keys to turn on and off firewall
-            self.changeFirewallStatus = GlobalHotKeys({hot_key_on: self.turnOnFirewall
-                                                       })
-
-        else:
-            #  will be used to set up hot keys to turn on and off firewall
-            self.changeFirewallStatus = GlobalHotKeys({hot_key_on: self.turnOnFirewall,
-                                                       hot_key_off: self.turnOffFirewall
-                                                       })
+        #  will be used to set up hot keys to turn on and off firewall
+        self.changeFirewallStatus = GlobalHotKeys(hot_keys)
         self.changeFirewallStatus.start()
 
     def display_shortcut_window(self):

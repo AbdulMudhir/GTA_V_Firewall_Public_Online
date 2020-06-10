@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="445d5f82-ae2c-468d-832f-e90354327bb7" name="Default Changelist" comment="update hot key when user has setup - need to complete numpad hotkey checks">
+    <list default="true" id="445d5f82-ae2c-468d-832f-e90354327bb7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/suspendprocess.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotkey.py" beforeDir="false" afterPath="$PROJECT_DIR$/hotkey.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_interface.py" afterDir="false" />
@@ -36,27 +37,6 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager" selected="Python.user_interface">
-    <configuration name="firewall (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="GTA_V_Firewall_Public_Online" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/firewall.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="hotkey" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="GTA_V_Firewall_Public_Online" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -120,6 +100,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="suspendprocess" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="GTA_V_Firewall_Public_Online" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/suspendprocess.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="user_interface" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="GTA_V_Firewall_Public_Online" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -142,19 +143,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.firewall (1)" />
       <item itemvalue="Python.ip_sniffer" />
       <item itemvalue="Python.packetsniffer" />
       <item itemvalue="Python.user_interface" />
       <item itemvalue="Python.hotkey" />
+      <item itemvalue="Python.suspendprocess" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.user_interface" />
-        <item itemvalue="Python.ip_sniffer" />
+        <item itemvalue="Python.suspendprocess" />
         <item itemvalue="Python.hotkey" />
+        <item itemvalue="Python.ip_sniffer" />
         <item itemvalue="Python.packetsniffer" />
-        <item itemvalue="Python.firewall (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -510,11 +511,17 @@
       <option name="project" value="LOCAL" />
       <updated>1591742924034</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="hotkeys should now work if 1 hotkey has not been set">
+      <created>1591818317337</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1591818317337</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="implemented ip address removal" />
     <MESSAGE value="removing and reseting when firewall rule is removed" />
     <MESSAGE value="remove bulk ip address" />
     <MESSAGE value="removed QT designer methods" />
@@ -539,7 +546,8 @@
     <MESSAGE value="hot key setup for all 3 buttons" />
     <MESSAGE value="prevent multiple keys being assigned" />
     <MESSAGE value="update hot key when user has setup - need to complete numpad hotkey checks" />
-    <option name="LAST_COMMIT_MESSAGE" value="update hot key when user has setup - need to complete numpad hotkey checks" />
+    <MESSAGE value="hotkeys should now work if 1 hotkey has not been set" />
+    <option name="LAST_COMMIT_MESSAGE" value="hotkeys should now work if 1 hotkey has not been set" />
   </component>
   <component name="WindowStateProjectService">
     <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590919418041">
@@ -550,35 +558,35 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1010" y="448" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591738185491" />
-    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591743495814">
+    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591818316574">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591743495814" />
+    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591818316574" />
     <state x="3080" y="51" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881570913" />
     <state x="1060" y="456" key="FileChooserDialogImpl" timestamp="1591437431752">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1060" y="456" key="FileChooserDialogImpl/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591437431752" />
-    <state width="2539" height="292" key="GridCell.Tab.0.bottom" timestamp="1591813651405">
+    <state width="2539" height="204" key="GridCell.Tab.0.bottom" timestamp="1591825022655">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="292" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591813651405" />
-    <state width="1419" height="94" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591797385649" />
-    <state width="2539" height="292" key="GridCell.Tab.0.center" timestamp="1591813651405">
+    <state width="2539" height="204" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591825022655" />
+    <state width="1419" height="57" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591822142120" />
+    <state width="2539" height="204" key="GridCell.Tab.0.center" timestamp="1591825022655">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="292" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591813651405" />
-    <state width="1419" height="94" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591797385649" />
-    <state width="2539" height="292" key="GridCell.Tab.0.left" timestamp="1591813651405">
+    <state width="2539" height="204" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591825022655" />
+    <state width="1419" height="57" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591822142119" />
+    <state width="2539" height="204" key="GridCell.Tab.0.left" timestamp="1591825022655">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="292" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591813651405" />
-    <state width="1419" height="94" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591797385648" />
-    <state width="2539" height="292" key="GridCell.Tab.0.right" timestamp="1591813651405">
+    <state width="2539" height="204" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591825022655" />
+    <state width="1419" height="57" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591822142119" />
+    <state width="2539" height="204" key="GridCell.Tab.0.right" timestamp="1591825022655">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="292" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591813651405" />
-    <state width="1419" height="94" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591797385649" />
+    <state width="2539" height="204" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591825022655" />
+    <state width="1419" height="57" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591822142119" />
     <state width="2539" height="490" key="GridCell.Tab.1.bottom" timestamp="1591706976954">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -599,19 +607,19 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="781" y="343" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591538994622" />
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591742924918">
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591818318986">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591742924918" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591818318986" />
     <state x="3051" y="267" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881572496" />
     <state x="2560" y="0" width="1456" height="945" key="dock-window-1" timestamp="1591737453801">
       <screen x="2560" y="0" width="1440" height="860" />
     </state>
     <state x="2560" y="0" width="1456" height="945" key="dock-window-1/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591737453801" />
-    <state x="2627" y="-25" width="1456" height="931" maximized="true" key="dock-window-2" timestamp="1591813530226">
-      <screen x="2560" y="0" width="1440" height="860" />
+    <state x="1021" y="132" width="819" height="572" key="dock-window-2" timestamp="1591820374348">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="2627" y="-25" width="1456" height="931" maximized="true" key="dock-window-2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591813530226" />
+    <state x="1021" y="132" width="819" height="572" key="dock-window-2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591820374348" />
     <state x="2560" y="0" width="1456" height="945" key="dock-window-2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591813308312" />
   </component>
 </project>

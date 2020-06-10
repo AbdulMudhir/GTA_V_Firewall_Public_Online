@@ -200,8 +200,6 @@ class WorkerThread(QThread):
 
         format_key = re.sub("Key\.", "", str(key)).title()
 
-
-
         if format_key == '''"'"''':
             format_key = format_key.replace('"', "")
 
@@ -216,6 +214,7 @@ class WorkerThread(QThread):
         # check the key has not already been assigned
         elif format_key in hot_keys_values and hot_keys[self.button_name] != format_key:
             self.finished.emit("Key_in_used")
+
 
         else:
             # replacing the hot key setting
