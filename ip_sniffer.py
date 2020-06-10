@@ -9,7 +9,7 @@
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt, QThread
+from PyQt5.QtCore import Qt, QThread, pyqtSignal
 import firewall
 import packetsniffer
 
@@ -20,21 +20,22 @@ class Ui_Dialog(QtWidgets.QDialog):
         super(Ui_Dialog, self).__init__(parent)
         # will be used to pass information across to main window
         self.main_window = parent
+        self.setupUi()
 
-    def setupUi(self, Dialog):
-        Dialog.resize(413, 648)
-        Dialog.setMinimumSize(QtCore.QSize(413, 648))
-        Dialog.setMaximumSize(QtCore.QSize(413, 648))
+    def setupUi(self):
+        self.resize(413, 648)
+        self.setMinimumSize(QtCore.QSize(413, 648))
+        self.setMaximumSize(QtCore.QSize(413, 648))
 
         self.network_interface = None
         self.network_name, self.network_description = packetsniffer.network_interfaces()
 
-        self.gridLayout = QtWidgets.QGridLayout(Dialog)
-        self.tableWidget = QtWidgets.QTableWidget(Dialog)
-        self.add_ip_address = QtWidgets.QPushButton(Dialog)
+        self.gridLayout = QtWidgets.QGridLayout(self)
+        self.tableWidget = QtWidgets.QTableWidget(self)
+        self.add_ip_address = QtWidgets.QPushButton(self)
         self.add_ip_address.clicked.connect(self.add_ip_address_from_table)
-        self.interface_options = QtWidgets.QComboBox(Dialog)
-        Dialog.setWindowIcon(QIcon('gta_icon.png'))
+        self.interface_options = QtWidgets.QComboBox(self)
+        self.setWindowIcon(QIcon('gta_icon.png'))
         self.setupInterfaces()
 
         self.tableWidget.setColumnCount(1)
@@ -47,11 +48,11 @@ class Ui_Dialog(QtWidgets.QDialog):
         self.gridLayout.addWidget(self.tableWidget, 5, 0, 1, 1)
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setSpacing(2)
-        self.scanning_buttons = QtWidgets.QPushButton(Dialog)
+        self.scanning_buttons = QtWidgets.QPushButton(self)
         self.scanning_buttons.clicked.connect(self.scanIPAddressInLobby)
         self.scanning_buttons.setFocus()
 
-        interface_label = QtWidgets.QLabel(Dialog)
+        interface_label = QtWidgets.QLabel(self)
         interface_label.setText("Network Interface")
 
         self.verticalLayout.addWidget(interface_label)
@@ -62,10 +63,10 @@ class Ui_Dialog(QtWidgets.QDialog):
         self.gridLayout.addLayout(self.verticalLayout, 1, 0, 1, 1)
 
         # prevent from switching between main window while it is opened
-        Dialog.setWindowModality(Qt.ApplicationModal)
+        self.setWindowModality(Qt.ApplicationModal)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(self)
+        QtCore.QMetaObject.connectSlotsByName(self)
 
     def setupInterfaces(self):
 
@@ -78,8 +79,18 @@ class Ui_Dialog(QtWidgets.QDialog):
 
         network_name = self.network_name[network_description_index]
 
-        sniffer = SnifferThread(self.tableWidget, network_name)
+        sniffer = SnifferThread(self)
+        sniffer.interface = network_name
+        sniffer.ip_address.connect(self.ip_address_scanned)
         sniffer.start()
+
+    def ip_address_scanned(self, ip_addresses):
+        self.tableWidget.setRowCount(0)
+        self.tableWidget.setRowCount(len(ip_addresses))
+
+        for index ,ip_address in enumerate(ip_addresses):
+            self.tableWidget.setItem(index, 0, QtWidgets.QTableWidgetItem(ip_address))
+
 
     def add_ip_address_from_table(self):
 
@@ -119,32 +130,25 @@ class AddIPThread(QThread):
 
 
 class SnifferThread(QThread):
+    ip_address = pyqtSignal(list)
 
-    def __init__(self, table, interface, parent=None):
+    def __init__(self, parent=None):
         super(SnifferThread, self).__init__(parent)
-        self.interface = interface
-        self.table = table
+        self.interface = None
 
     def __del__(self):
         self.wait()
 
-
     def run(self):
         ip_address = packetsniffer.scan_ip_address()
 
-
-        self.table.setRowCount(len(ip_address))
-
-        for index, ip_address in enumerate(ip_address):
-            self.table.setItem(index, 0, QtWidgets.QTableWidgetItem(ip_address))
+        self.ip_address.emit(ip_address)
 
 
 if __name__ == "__main__":
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
     ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
+    ui.show()
     sys.exit(app.exec_())

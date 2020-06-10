@@ -17,11 +17,9 @@ import json, os
 import firewall
 import hotkey
 from suspendprocess import GTASuspend
+import ctypes, os
 
-
-
-
-from pynput.keyboard import Key, Listener, KeyCode, HotKey, GlobalHotKeys
+from pynput.keyboard import GlobalHotKeys
 
 
 class Ui_MainWindow(QMainWindow):
@@ -31,7 +29,7 @@ class Ui_MainWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
-
+        self.is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
         self.tray_icon = QSystemTrayIcon(self)
         self.settings_file = {}
         # will  be used for setting hot keysvisu
@@ -47,11 +45,12 @@ class Ui_MainWindow(QMainWindow):
         self.set_up_help_window()
         self.update_global_hot_key()
 
+        if not self.is_admin:
+            self.notAdmin()
+
     def setupUi(self):
         # second window for scanning lobby ip _ add
-        self.Dialog = QtWidgets.QDialog(self)
         self.second_window = Ui_Dialog(self)
-        self.second_window.setupUi(self.Dialog)
         self.gta_icon = QIcon("gta_icon.png")
 
         self.resize(self.width, self.height)
@@ -198,13 +197,45 @@ class Ui_MainWindow(QMainWindow):
         if seconds == 0:
             self.resource_monitor_button.setText("Resource Monitor")
 
+    def notAdmin(self):
+        self.firewall_button.setDisabled(True)
+        self.add_firewall_rule_button.setDisabled(True)
+        self.remove_firewall_rule_button.setDisabled(True)
+        self.add_ip_address_button.setDisabled(True)
+        self.remove_ip_address_button.setDisabled(True)
+        self.file_path_directory.setDisabled(True)
+        self.file_path.setDisabled(True)
+        self.ip_address_edit_text.setDisabled(True)
+        self.tableView.setDisabled(True)
+
+        self.second_window.add_ip_address.setDisabled(True)
+
+        pop_up = QtWidgets.QDialog(self)
+        pop_up.setWindowTitle(self.window_title+" - Run as Admin")
+        layout = QtWidgets.QVBoxLayout()
+
+
+        button = QtWidgets.QPushButton(self)
+        button.setText("Okay")
+        button.clicked.connect(lambda e: pop_up.close())
+
+        pop_up.setFixedSize(300,70)
+        button.setFixedSize(50,30)
+
+        message = QtWidgets.QLabel("Please run as administrator to use some of the features")
+
+        layout.addWidget(message, alignment=QtCore.Qt.AlignCenter)
+
+        layout.addWidget(button, alignment=QtCore.Qt.AlignCenter)
+
+        pop_up.setLayout(layout)
+
+        pop_up.show()
 
     def suspend_gta(self):
 
         if not self.gta_process.isRunning():
-
             self.gta_process.start()
-
 
     def update_global_hot_key(self):
 
@@ -266,12 +297,13 @@ class Ui_MainWindow(QMainWindow):
         self.help_dialog.show()
 
     def displayLobbyScanWindow(self):
-        self.Dialog.show()
+        self.second_window.show()
 
+    # used for tray icon to bring window back up
     def showWindow(self):
         self.show()
+        # display the window  and brings it to focus when brought back up by tray icon
         self.setWindowState(self.windowState() & ~QtCore.Qt.WindowMinimized | QtCore.Qt.WindowActive)
-        self.activateWindow()
 
     def firewall_status(self):
 

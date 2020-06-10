@@ -30,6 +30,6 @@ def scan_ip_address(interface=conf.iface):
                            count=200)
 
     sniffer.start()
-    sniffer.join(timeout=0.5)
+    sniffer.join(timeout=1)
 
     return ip_addresses
