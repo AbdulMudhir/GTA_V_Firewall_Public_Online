@@ -189,10 +189,27 @@ class Ui_MainWindow(QMainWindow):
         hot_key_on = f'<{self.hot_keys.get("F_ON")}>'
         hot_key_off = f'<{self.hot_keys.get("F_OFF")}>'
 
-        #  will be used to set up hot keys to turn on and off firewall
-        self.changeFirewallStatus = GlobalHotKeys({hot_key_on: self.turnOnFirewall,
-                                                   hot_key_off: self.turnOffFirewall
-                                                   })
+
+        if  hot_key_on == "<None>" and  hot_key_off == "<None>":
+            self.changeFirewallStatus = GlobalHotKeys({
+            })
+
+        elif hot_key_on == "<None>":
+
+            #  will be used to set up hot keys to turn on and off firewall
+            self.changeFirewallStatus = GlobalHotKeys({
+                                                       hot_key_off: self.turnOffFirewall
+                                                       })
+        elif hot_key_off == "<None>":
+            #  will be used to set up hot keys to turn on and off firewall
+            self.changeFirewallStatus = GlobalHotKeys({hot_key_on: self.turnOnFirewall
+                                                       })
+
+        else:
+            #  will be used to set up hot keys to turn on and off firewall
+            self.changeFirewallStatus = GlobalHotKeys({hot_key_on: self.turnOnFirewall,
+                                                       hot_key_off: self.turnOffFirewall
+                                                       })
         self.changeFirewallStatus.start()
     def update_global_hot_key(self):
 
@@ -201,13 +218,26 @@ class Ui_MainWindow(QMainWindow):
         hot_key_on = f'<{self.hot_keys.get("F_ON")}>'
         hot_key_off = f'<{self.hot_keys.get("F_OFF")}>'
 
-        print(hot_key_on)
+        if hot_key_on == "<None>" and hot_key_off == "<None>":
+            self.changeFirewallStatus = GlobalHotKeys({
+            })
 
-        self.changeFirewallStatus.stop()
-        #  will be used to set up hot keys to turn on and off firewall
-        self.changeFirewallStatus = GlobalHotKeys({hot_key_on: self.turnOnFirewall,
-                                                   hot_key_off: self.turnOffFirewall
-                                                   })
+        elif hot_key_on == "<None>":
+
+            #  will be used to set up hot keys to turn on and off firewall
+            self.changeFirewallStatus = GlobalHotKeys({
+                hot_key_off: self.turnOffFirewall
+            })
+        elif hot_key_off == "<None>":
+            #  will be used to set up hot keys to turn on and off firewall
+            self.changeFirewallStatus = GlobalHotKeys({hot_key_on: self.turnOnFirewall
+                                                       })
+
+        else:
+            #  will be used to set up hot keys to turn on and off firewall
+            self.changeFirewallStatus = GlobalHotKeys({hot_key_on: self.turnOnFirewall,
+                                                       hot_key_off: self.turnOffFirewall
+                                                       })
         self.changeFirewallStatus.start()
 
     def display_shortcut_window(self):

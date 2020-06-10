@@ -200,6 +200,8 @@ class WorkerThread(QThread):
 
         format_key = re.sub("Key\.", "", str(key)).title()
 
+
+
         if format_key == '''"'"''':
             format_key = format_key.replace('"', "")
 
@@ -208,6 +210,8 @@ class WorkerThread(QThread):
 
         if key == Key.esc:
             self.finished.emit(str(key))
+            hot_keys[self.button_name] = "None"
+            self.key_listner.stop()
 
         # check the key has not already been assigned
         elif format_key in hot_keys_values and hot_keys[self.button_name] != format_key:
@@ -216,14 +220,15 @@ class WorkerThread(QThread):
         else:
             # replacing the hot key setting
             hot_keys[self.button_name] = format_key
-            with open("settings.json", "w") as f:
-                json.dump(settings, f)
-                # update the global hot_keys
-            self.parent_test.main_parent.update_global_hot_key()
 
+            # update the global hot_keys
             self.listening_for_key = False
             self.finished.emit(format_key)
             self.key_listner.stop()
+
+        json.dump(settings, open("settings.json", "w") )
+
+        self.parent_test.main_parent.update_global_hot_key()
 
 
 
