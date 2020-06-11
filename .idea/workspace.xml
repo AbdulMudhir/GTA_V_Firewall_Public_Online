@@ -141,11 +141,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.gta_public_solo" />
-      <item itemvalue="Python.hotkey" />
       <item itemvalue="Python.ip_sniffer" />
-      <item itemvalue="Python.suspendprocess" />
       <item itemvalue="Python.user_interface" />
+      <item itemvalue="Python.hotkey" />
+      <item itemvalue="Python.suspendprocess" />
+      <item itemvalue="Python.gta_public_solo" />
     </list>
     <recent_temporary>
       <list>
@@ -567,10 +567,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1032" y="608" key="#com.jetbrains.python.refactoring.move.PyMakeFunctionTopLevelDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591882152613" />
-    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591885979375">
+    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591886804944">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591885979375" />
+    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591886804944" />
     <state x="3080" y="51" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839487658" />
     <state x="3156" y="280" key="FileChooserDialogImpl" timestamp="1591839178154">
       <screen x="2560" y="0" width="1440" height="860" />
@@ -618,15 +618,15 @@
     </state>
     <state x="781" y="343" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591538994622" />
     <state x="2691" y="133" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839188083" />
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591885981108">
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591886768752">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591885981108" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591886768752" />
     <state x="3051" y="267" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881572496" />
-    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1591879847106">
+    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1591886803548">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591879847106" />
+    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591886803548" />
     <state x="3196" y="190" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839484889" />
     <state x="2560" y="0" width="1456" height="945" key="dock-window-1" timestamp="1591884196935">
       <screen x="2560" y="0" width="1440" height="860" />
