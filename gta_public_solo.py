@@ -46,8 +46,12 @@ class Ui_MainWindow(QMainWindow):
 
         self.setupTrayIcon()
         self.set_up_help_window()
-        self.hot_keys_setup =  GlobalHotKeys(self.get_hot_keys())
+
+        self.hot_keys = self.get_hot_keys()
+
+        self.hot_keys_setup = GlobalHotKeys(self.hot_keys)
         self.hot_keys_setup.start()
+
 
 
         if not self.is_admin:
@@ -262,6 +266,8 @@ class Ui_MainWindow(QMainWindow):
 
             self.hot_keys_setup = GlobalHotKeys(self.get_hot_keys())
             self.hot_keys_setup.start()
+
+
 
 
 
