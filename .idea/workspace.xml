@@ -179,13 +179,6 @@
       <option name="presentableId" value="Default" />
       <updated>1590840251199</updated>
     </task>
-    <task id="LOCAL-00005" summary="retrieve the remote ip address">
-      <created>1590848745843</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1590848745843</updated>
-    </task>
     <task id="LOCAL-00006" summary="ip address validator">
       <created>1590850363648</created>
       <option name="number" value="00006" />
@@ -522,11 +515,17 @@
       <option name="project" value="LOCAL" />
       <updated>1591872263021</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="added requirements">
+      <created>1591872642475</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1591872642475</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="shortcut key for turning firewall on and off" />
     <MESSAGE value="turn on and off firewall in game using hotkeys" />
     <MESSAGE value="removed test methods" />
     <MESSAGE value="added ip sniffer using scapy" />
@@ -551,7 +550,8 @@
     <MESSAGE value="fixed thread freezing main frame when addming ip address from scanning" />
     <MESSAGE value="fixed threading issue with removing multiple ip address" />
     <MESSAGE value="check if a file path was given" />
-    <option name="LAST_COMMIT_MESSAGE" value="check if a file path was given" />
+    <MESSAGE value="added requirements" />
+    <option name="LAST_COMMIT_MESSAGE" value="added requirements" />
   </component>
   <component name="WindowStateProjectService">
     <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1591832643403">
@@ -562,10 +562,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1010" y="448" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591868030187" />
-    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591872602453">
+    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591873673068">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591872602453" />
+    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591873673068" />
     <state x="3080" y="51" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839487658" />
     <state x="3156" y="280" key="FileChooserDialogImpl" timestamp="1591839178154">
       <screen x="2560" y="0" width="1440" height="860" />
@@ -613,15 +613,15 @@
     </state>
     <state x="781" y="343" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591538994622" />
     <state x="2691" y="133" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839188083" />
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591872264467">
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591872643690">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591872264467" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591872643690" />
     <state x="3051" y="267" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881572496" />
-    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1591872600455">
+    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1591872633184">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591872600455" />
+    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591872633184" />
     <state x="3196" y="190" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839484889" />
     <state x="2560" y="0" width="1456" height="945" key="dock-window-1" timestamp="1591737453801">
       <screen x="2560" y="0" width="1440" height="860" />
