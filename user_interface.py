@@ -433,7 +433,7 @@ class Ui_MainWindow(QMainWindow):
         selected_ip_address = self.tableView.selectedItems()
 
         if selected_ip_address:
-
+            # will be displayed if multiple IP address were selected
             if len(selected_ip_address) > 1:
                 message_box = QtWidgets.QMessageBox(self)
                 message_box.setWindowTitle("Confirm")
@@ -455,7 +455,9 @@ class Ui_MainWindow(QMainWindow):
 
     def messageBoxConfirmationRemoval(self, button):
         if button.text() == "&Yes":
-            worker_thread = RemoveIPThread(self.tableView, self.update_table)
+            worker_thread = RemoveIPThread(self)
+            worker_thread.selected_ip_address = self.tableView.selectedItems()
+            worker_thread.finished.connect(lambda status: self.update_table())
 
             worker_thread.start()
 
@@ -546,21 +548,19 @@ class Ui_MainWindow(QMainWindow):
 
 class RemoveIPThread(QThread):
 
-    def __init__(self, tableWidget, update_table, parent=None):
-        super(RemoveIPThread, self).__init__(parent)
-        self.tableView = tableWidget
-        self.update_table = update_table
+    finished = pyqtSignal(str)
 
-    def __del__(self):
-        self.wait()
+    def __init__(self, parent=None):
+        super(RemoveIPThread, self).__init__(parent)
+        self.selected_ip_address = None
 
     def run(self):
         # get the strings value of the table rows
-        ip_addresses = ",".join([ip.text() for ip in self.tableView.selectedItems()])
+        ip_addresses = ",".join([ip.text() for ip in self.selected_ip_address])
 
         firewall.remove_white_list(ip_addresses)
 
-        self.update_table()
+        self.finished.emit("finished")
 
 
 class AddIPThread(QThread):
