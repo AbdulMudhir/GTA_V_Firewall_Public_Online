@@ -183,6 +183,7 @@ class HotKey(QMainWindow):
 
             self.worker_thread.button.setText(key)
             self.worker_thread.button.setStyleSheet(StyleSheet)
+        self.main_parent.update_global_hot_key()
 
 
 class WorkerThread(QThread):
@@ -215,6 +216,7 @@ class WorkerThread(QThread):
         if key == Key.esc:
             self.finished.emit(str(key))
             self.hot_keys[self.button_name] = "None"
+            self.listening_for_key = False
             self.key_listner.stop()
 
         # check the key has not already been assigned
@@ -233,7 +235,7 @@ class WorkerThread(QThread):
 
         json.dump(self.settings, open("settings.json", "w") )
 
-        self.parent_test.main_parent.update_global_hot_key()
+
 
 
 

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="445d5f82-ae2c-468d-832f-e90354327bb7" name="Default Changelist" comment="">
+    <list default="true" id="445d5f82-ae2c-468d-832f-e90354327bb7" name="Default Changelist" comment="updated .exe with latest fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gta_public_solo.py" beforeDir="false" afterPath="$PROJECT_DIR$/gta_public_solo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotkey.py" beforeDir="false" afterPath="$PROJECT_DIR$/hotkey.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,13 +180,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1590840251199</updated>
-    </task>
-    <task id="LOCAL-00010" summary="added add and remove firewall button">
-      <created>1590886735490</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1590886735490</updated>
     </task>
     <task id="LOCAL-00011" summary="added settings file">
       <created>1590889467441</created>
@@ -522,11 +517,17 @@
       <option name="project" value="LOCAL" />
       <updated>1591879138090</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="updated .exe with latest fix">
+      <created>1591879860098</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1591879860098</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added network interfaces" />
     <MESSAGE value="functionality to scan lobby ip addresses" />
     <MESSAGE value="ability to scan IP address from the lobby" />
     <MESSAGE value="add ip address from scanner" />
@@ -551,7 +552,8 @@
     <MESSAGE value="fixed issue with firewall button not responding correctly" />
     <MESSAGE value="fixed issue with ip scanner not refreshing" />
     <MESSAGE value="removed shell when disabling firewall" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed shell when disabling firewall" />
+    <MESSAGE value="updated .exe with latest fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated .exe with latest fix" />
   </component>
   <component name="WindowStateProjectService">
     <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1591877088571">
@@ -562,35 +564,39 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1010" y="448" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591868030187" />
-    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591879137127">
+    <state x="1032" y="608" key="#com.jetbrains.python.refactoring.move.PyMakeFunctionTopLevelDialog" timestamp="1591882152613">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591879137127" />
+    <state x="1032" y="608" key="#com.jetbrains.python.refactoring.move.PyMakeFunctionTopLevelDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591882152613" />
+    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591880769139">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591880769139" />
     <state x="3080" y="51" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839487658" />
     <state x="3156" y="280" key="FileChooserDialogImpl" timestamp="1591839178154">
       <screen x="2560" y="0" width="1440" height="860" />
     </state>
     <state x="1060" y="456" key="FileChooserDialogImpl/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591437431752" />
     <state x="3156" y="280" key="FileChooserDialogImpl/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839178154" />
-    <state width="2539" height="531" key="GridCell.Tab.0.bottom" timestamp="1591879013627">
+    <state width="2539" height="275" key="GridCell.Tab.0.bottom" timestamp="1591883061815">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="531" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591879013627" />
+    <state width="2539" height="275" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591883061815" />
     <state width="1419" height="274" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591877467925" />
-    <state width="2539" height="531" key="GridCell.Tab.0.center" timestamp="1591879013627">
+    <state width="2539" height="275" key="GridCell.Tab.0.center" timestamp="1591883061815">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="531" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591879013627" />
+    <state width="2539" height="275" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591883061815" />
     <state width="1419" height="274" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591877467924" />
-    <state width="2539" height="531" key="GridCell.Tab.0.left" timestamp="1591879013626">
+    <state width="2539" height="275" key="GridCell.Tab.0.left" timestamp="1591883061815">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="531" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591879013626" />
+    <state width="2539" height="275" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591883061815" />
     <state width="1419" height="274" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591877467924" />
-    <state width="2539" height="531" key="GridCell.Tab.0.right" timestamp="1591879013627">
+    <state width="2539" height="275" key="GridCell.Tab.0.right" timestamp="1591883061815">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="531" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591879013627" />
+    <state width="2539" height="275" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591883061815" />
     <state width="1419" height="274" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591877467924" />
     <state width="2539" height="274" key="GridCell.Tab.1.bottom" timestamp="1591877619145">
       <screen x="0" y="0" width="2560" height="1400" />
@@ -613,15 +619,15 @@
     </state>
     <state x="781" y="343" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591538994622" />
     <state x="2691" y="133" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839188083" />
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591879138885">
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591879861042">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591879138885" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591879861042" />
     <state x="3051" y="267" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881572496" />
-    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1591873688503">
+    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1591879847106">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591873688503" />
+    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591879847106" />
     <state x="3196" y="190" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839484889" />
     <state x="2560" y="0" width="1456" height="945" key="dock-window-1" timestamp="1591737453801">
       <screen x="2560" y="0" width="1440" height="860" />

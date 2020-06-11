@@ -35,18 +35,19 @@ class Ui_MainWindow(QMainWindow):
         # will  be used for setting hot keysvisu
         self.firewall_active = False
         self.hold_control = False
+        #  will be used to set up hot keys to turn on and off firewall
+
 
         self.ip_address_scope = ""
 
-
         self.setupUi()
-
 
         self.firewall_status()
 
         self.setupTrayIcon()
         self.set_up_help_window()
-        self.update_global_hot_key()
+        self.hot_keys_setup =  GlobalHotKeys(self.get_hot_keys())
+        self.hot_keys_setup.start()
 
 
         if not self.is_admin:
@@ -194,7 +195,6 @@ class Ui_MainWindow(QMainWindow):
         self.focusWidget()
         self.setTextForButtons()
 
-
     def seconds_process_down(self, seconds):
 
         self.resource_monitor_button.setText(f"GTA V Will Resume Process in {seconds}")
@@ -216,16 +216,15 @@ class Ui_MainWindow(QMainWindow):
         self.second_window.add_ip_address.setDisabled(True)
 
         pop_up = QtWidgets.QDialog(self)
-        pop_up.setWindowTitle(self.window_title+" - Run as Admin")
+        pop_up.setWindowTitle(self.window_title + " - Run as Admin")
         layout = QtWidgets.QVBoxLayout()
-
 
         button = QtWidgets.QPushButton(self)
         button.setText("Okay")
         button.clicked.connect(lambda e: pop_up.close())
 
-        pop_up.setFixedSize(300,70)
-        button.setFixedSize(50,30)
+        pop_up.setFixedSize(300, 70)
+        button.setFixedSize(50, 30)
 
         message = QtWidgets.QLabel("Please run as administrator to use some of the features")
 
@@ -237,12 +236,7 @@ class Ui_MainWindow(QMainWindow):
 
         pop_up.show()
 
-    def suspend_gta(self):
-
-        if not self.gta_process.isRunning():
-            self.gta_process.start()
-
-    def update_global_hot_key(self):
+    def get_hot_keys(self):
 
         self.hot_keys = json.load(open("settings.json", "r")).get("Hot_Key")
 
@@ -253,9 +247,23 @@ class Ui_MainWindow(QMainWindow):
         hot_keys = {f"<{key}>": method_calls[index]
                     for index, (name, key) in enumerate(self.hot_keys.items()) if key != "None"}
 
-        #  will be used to set up hot keys to turn on and off firewall
-        self.changeFirewallStatus = GlobalHotKeys(hot_keys)
-        self.changeFirewallStatus.start()
+        return hot_keys
+
+    def suspend_gta(self):
+
+        if not self.gta_process.isRunning():
+            self.gta_process.start()
+
+    def update_global_hot_key(self):
+
+        if self.hot_keys_setup.is_alive():
+
+            self.hot_keys_setup.stop()
+
+            self.hot_keys_setup = GlobalHotKeys(self.get_hot_keys())
+            self.hot_keys_setup.start()
+
+
 
     def display_shortcut_window(self):
 
@@ -328,7 +336,6 @@ class Ui_MainWindow(QMainWindow):
 
         self.firewall_active = firewall.firewall_active()
 
-
         if self.firewall_active:
             self.firewall_button.setText("Firewall Mode (ON)")
             self.firewall_button.setStyleSheet("background-color:#00FF00;")
@@ -353,7 +360,6 @@ class Ui_MainWindow(QMainWindow):
         if firewall.firewall_exist():
 
             if not self.firewall_active:
-
                 self.firewall_active = True
 
                 self.tray_icon.showMessage(self.windowTitle(), "Firewall On")
@@ -433,9 +439,6 @@ class Ui_MainWindow(QMainWindow):
             self.firewall_button.setText("Firewall Mode (OFF)")
             self.firewall_button.setStyleSheet("background-color:red;")
             firewall.disable_firewall_rule()
-
-
-
 
     def add_ip_address(self):
 
@@ -520,7 +523,6 @@ class Ui_MainWindow(QMainWindow):
             message_box.setStandardButtons(QMessageBox.Ok)
             message_box.show()
 
-
     def remove_firewall(self):
 
         remove_firewall_rule = firewall.delete_firewall_rule()
@@ -581,7 +583,6 @@ class Ui_MainWindow(QMainWindow):
 
 
 class RemoveIPThread(QThread):
-
     finished = pyqtSignal(str)
 
     def __init__(self, parent=None):
