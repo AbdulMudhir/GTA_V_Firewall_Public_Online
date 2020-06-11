@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="445d5f82-ae2c-468d-832f-e90354327bb7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gta_public_solo.py" beforeDir="false" afterPath="$PROJECT_DIR$/gta_public_solo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ip_sniffer.py" beforeDir="false" afterPath="$PROJECT_DIR$/ip_sniffer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packetsniffer.py" beforeDir="false" afterPath="$PROJECT_DIR$/packetsniffer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,20 +178,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1590840251199</updated>
-    </task>
-    <task id="LOCAL-00008" summary="remove ip address from white_list">
-      <created>1590880513409</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1590880513409</updated>
-    </task>
-    <task id="LOCAL-00009" summary="cleaned up user_interface and removed unecssary code">
-      <created>1590881571401</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1590881571401</updated>
     </task>
     <task id="LOCAL-00010" summary="added add and remove firewall button">
       <created>1590886735490</created>
@@ -525,12 +508,24 @@
       <option name="project" value="LOCAL" />
       <updated>1591876911908</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="fixed issue with ip scanner not refreshing">
+      <created>1591879005305</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1591879005305</updated>
+    </task>
+    <task id="LOCAL-00058" summary="removed shell when disabling firewall">
+      <created>1591879138090</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1591879138090</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added ip sniffer using scapy" />
-    <MESSAGE value="packet sniffer complete" />
     <MESSAGE value="added network interfaces" />
     <MESSAGE value="functionality to scan lobby ip addresses" />
     <MESSAGE value="ability to scan IP address from the lobby" />
@@ -554,7 +549,9 @@
     <MESSAGE value="added requirements" />
     <MESSAGE value="added .exe file" />
     <MESSAGE value="fixed issue with firewall button not responding correctly" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed issue with firewall button not responding correctly" />
+    <MESSAGE value="fixed issue with ip scanner not refreshing" />
+    <MESSAGE value="removed shell when disabling firewall" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed shell when disabling firewall" />
   </component>
   <component name="WindowStateProjectService">
     <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1591877088571">
@@ -565,10 +562,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1010" y="448" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591868030187" />
-    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591879004377">
+    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591879137127">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591879004377" />
+    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591879137127" />
     <state x="3080" y="51" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839487658" />
     <state x="3156" y="280" key="FileChooserDialogImpl" timestamp="1591839178154">
       <screen x="2560" y="0" width="1440" height="860" />
@@ -616,10 +613,10 @@
     </state>
     <state x="781" y="343" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591538994622" />
     <state x="2691" y="133" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839188083" />
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591879006305">
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591879138885">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591879006305" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591879138885" />
     <state x="3051" y="267" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881572496" />
     <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1591873688503">
       <screen x="0" y="0" width="2560" height="1400" />
