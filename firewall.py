@@ -229,7 +229,7 @@ def enable_firewall_rule():
 
 def disable_firewall_rule():
     netsh_add_firewall_command = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" new enable=no '''
-    Popen(netsh_add_firewall_command, True)
+    Popen(netsh_add_firewall_command, shell=True)
 
 
 def delete_firewall_rule():
