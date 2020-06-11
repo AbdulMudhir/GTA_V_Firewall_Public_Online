@@ -88,18 +88,23 @@ class Ui_Dialog(QtWidgets.QDialog):
         self.tableWidget.setRowCount(0)
         self.tableWidget.setRowCount(len(ip_addresses))
 
-        for index ,ip_address in enumerate(ip_addresses):
+        for index, ip_address in enumerate(ip_addresses):
             self.tableWidget.setItem(index, 0, QtWidgets.QTableWidgetItem(ip_address))
-
 
     def add_ip_address_from_table(self):
 
         ip_addresses = self.tableWidget.selectedItems()
 
-        if len(ip_addresses) >= 1:
-            add_ip_thread = AddIPThread(ip_addresses, self.main_window.update_table)
+        if ip_addresses:
+            add_ip_thread = AddIPThread(self)
+            add_ip_thread.finished.connect(self.status_adding_ip)
+            add_ip_thread.ip_addresses_item  =  ip_addresses
             add_ip_thread.start()
 
+    def status_adding_ip(self, status):
+        print(status)
+        if status == "finished":
+            self.main_window.update_table()
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "GTA V SOLO KIT"))
@@ -108,14 +113,11 @@ class Ui_Dialog(QtWidgets.QDialog):
 
 
 class AddIPThread(QThread):
+    finished = pyqtSignal(str)
 
-    def __init__(self, ip_addresses, main_window_table, parent=None):
+    def __init__(self, parent=None):
         super(AddIPThread, self).__init__(parent)
-        self.ip_addresses_item = ip_addresses
-        self.tableWidget = main_window_table
-
-    def __del__(self):
-        self.wait()
+        self.ip_addresses_item = None
 
     def run(self):
         # create a list of ip address that do not exist on the table
@@ -125,8 +127,7 @@ class AddIPThread(QThread):
         if ip_addresses_text:
             ip_addresses = ",".join(ip_addresses_text)
             firewall.add_white_list(ip_addresses)
-
-            self.tableWidget()
+            self.finished.emit("finished")
 
 
 class SnifferThread(QThread):
@@ -135,9 +136,6 @@ class SnifferThread(QThread):
     def __init__(self, parent=None):
         super(SnifferThread, self).__init__(parent)
         self.interface = None
-
-    def __del__(self):
-        self.wait()
 
     def run(self):
         ip_address = packetsniffer.scan_ip_address()
