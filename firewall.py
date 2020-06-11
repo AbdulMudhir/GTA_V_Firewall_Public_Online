@@ -129,7 +129,7 @@ def add_white_list(ip_address):
         new_scope = new_ip_address_scope(previous_scope, ip_address)
 
         netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}"  new remoteip={new_scope} '''
-        Popen(netsh_allow_remote_address)
+        Popen(netsh_allow_remote_address, shell=True)
 
 
     else:
@@ -142,7 +142,7 @@ def add_white_list(ip_address):
         new_scope = f'{first_range},{second_range}'
 
         netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" new remoteip={new_scope} '''
-        Popen(netsh_allow_remote_address)
+        Popen(netsh_allow_remote_address, shell=True)
 
 
 def ip_address_without_scope():
@@ -207,11 +207,11 @@ def remove_white_list(ip_address):
 
     if len(new_scope) != 1:
         netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip={new_scope}    '''
-        Popen(netsh_allow_remote_address)
+        Popen(netsh_allow_remote_address, shell=True)
 
     else:
         netsh_allow_remote_address = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" dir=in new remoteip="" '''
-        Popen(netsh_allow_remote_address)
+        Popen(netsh_allow_remote_address, shell=True)
 
 
 # if previous_scope != "Any":
@@ -224,12 +224,12 @@ def remove_white_list(ip_address):
 
 def enable_firewall_rule():
     netsh_add_firewall_command = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" new enable=yes '''
-    call(netsh_add_firewall_command)
+    Popen(netsh_add_firewall_command, shell=True)
 
 
 def disable_firewall_rule():
     netsh_add_firewall_command = f'''netsh advfirewall firewall set rule name="{firewall_rule_name}" new enable=no '''
-    call(netsh_add_firewall_command)
+    Popen(netsh_add_firewall_command, True)
 
 
 def delete_firewall_rule():

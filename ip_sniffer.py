@@ -102,7 +102,6 @@ class Ui_Dialog(QtWidgets.QDialog):
             add_ip_thread.start()
 
     def status_adding_ip(self, status):
-        print(status)
         if status == "finished":
             self.main_window.update_table()
     def retranslateUi(self, Dialog):

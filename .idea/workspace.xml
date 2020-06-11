@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="445d5f82-ae2c-468d-832f-e90354327bb7" name="Default Changelist" comment="">
+    <list default="true" id="445d5f82-ae2c-468d-832f-e90354327bb7" name="Default Changelist" comment="added .exe file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/firewall.py" beforeDir="false" afterPath="$PROJECT_DIR$/firewall.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gta_public_solo.py" beforeDir="false" afterPath="$PROJECT_DIR$/gta_public_solo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ip_sniffer.py" beforeDir="false" afterPath="$PROJECT_DIR$/ip_sniffer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,13 +181,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1590840251199</updated>
-    </task>
-    <task id="LOCAL-00006" summary="ip address validator">
-      <created>1590850363648</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1590850363648</updated>
     </task>
     <task id="LOCAL-00007" summary="remove ip address from white_list">
       <created>1590851609737</created>
@@ -522,11 +518,17 @@
       <option name="project" value="LOCAL" />
       <updated>1591872642475</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="added .exe file">
+      <created>1591873700851</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1591873700851</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="turn on and off firewall in game using hotkeys" />
     <MESSAGE value="removed test methods" />
     <MESSAGE value="added ip sniffer using scapy" />
     <MESSAGE value="packet sniffer complete" />
@@ -551,7 +553,8 @@
     <MESSAGE value="fixed threading issue with removing multiple ip address" />
     <MESSAGE value="check if a file path was given" />
     <MESSAGE value="added requirements" />
-    <option name="LAST_COMMIT_MESSAGE" value="added requirements" />
+    <MESSAGE value="added .exe file" />
+    <option name="LAST_COMMIT_MESSAGE" value="added .exe file" />
   </component>
   <component name="WindowStateProjectService">
     <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1591832643403">
@@ -562,35 +565,35 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1010" y="448" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591868030187" />
-    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591873673068">
+    <state x="925" y="295" key="CommitChangelistDialog2" timestamp="1591875759282">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591873673068" />
+    <state x="925" y="295" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591875759282" />
     <state x="3080" y="51" key="CommitChangelistDialog2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839487658" />
     <state x="3156" y="280" key="FileChooserDialogImpl" timestamp="1591839178154">
       <screen x="2560" y="0" width="1440" height="860" />
     </state>
     <state x="1060" y="456" key="FileChooserDialogImpl/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591437431752" />
     <state x="3156" y="280" key="FileChooserDialogImpl/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839178154" />
-    <state width="2539" height="278" key="GridCell.Tab.0.bottom" timestamp="1591872611100">
+    <state width="2539" height="299" key="GridCell.Tab.0.bottom" timestamp="1591876637971">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="278" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591872611100" />
+    <state width="2539" height="299" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591876637971" />
     <state width="1419" height="107" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839302355" />
-    <state width="2539" height="278" key="GridCell.Tab.0.center" timestamp="1591872611100">
+    <state width="2539" height="299" key="GridCell.Tab.0.center" timestamp="1591876637970">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="278" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591872611100" />
+    <state width="2539" height="299" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591876637970" />
     <state width="1419" height="107" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839302354" />
-    <state width="2539" height="278" key="GridCell.Tab.0.left" timestamp="1591872611100">
+    <state width="2539" height="299" key="GridCell.Tab.0.left" timestamp="1591876637970">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="278" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591872611100" />
+    <state width="2539" height="299" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591876637970" />
     <state width="1419" height="107" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839302354" />
-    <state width="2539" height="278" key="GridCell.Tab.0.right" timestamp="1591872611100">
+    <state width="2539" height="299" key="GridCell.Tab.0.right" timestamp="1591876637971">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2539" height="278" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591872611100" />
+    <state width="2539" height="299" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591876637971" />
     <state width="1419" height="107" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839302354" />
     <state width="2539" height="490" key="GridCell.Tab.1.bottom" timestamp="1591706976954">
       <screen x="0" y="0" width="2560" height="1400" />
@@ -613,15 +616,15 @@
     </state>
     <state x="781" y="343" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591538994622" />
     <state x="2691" y="133" key="SettingsEditor/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839188083" />
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591872643690">
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1591873702028">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591872643690" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591873702028" />
     <state x="3051" y="267" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1590881572496" />
-    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1591872633184">
+    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1591873688503">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591872633184" />
+    <state x="1131" y="309" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.2560.1400/2560.0.1440.860@0.0.2560.1400" timestamp="1591873688503" />
     <state x="3196" y="190" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.2560.1400/2560.0.1440.860@2560.0.1440.860" timestamp="1591839484889" />
     <state x="2560" y="0" width="1456" height="945" key="dock-window-1" timestamp="1591737453801">
       <screen x="2560" y="0" width="1440" height="860" />

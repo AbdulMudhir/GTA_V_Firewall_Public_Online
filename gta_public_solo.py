@@ -328,6 +328,8 @@ class Ui_MainWindow(QMainWindow):
 
         self.firewall_active = firewall.firewall_active()
 
+
+        print(self.firewall_active)
         if self.firewall_active:
             self.firewall_button.setText("Firewall Mode (ON)")
             self.firewall_button.setStyleSheet("background-color:#00FF00;")
@@ -352,18 +354,24 @@ class Ui_MainWindow(QMainWindow):
         if firewall.firewall_exist():
 
             if not self.firewall_active:
+
+                self.firewall_active = True
+
                 self.tray_icon.showMessage(self.windowTitle(), "Firewall On")
                 firewall.enable_firewall_rule()
-                self.update_firewall_button_status()
+                self.firewall_button.setText("Firewall Mode (ON)")
+                self.firewall_button.setStyleSheet("background-color:#00FF00;")
 
     def turnOffFirewall(self):
 
         if firewall.firewall_exist():
 
             if self.firewall_active:
+                self.firewall_active = False
                 self.tray_icon.showMessage(self.windowTitle(), "Firewall off")
                 firewall.disable_firewall_rule()
-                self.update_firewall_button_status()
+                self.firewall_button.setText("Firewall Mode (OFF)")
+                self.firewall_button.setStyleSheet("background-color:red;")
 
     def setupTrayIcon(self):
         self.tray_icon.setIcon(self.gta_icon)
@@ -413,11 +421,22 @@ class Ui_MainWindow(QMainWindow):
     def firewall_mode(self):
 
         if not self.firewall_active:
+
+            self.firewall_active = True
+            self.tray_icon.showMessage(self.windowTitle(), "Firewall On")
             firewall.enable_firewall_rule()
-            self.update_firewall_button_status()
+            self.firewall_button.setText("Firewall Mode (ON)")
+            self.firewall_button.setStyleSheet("background-color:#00FF00;")
+
         else:
+            self.firewall_active = False
+            self.tray_icon.showMessage(self.windowTitle(), "Firewall off")
+            self.firewall_button.setText("Firewall Mode (OFF)")
+            self.firewall_button.setStyleSheet("background-color:red;")
             firewall.disable_firewall_rule()
-            self.update_firewall_button_status()
+
+
+
 
     def add_ip_address(self):
 
