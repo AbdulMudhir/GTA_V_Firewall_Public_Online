@@ -85,7 +85,6 @@ class Ui_Dialog(QtWidgets.QDialog):
         sniffer.start()
 
     def ip_address_scanned(self, ip_addresses):
-        self.tableWidget.setRowCount(0)
         self.tableWidget.setRowCount(len(ip_addresses))
 
         for index, ip_address in enumerate(ip_addresses):

@@ -329,7 +329,6 @@ class Ui_MainWindow(QMainWindow):
         self.firewall_active = firewall.firewall_active()
 
 
-        print(self.firewall_active)
         if self.firewall_active:
             self.firewall_button.setText("Firewall Mode (ON)")
             self.firewall_button.setStyleSheet("background-color:#00FF00;")
