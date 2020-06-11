@@ -4,14 +4,14 @@ import ctypes
 
 firewall_rule_name = "GTA Online Firewall Rule"
 
-
+# shell = True will remove console output when using .exe from pyinstaller
 def running_as_admin():
     return ctypes.windll.shell32.IsUserAnAdmin()
 
 
 def firewall_exist():
     netsh_firewall_exist = f'''netsh advfirewall firewall show rule name="{firewall_rule_name}"'''
-    in_command = Popen(netsh_firewall_exist, stdout=PIPE, stderr=PIPE)
+    in_command = Popen(netsh_firewall_exist, stdout=PIPE, stderr=PIPE, shell=True)
 
     output_message, _ = in_command.communicate()
 
@@ -21,7 +21,7 @@ def firewall_exist():
 def firewall_scopes_list():
     if firewall_exist():
         netsh_firewall_exist = f'''netsh advfirewall firewall show rule name="{firewall_rule_name}" dir=in '''
-        in_command = Popen(netsh_firewall_exist, stdout=PIPE, stderr=PIPE)
+        in_command = Popen(netsh_firewall_exist, stdout=PIPE, stderr=PIPE, shell=True)
 
         output_message, _ = in_command.communicate()
 
@@ -34,7 +34,7 @@ def firewall_scopes_list():
 
 def firewall_active():
     netsh_firewall_exist = f'''netsh advfirewall firewall show rule name="{firewall_rule_name}" dir=in '''
-    in_command = Popen(netsh_firewall_exist, stdout=PIPE, stderr=PIPE)
+    in_command = Popen(netsh_firewall_exist, stdout=PIPE, stderr=PIPE, shell=True)
 
     output_message, _ = in_command.communicate()
 
@@ -54,8 +54,8 @@ def valid_ip_address(ip_address):
 def add_firewall_rule(program_path):
     netsh_add_firewall_command_in = f'''netsh advfirewall firewall add rule name="{firewall_rule_name}" dir=in action=block program="{program_path}" enable=no profile=domain,private,public protocol=UDP localport=6672'''
     netsh_add_firewall_command_out = f'''netsh advfirewall firewall add rule name="{firewall_rule_name}" dir=out action=block program="{program_path}" enable=no profile=domain,private,public protocol=UDP localport=6672'''
-    in_command = Popen(netsh_add_firewall_command_in, stdout=PIPE, stderr=PIPE)
-    out_command = Popen(netsh_add_firewall_command_out, stdout=PIPE, stderr=PIPE)
+    in_command = Popen(netsh_add_firewall_command_in, stdout=PIPE, stderr=PIPE, shell=True)
+    out_command = Popen(netsh_add_firewall_command_out, stdout=PIPE, stderr=PIPE, shell=True)
 
     output_message, _ = in_command.communicate()
 
@@ -234,6 +234,6 @@ def disable_firewall_rule():
 
 def delete_firewall_rule():
     netsh_add_firewall_command = f'''netsh advfirewall firewall delete rule name="{firewall_rule_name}" '''
-    in_command = Popen(netsh_add_firewall_command, stdout=PIPE, stderr=PIPE)
+    in_command = Popen(netsh_add_firewall_command, stdout=PIPE, stderr=PIPE, shell=True)
     output_message, _ = in_command.communicate()
     return "Ok." in output_message.decode().strip()

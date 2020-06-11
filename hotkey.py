@@ -38,17 +38,18 @@ QPushButton:hover {
 
 '''
 
-settings = json.load(open("settings.json"))
-
-hot_keys_values = settings.get("Hot_Key").values()
-
-hot_keys = settings.get("Hot_Key")
 
 
 class HotKey(QMainWindow):
 
     def __init__(self, parent=None):
         super(HotKey, self).__init__(parent)
+        self.settings = json.load(open("settings.json"))
+
+        self.hot_keys_values = self.settings.get("Hot_Key").values()
+
+        self.hot_keys = self.settings.get("Hot_Key")
+
         self.setFixedWidth(400)
         self.setWindowIcon(QtGui.QIcon("gta_icon.png"))
         self.setWindowTitle("GTA V SOLO KIT - HotKeys")
@@ -85,9 +86,9 @@ class HotKey(QMainWindow):
         self.firewall_off_button.setObjectName("F_OFF")
         self.resource_monitor_button.setObjectName("R_M")
 
-        self.firewall_on_button.setText(hot_keys[self.firewall_on_button.objectName()])
-        self.firewall_off_button.setText(hot_keys[self.firewall_off_button.objectName()])
-        self.resource_monitor_button.setText(hot_keys[self.resource_monitor_button.objectName()])
+        self.firewall_on_button.setText(self.hot_keys[self.firewall_on_button.objectName()])
+        self.firewall_off_button.setText(self.hot_keys[self.firewall_off_button.objectName()])
+        self.resource_monitor_button.setText(self.hot_keys[self.resource_monitor_button.objectName()])
 
         option_label = QLabel("Options")
         hot_key_label = QLabel("HotKeys")
@@ -192,8 +193,13 @@ class WorkerThread(QThread):
         self.listening_for_key = False
         self.button = None
         self.button_name = None
+        self.settings = json.load(open("settings.json"))
 
-        self.parent_test = parent
+        self.hot_keys_values = self.settings.get("Hot_Key").values()
+
+        self.hot_keys = self.settings.get("Hot_Key")
+
+
 
 
     def on_press(self, key):
@@ -208,24 +214,24 @@ class WorkerThread(QThread):
 
         if key == Key.esc:
             self.finished.emit(str(key))
-            hot_keys[self.button_name] = "None"
+            self.hot_keys[self.button_name] = "None"
             self.key_listner.stop()
 
         # check the key has not already been assigned
-        elif format_key in hot_keys_values and hot_keys[self.button_name] != format_key:
+        elif format_key in self.hot_keys_values and self.hot_keys[self.button_name] != format_key:
             self.finished.emit("Key_in_used")
 
 
         else:
             # replacing the hot key setting
-            hot_keys[self.button_name] = format_key
+            self.hot_keys[self.button_name] = format_key
 
             # update the global hot_keys
             self.listening_for_key = False
             self.finished.emit(format_key)
             self.key_listner.stop()
 
-        json.dump(settings, open("settings.json", "w") )
+        json.dump(self.settings, open("settings.json", "w") )
 
         self.parent_test.main_parent.update_global_hot_key()
 
