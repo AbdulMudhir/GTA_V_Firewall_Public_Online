@@ -2,4 +2,4 @@
 
 demo gif
 
-![](https://imgur.com/FXt39XL)
+![](https://imgur.com/FXt39XL.gif)
